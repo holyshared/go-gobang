@@ -55,7 +55,7 @@ func NewBoard(height, width uint) Board {
   size := &Size { height: height, width: width }
   cells := make([]Cell, size.CellCount())
 
-  for i := 0; i <= len(cells) - 1; i++ {
+  for i := range cells {
     y := (uint(i) / size.width)
     x := uint(i) - (uint(y) * size.width)
     cells[i] = Cell { point: Point { x: x, y: y } }
