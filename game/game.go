@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package game
 
 type Point struct {
   x, y uint
@@ -61,18 +59,4 @@ func NewBoard(height, width uint) Board {
     cells[i] = Cell { point: Point { x: x, y: y } }
   }
   return Board { size: size, cells: cells }
-}
-
-
-func main() {
-  board := NewBoard(10, 10)
-  cell := board.At(0, 0)
-
-  blackStone := BlackStone {}
-  blackStone.PutTo(cell)
-
-  whiteStone := WhiteStone {}
-  whiteStone.PutTo(cell)
-
-  fmt.Println(board)
 }
