@@ -49,6 +49,14 @@ func (board *Board) At(x, y uint) *Cell {
   return &board.cells[index]
 }
 
+func (board *Board) Height() uint {
+  return board.size.height
+}
+
+func (board *Board) Width() uint {
+  return board.size.width
+}
+
 func NewBoard(height, width uint) Board {
   size := &Size { height: height, width: width }
   cells := make([]Cell, size.CellCount())
