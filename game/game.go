@@ -10,25 +10,23 @@ type Cell struct {
 }
 
 func (cell *Cell) IsEmpty() bool {
-  return cell.stone == nil
+  return cell.stone == None
 }
 
-type BlackStone struct {
+type Stone int
+
+const (
+  Black Stone = iota
+  White
+  None
+)
+
+func (stone Stone) Eq(other Stone) bool  {
+  return stone == other
 }
 
-func (stone *BlackStone) PutTo(cell *Cell) {
+func (stone Stone) PutTo(cell *Cell) {
   cell.stone = stone
-}
-
-type WhiteStone struct {
-}
-
-func (stone *WhiteStone) PutTo(cell *Cell) {
-  cell.stone = stone
-}
-
-type Stone interface {
-  PutTo(*Cell)
 }
 
 type Size struct {
@@ -64,7 +62,7 @@ func NewBoard(height, width uint) Board {
   for i := range cells {
     y := (uint(i) / size.width)
     x := uint(i) - (uint(y) * size.width)
-    cells[i] = Cell { point: Point { x: x, y: y } }
+    cells[i] = Cell { stone: None, point: Point { x: x, y: y } }
   }
   return Board { size: size, cells: cells }
 }

@@ -9,10 +9,10 @@ func main() {
   board := game.NewBoard(10, 10)
   cell := board.At(0, 0)
 
-  blackStone := game.BlackStone {}
+  blackStone := game.Black
   blackStone.PutTo(cell)
 
-  whiteStone := game.WhiteStone {}
+  whiteStone := game.White
   whiteStone.PutTo(cell)
 
   fmt.Println(board)
