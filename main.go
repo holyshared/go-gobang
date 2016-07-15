@@ -15,5 +15,8 @@ func main() {
   whiteStone := game.White
   whiteStone.PutTo(cell)
 
+  fmt.Println(cell.Have(game.White))
+  fmt.Println(cell.Have(game.Black))
+
   fmt.Println(board)
 }

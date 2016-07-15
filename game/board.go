@@ -10,7 +10,11 @@ type Cell struct {
 }
 
 func (cell *Cell) IsEmpty() bool {
-  return cell.stone == None
+  return cell.stone != Black && cell.stone != White
+}
+
+func (cell *Cell) Have(stone Stone) bool {
+  return cell.stone == stone
 }
 
 type Size struct {
@@ -46,7 +50,7 @@ func NewBoard(height, width uint) Board {
   for i := range cells {
     y := (uint(i) / size.width)
     x := uint(i) - (uint(y) * size.width)
-    cells[i] = Cell { stone: None, point: Point { x: x, y: y } }
+    cells[i] = Cell { point: Point { x: x, y: y } }
   }
   return Board { size: size, cells: cells }
 }

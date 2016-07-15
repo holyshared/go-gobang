@@ -3,9 +3,8 @@ package game
 type Stone int
 
 const (
-  Black Stone = iota
+  Black Stone = iota + 1
   White
-  None
 )
 
 func (stone Stone) Eq(other Stone) bool  {
