@@ -13,22 +13,6 @@ func (cell *Cell) IsEmpty() bool {
   return cell.stone == None
 }
 
-type Stone int
-
-const (
-  Black Stone = iota
-  White
-  None
-)
-
-func (stone Stone) Eq(other Stone) bool  {
-  return stone == other
-}
-
-func (stone Stone) PutTo(cell *Cell) {
-  cell.stone = stone
-}
-
 type Size struct {
   height, width uint
 }
