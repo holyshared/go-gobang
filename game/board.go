@@ -1,28 +1,15 @@
 package game
 
-type Point struct {
-  x, y uint
-}
+func NewBoard(height, width uint) Board {
+  size := &Size { height: height, width: width }
+  cells := make([]Cell, size.CellCount())
 
-type Cell struct {
-  stone Stone
-  point Point
-}
-
-func (cell *Cell) IsEmpty() bool {
-  return cell.stone != Black && cell.stone != White
-}
-
-func (cell *Cell) Have(stone Stone) bool {
-  return cell.stone == stone
-}
-
-type Size struct {
-  height, width uint
-}
-
-func (size *Size) CellCount() uint {
-  return size.height * size.width
+  for i := range cells {
+    y := (uint(i) / size.width)
+    x := uint(i) - (uint(y) * size.width)
+    cells[i] = Cell { point: Point { x: x, y: y } }
+  }
+  return Board { size: size, cells: cells }
 }
 
 type Board struct {
@@ -41,16 +28,4 @@ func (board *Board) Height() uint {
 
 func (board *Board) Width() uint {
   return board.size.width
-}
-
-func NewBoard(height, width uint) Board {
-  size := &Size { height: height, width: width }
-  cells := make([]Cell, size.CellCount())
-
-  for i := range cells {
-    y := (uint(i) / size.width)
-    x := uint(i) - (uint(y) * size.width)
-    cells[i] = Cell { point: Point { x: x, y: y } }
-  }
-  return Board { size: size, cells: cells }
 }
