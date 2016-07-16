@@ -2,7 +2,7 @@ package main
 
 import (
   "fmt"
-  "./game"
+  "github.com/holyshared/learn-golang/game"
 )
 
 func main() {
@@ -19,4 +19,9 @@ func main() {
   fmt.Println(cell.Have(game.Black))
 
   fmt.Println(board)
+
+  selector := game.NewSelector(&board, 5)
+  results := selector.Select(game.Black)
+
+  fmt.Println(results)
 }
