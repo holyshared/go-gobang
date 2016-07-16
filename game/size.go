@@ -1,9 +1,9 @@
 package game
 
 type Size struct {
-  height, width uint
+  height, width int
 }
 
-func (size *Size) CellCount() uint {
+func (size *Size) CellCount() int {
   return size.height * size.width
 }
