@@ -23,21 +23,18 @@ func (selector *Selector) Select(stone Stone) [][]*Cell {
 
       if cell.Have(stone) == false {
         cells = cells[0:0]
-      } else {
-        cells = append(cells, cell)
+        continue
       }
+      cells = append(cells, cell)
 
       if (len(cells) < selector.count) {
         continue
       }
+      results = append(results, cells[:0])
+      cells = cells[0:0]
+
       break
     }
-
-    if len(cells) < selector.count {
-      cells = cells[0:0]
-      continue
-    }
-    results = append(results, cells[:0])
   }
 
   return results
