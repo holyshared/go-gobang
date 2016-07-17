@@ -15,10 +15,10 @@ func TestSelectorRightFilled(t *testing.T) {
   board.Print()
 
   selector := NewSelector(&board, 5)
-  results := selector.Select(Black)
+  result := selector.Select(Black)
 
-  if len(results) != 10 {
-    t.Errorf("got %v\nwant %v", len(results), 10)
+  if len(result.results) != 10 {
+    t.Errorf("got %v\nwant %v", len(result.results), 10)
   }
 }
 
@@ -33,9 +33,9 @@ func TestSelectorLeftFilled(t *testing.T) {
   board.Print()
 
   selector := NewSelector(&board, 5)
-  results := selector.Select(Black)
+  result := selector.Select(Black)
 
-  if len(results) != 10 {
-    t.Errorf("got %v\nwant %v", len(results), 10)
+  if len(result.results) != 10 {
+    t.Errorf("got %v\nwant %v", len(result.results), 10)
   }
 }
