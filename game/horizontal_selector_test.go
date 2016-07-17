@@ -14,7 +14,7 @@ func TestSelectorRightFilled(t *testing.T) {
   }
   board.Print()
 
-  selector := NewSelector(&board, 5)
+  selector := NewHorizontalSelector(&board, 5)
   result := selector.Select(Black)
 
   if len(result.results) != 10 {
@@ -32,7 +32,7 @@ func TestSelectorLeftFilled(t *testing.T) {
   }
   board.Print()
 
-  selector := NewSelector(&board, 5)
+  selector := NewHorizontalSelector(&board, 5)
   result := selector.Select(Black)
 
   if len(result.results) != 10 {

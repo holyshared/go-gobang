@@ -1,5 +1,5 @@
 package game
-/*
+
 type HorizontalSelector struct {
   count int
   board *Board
@@ -12,43 +12,6 @@ func NewHorizontalSelector(board *Board, count int) HorizontalSelector {
 func (selector *HorizontalSelector) At(x, y int) *Cell {
   return selector.board.At(x, y)
 }
-*/
-type MatchedResult struct {
-  results []*ReachedResult
-}
-
-type ReachedResult struct {
-  cells []*Cell
-  neighborCells []*Cell
-}
-
-func (result *ReachedResult) IsEmpty() bool {
-  return len(result.cells) <= 0
-}
-
-func (result *ReachedResult) First() *Cell {
-  if len(result.cells) <= 0 {
-    return nil
-  }
-  return result.cells[0]
-}
-
-func (result *ReachedResult) Last() *Cell {
-  if len(result.cells) <= 0 {
-    return nil
-  }
-  return result.cells[len(result.cells) - 1]
-}
-
-
-
-
-
-
-
-
-
-/*
 
 func (selector *HorizontalSelector) Select(stone Stone) *MatchedResult {
   result := MatchedResult {}
@@ -97,4 +60,3 @@ func (selector *HorizontalSelector) SelectByHorizontal(y int, stone Stone) *Reac
 
   return &result
 }
-*/
