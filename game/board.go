@@ -22,7 +22,7 @@ type Board struct {
   cells []Cell
 }
 
-func (board *Board) At(x, y int) *Cell {
+func (board *Board) Select(x, y int) *Cell {
   index := (y * board.width) + x
   return &board.cells[index]
 }
@@ -40,7 +40,7 @@ func (board *Board) Print() {
 
   for y := 0; y <= board.Height() - 1; y++ {
     for x := 0; x <= board.Width() - 1; x++ {
-      cell := board.At(x, y)
+      cell := board.Select(x, y)
 
       if (cell.IsEmpty()) {
         cells = append(cells, " ")

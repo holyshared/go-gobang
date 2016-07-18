@@ -10,7 +10,7 @@ func NewVerticalSelector(board *Board, count int) VerticalSelector {
 }
 
 func (selector *VerticalSelector) At(x, y int) *Cell {
-  return selector.board.At(x, y)
+  return selector.board.Select(x, y)
 }
 
 func (selector *VerticalSelector) Select(stone Stone) *MatchedResult {

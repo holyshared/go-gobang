@@ -10,7 +10,7 @@ func NewHorizontalSelector(board *Board, count int) HorizontalSelector {
 }
 
 func (selector *HorizontalSelector) At(x, y int) *Cell {
-  return selector.board.At(x, y)
+  return selector.board.Select(x, y)
 }
 
 func (selector *HorizontalSelector) Select(stone Stone) *MatchedResult {

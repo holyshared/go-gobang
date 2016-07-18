@@ -8,7 +8,7 @@ func TestSelectorTopFilled(t *testing.T) {
   board := NewBoard(10, 10)
   for y := 0; y <= 4; y++ {
     for x := 0; x <= board.Width() - 1; x++ {
-      cell := board.At(x, y)
+      cell := board.Select(x, y)
       Black.PutTo(cell)
     }
   }
@@ -26,7 +26,7 @@ func TestSelectorBottomFilled(t *testing.T) {
   board := NewBoard(10, 10)
   for y := 5; y <= board.Height() - 1; y++ {
     for x := 0; x <= board.Width() - 1; x++ {
-      cell := board.At(x, y)
+      cell := board.Select(x, y)
       Black.PutTo(cell)
     }
   }
