@@ -6,7 +6,7 @@ import (
 )
 
 func NewBoard(height, width int) Board {
-  size := &Size { height: height, width: width }
+  size := Size { height: height, width: width }
   cells := make([]Cell, size.CellCount())
 
   for i := range cells {
@@ -14,25 +14,25 @@ func NewBoard(height, width int) Board {
     x := i - (y * size.width)
     cells[i] = Cell { Point { x: x, y: y }, 0 }
   }
-  return Board { size: size, cells: cells }
+  return Board { size, cells }
 }
 
 type Board struct {
-  size *Size
+  Size
   cells []Cell
 }
 
 func (board *Board) At(x, y int) *Cell {
-  index := (y * board.size.width) + x
+  index := (y * board.width) + x
   return &board.cells[index]
 }
 
 func (board *Board) Height() int {
-  return board.size.height
+  return board.height
 }
 
 func (board *Board) Width() int {
-  return board.size.width
+  return board.width
 }
 
 func (board *Board) Print() {
