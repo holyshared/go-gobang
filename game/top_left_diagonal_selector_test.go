@@ -16,14 +16,14 @@ import (
  * | | | |B|B|B|B|B|B|B|
  * | | | | |B|B|B|B|B|B|
  */
-func TestSelectorXXXXYAisxFilled(t *testing.T) {
+func TestTopLeftDiagonalSelector(t *testing.T) {
   board := NewBoard(10, 10)
 
   for y := 0; y <= 5; y++ {
-    YAxisFillBoard(&board, y)
+    TopLeftYAxisFillBoard(&board, y)
   }
   for x := 1; x <= 5; x++ {
-    XAxisFillBoard(&board, x)
+    TopLeftXAxisFillBoard(&board, x)
   }
   board.Print()
 
@@ -35,7 +35,7 @@ func TestSelectorXXXXYAisxFilled(t *testing.T) {
   }
 }
 
-func YAxisFillBoard(board *Board, startY int) {
+func TopLeftYAxisFillBoard(board *Board, startY int) {
   y := startY
 
   for x := 0; x <= board.Width() - startY; x++ {
@@ -48,7 +48,7 @@ func YAxisFillBoard(board *Board, startY int) {
   }
 }
 
-func XAxisFillBoard(board *Board, startX int) {
+func TopLeftXAxisFillBoard(board *Board, startX int) {
   x := startX
 
   for y := 0; y <= board.Height() - startX; y++ {
