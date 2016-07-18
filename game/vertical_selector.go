@@ -45,13 +45,13 @@ func (selector *VerticalSelector) SelectByVertical(x int, stone Stone) *ReachedR
     }
     first := result.First()
 
-    if first.y > 0 {
+    if selector.board.Have(x, first.y - 1) {
       p := selector.At(x, first.y - 1)
       result.neighborCells = append(result.neighborCells, p)
     }
     last := result.Last()
 
-    if last.y < selector.board.Height() - 1 {
+    if selector.board.Have(x, last.y + 1) {
       n := selector.At(x, last.y + 1)
       result.neighborCells = append(result.neighborCells, n)
     }
