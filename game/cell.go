@@ -1,8 +1,8 @@
 package game
 
 type Cell struct {
+  Point
   stone Stone
-  point Point
 }
 
 func (cell *Cell) IsEmpty() bool {
@@ -12,7 +12,8 @@ func (cell *Cell) IsEmpty() bool {
 func (cell *Cell) Have(stone Stone) bool {
   return cell.stone == stone
 }
-
+/*
 func (cell *Cell) ToString() string {
   return cell.point.ToString()
 }
+*/

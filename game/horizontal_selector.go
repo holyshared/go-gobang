@@ -45,14 +45,14 @@ func (selector *HorizontalSelector) SelectByHorizontal(y int, stone Stone) *Reac
     }
     first := result.First()
 
-    if first.point.x > 0 {
-      p := selector.At(first.point.x - 1, y)
+    if first.x > 0 {
+      p := selector.At(first.x - 1, y)
       result.neighborCells = append(result.neighborCells, p)
     }
     last := result.Last()
 
-    if last.point.x < selector.board.Width() - 1 {
-      n := selector.At(last.point.x + 1, y)
+    if last.x < selector.board.Width() - 1 {
+      n := selector.At(last.x + 1, y)
       result.neighborCells = append(result.neighborCells, n)
     }
     break
