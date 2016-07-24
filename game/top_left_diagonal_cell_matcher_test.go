@@ -31,7 +31,7 @@ func TestTopLeftDiagonalSelector(t *testing.T) {
 
   board.Print()
 
-  selector := NewTopLeftDiagonalSelector(Black, 5)
+  selector := NewTopLeftDiagonalCellMatcher(Black, 5)
   result := selector.Matches(&board)
 
   if len(result.results) != 48 {
@@ -57,7 +57,7 @@ func TestTopLeftDiagonalSelectorScanCellGroup(t *testing.T) {
   sboard := NewBoard(10, 10)
   vboard := NewBoard(10, 10)
 
-  selector := NewTopLeftDiagonalSelector(Black, 5)
+  selector := NewTopLeftDiagonalCellMatcher(Black, 5)
   groups := selector.scanAllCellGroup(&sboard)
 
   if len(groups) != 11 {

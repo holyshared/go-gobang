@@ -2,10 +2,10 @@ package game
 
 func NewCellReachedMatcher(stone Stone, count int) CellReachedMatcher {
   selectors := make([]ReachedMatcher, 0)
-  selectors = append(selectors, NewVerticalSelector(stone, count))
-  selectors = append(selectors, NewHorizontalSelector(stone, count))
-  selectors = append(selectors, NewTopLeftDiagonalSelector(stone, count))
-  selectors = append(selectors, NewTopRightDiagonalSelector(stone, count))
+  selectors = append(selectors, NewVerticalCellMatcher(stone, count))
+  selectors = append(selectors, NewHorizontalCellMatcher(stone, count))
+  selectors = append(selectors, NewTopLeftDiagonalCellMatcher(stone, count))
+  selectors = append(selectors, NewTopRightDiagonalCellMatcher(stone, count))
 
   return CellReachedMatcher { selectors: selectors }
 }

@@ -4,21 +4,26 @@ import (
   "testing"
 )
 
-func TestSelectorRightFilled(t *testing.T) {
+func TestSelectorTopFilled(t *testing.T) {
   board := NewBoard(30, 30)
-  for y := 0; y <= board.Height() - 1; y++ {
-    for x := 25; x <= board.Width() - 1; x++ {
-      cell := board.Select(x, y)
-      Black.PutTo(cell)
-    }
-    for x := 19; x <= 23; x++ {
+
+  for y := 0; y <= 4; y++ {
+    for x := 0; x <= board.Width() - 1; x++ {
       cell := board.Select(x, y)
       Black.PutTo(cell)
     }
   }
+
+  for y := 6; y <= 10; y++ {
+    for x := 0; x <= board.Width() - 1; x++ {
+      cell := board.Select(x, y)
+      Black.PutTo(cell)
+    }
+  }
+
   board.Print()
 
-  selector := NewHorizontalSelector(Black, 5)
+  selector := NewVerticalCellMatcher(Black, 5)
   result := selector.Matches(&board)
 
   if len(result.results) != 60 {
@@ -26,21 +31,25 @@ func TestSelectorRightFilled(t *testing.T) {
   }
 }
 
-func TestSelectorLeftFilled(t *testing.T) {
+func TestSelectorBottomFilled(t *testing.T) {
   board := NewBoard(30, 30)
-  for y := 0; y <= board.Height() - 1; y++ {
-    for x := 0; x <= 4; x++ {
+
+  for y := 19; y <= 23; y++ {
+    for x := 0; x <= board.Width() - 1; x++ {
       cell := board.Select(x, y)
       Black.PutTo(cell)
     }
-    for x := 6; x <= 11; x++ {
+  }
+
+  for y := 25; y <= board.Height() - 1; y++ {
+    for x := 0; x <= board.Width() - 1; x++ {
       cell := board.Select(x, y)
       Black.PutTo(cell)
     }
   }
   board.Print()
 
-  selector := NewHorizontalSelector(Black, 5)
+  selector := NewVerticalCellMatcher(Black, 5)
   result := selector.Matches(&board)
 
   if len(result.results) != 60 {
