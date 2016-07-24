@@ -14,3 +14,15 @@ func (g *Game) CurrentBoard() *Board {
 func (g *Game) CurrentPlayer() Player {
   return g.currentPlayer
 }
+
+func (g *Game) ChangeToNextPlayer() {
+  var player Player
+
+  if (g.currentPlayer == g.npcPlayer) {
+    player = g.player
+  } else {
+    player = g.npcPlayer
+  }
+
+  g.currentPlayer = player
+}
