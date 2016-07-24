@@ -41,6 +41,27 @@ func (board *Board) Width() int {
   return board.width
 }
 
+func (board *Board) IsCellEmpty(x, y int) bool {
+  cell := board.Select(x, y)
+  return cell.IsEmpty()
+}
+
+func (board *Board) IsAllFilled() bool {
+  endX := board.Width() - 1
+  endY := board.Height() - 1
+
+  for x := 0; x <= endX; x++ {
+    for y := 0; y <= endY; y++ {
+      if !board.IsCellEmpty(x, y) {
+        continue
+      }
+      return false
+    }
+  }
+
+  return true
+}
+
 func (board *Board) Print() {
   cells := make([]string, 0)
 
