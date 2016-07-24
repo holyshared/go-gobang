@@ -2,61 +2,48 @@ package game
 
 type HorizontalSelector struct {
   count int
-  board *Board
+  stone Stone
 }
 
-func NewHorizontalSelector(board *Board, count int) HorizontalSelector {
-  return HorizontalSelector { count: count, board: board }
-}
-
-func (selector *HorizontalSelector) At(x, y int) *Cell {
-  return selector.board.Select(x, y)
-}
-
-func (selector *HorizontalSelector) Select(stone Stone) *MatchedResult {
+func (s *HorizontalSelector) Select(board *Board) *MatchedResult {
   result := MatchedResult {}
+  groups := s.scanXAxisCellGroup(board)
 
-  for y := 0; y <= selector.board.Height() - 1; y++ {
-    reachedResult := selector.SelectByHorizontal(y, stone)
+  reachedSelector := ReachedSelector {
+    stone: s.stone,
+    count: s.count,
+    board: board,
+    neighbor: NewHorizontalNeighborDistance(),
+  }
 
-    if reachedResult.IsEmpty() {
+  for _, group := range groups {
+    results := group.SelectReached(reachedSelector)
+
+    if len(results) <= 0 {
       continue
     }
-    result.results = append(result.results, reachedResult)
+    result.results = append(result.results, results...)
   }
 
   return &result
 }
 
-func (selector *HorizontalSelector) SelectByHorizontal(y int, stone Stone) *ReachedResult {
-  result := ReachedResult {}
 
-  for x := 0; x <= selector.board.Width() - 1; x++ {
-    cell := selector.At(x, y)
+func (s *HorizontalSelector) scanXAxisCellGroup(board *Board) []*CellGroup {
+  endY := board.Height() - 1
+  endX := board.Width() - 1
+  groups := make([]*CellGroup, 0)
 
-    if cell.Have(stone) == false {
-      result.cells = result.cells[0:0]
-      continue
+  for y := 0; y <= endY; y++ {
+    group := &CellGroup {}
+
+    for x := 0; x <= endX; x++ {
+      cell := board.Select(x, y)
+      group.cells = append(group.cells, cell)
     }
-    result.cells = append(result.cells, cell)
-
-    if (len(result.cells) < selector.count) {
-      continue
-    }
-    first := result.First()
-
-    if first.x > 0 {
-      p := selector.At(first.x - 1, y)
-      result.neighborCells = append(result.neighborCells, p)
-    }
-    last := result.Last()
-
-    if last.x < selector.board.Width() - 1 {
-      n := selector.At(last.x + 1, y)
-      result.neighborCells = append(result.neighborCells, n)
-    }
-    break
+    groups = append(groups, group)
+    group = &CellGroup {}
   }
 
-  return &result
+  return groups
 }

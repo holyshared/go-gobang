@@ -17,29 +17,33 @@ import (
  * | | | | |B|B|B|B|B|B|
  */
 func TestTopLeftDiagonalSelector(t *testing.T) {
-  board := NewBoard(10, 10)
+  board := NewBoard(30, 30)
 
-  for y := 0; y <= 5; y++ {
-    TopLeftYAxisFillBoard(&board, y)
+  for x := 0; x <= board.Width() - 5; x++ {
+    TopLeftFillBoard(&board, x, 0)
   }
-  for x := 1; x <= 5; x++ {
-    TopLeftXAxisFillBoard(&board, x)
+  for x := 6; x <= board.Width() - 5; x++ {
+    TopLeftFillBoard(&board, x, 6)
   }
+
+  TopLeftFillBoard(&board, 0, 1)
+  TopLeftFillBoard(&board, 6, 7)
+
   board.Print()
 
-  selector := NewTopLeftDiagonalSelector(&board, 5)
-  result := selector.Select(Black)
+  selector := NewTopLeftDiagonalSelector(Black, 5)
+  result := selector.Select(&board)
 
-  if len(result.results) != 11 {
-    t.Errorf("got %v\nwant %v", len(result.results), 11)
+  if len(result.results) != 48 {
+    t.Errorf("got %v\nwant %v", len(result.results), 48)
   }
 }
 
-func TopLeftYAxisFillBoard(board *Board, startY int) {
+func TopLeftFillBoard(board *Board, startX int, startY int) {
   y := startY
 
-  for x := 0; x <= board.Width() - startY; x++ {
-    if y > board.Height() - 1 {
+  for x := startX; x <= board.Width() - 1; x++ {
+    if y > startY + 4 {
       break
     }
     cell := board.Select(x, y)
@@ -48,15 +52,31 @@ func TopLeftYAxisFillBoard(board *Board, startY int) {
   }
 }
 
-func TopLeftXAxisFillBoard(board *Board, startX int) {
-  x := startX
+func TestTopLeftDiagonalSelectorScanCellGroup(t *testing.T) {
+  index := map[string]int{}
+  sboard := NewBoard(10, 10)
+  vboard := NewBoard(10, 10)
 
-  for y := 0; y <= board.Height() - startX; y++ {
-    if x > board.Width() - 1 {
-      break
-    }
-    cell := board.Select(x, y)
-    Black.PutTo(cell)
-    x++
+  selector := NewTopLeftDiagonalSelector(Black, 5)
+  groups := selector.scanAllCellGroup(&sboard)
+
+  if len(groups) != 11 {
+    t.Errorf("got %v\nwant %v", len(groups), 11)
   }
+
+  for _, group := range groups {
+    for _, v := range group.cells {
+      cell := vboard.Select(v.x, v.y)
+      Black.PutTo(cell)
+      index[cell.ToString()] += 1
+    }
+  }
+
+  for k, v := range index {
+    if v <= 1 {
+      continue
+    }
+    t.Errorf("cell is a duplicate %v", k)
+  }
+  vboard.Print()
 }
