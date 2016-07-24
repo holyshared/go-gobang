@@ -39,3 +39,15 @@ func (result *ReachedResult) Clear() {
   result.cells = result.cells[0:0]
   result.neighborCells = result.neighborCells[0:0]
 }
+
+func (result *ReachedResult) EmptyNeighborCells() []*Cell {
+  cells := make([]*Cell, 0)
+
+  for _, cell := range result.neighborCells {
+    if !cell.IsEmpty() {
+      continue
+    }
+    cells = append(cells, cell)
+  }
+  return cells
+}
