@@ -1,5 +1,9 @@
 package game
 
+func NewHorizontalCellMatcher(stone Stone, count int) *HorizontalCellMatcher {
+  return &HorizontalCellMatcher { count: count, stone: stone, }
+}
+
 type HorizontalCellMatcher struct {
   count int
   stone Stone

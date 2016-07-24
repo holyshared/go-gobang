@@ -1,5 +1,9 @@
 package game
 
+func NewVerticalCellMatcher(stone Stone, count int) *VerticalCellMatcher {
+  return &VerticalCellMatcher { count: count, stone: stone }
+}
+
 type VerticalCellMatcher struct {
   count int
   stone Stone

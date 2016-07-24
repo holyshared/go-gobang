@@ -12,6 +12,9 @@ package game
  * | | | | | | |B| | | |
  * | | | | | | | |B| | |
  */
+func NewTopLeftDiagonalCellMatcher(stone Stone, count int) *TopLeftDiagonalCellMatcher {
+  return &TopLeftDiagonalCellMatcher { count: count, stone: stone, }
+}
 
 type TopLeftDiagonalCellMatcher struct {
   count int
