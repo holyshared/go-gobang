@@ -19,7 +19,7 @@ func TestSelectorRightFilled(t *testing.T) {
   board.Print()
 
   selector := NewHorizontalSelector(Black, 5)
-  result := selector.Select(&board)
+  result := selector.Matches(&board)
 
   if len(result.results) != 60 {
     t.Errorf("got %v\nwant %v", len(result.results), 60)
@@ -41,7 +41,7 @@ func TestSelectorLeftFilled(t *testing.T) {
   board.Print()
 
   selector := NewHorizontalSelector(Black, 5)
-  result := selector.Select(&board)
+  result := selector.Matches(&board)
 
   if len(result.results) != 60 {
     t.Errorf("got %v\nwant %v", len(result.results), 60)

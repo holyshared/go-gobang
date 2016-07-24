@@ -32,7 +32,7 @@ func TestTopLeftDiagonalSelector(t *testing.T) {
   board.Print()
 
   selector := NewTopLeftDiagonalSelector(Black, 5)
-  result := selector.Select(&board)
+  result := selector.Matches(&board)
 
   if len(result.results) != 48 {
     t.Errorf("got %v\nwant %v", len(result.results), 48)

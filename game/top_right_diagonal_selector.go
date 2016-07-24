@@ -17,7 +17,7 @@ type TopRightDiagonalSelector struct {
   stone Stone
 }
 
-func (s *TopRightDiagonalSelector) Select(board *Board) *MatchedResult {
+func (s *TopRightDiagonalSelector) Matches(board *Board) *MatchedResult {
   result := &MatchedResult {}
   groups := s.scanAllCellGroup(board)
 

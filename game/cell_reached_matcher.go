@@ -14,11 +14,11 @@ type CellReachedMatcher struct {
   selectors []ReachedMatcher
 }
 
-func (s *CellReachedMatcher) Select(board *Board) *MatchedResult {
+func (s *CellReachedMatcher) Matches(board *Board) *MatchedResult {
   result := &MatchedResult {}
 
   for _, selector := range s.selectors {
-    result.Merge(selector.Select(board))
+    result.Merge(selector.Matches(board))
   }
 
   return result

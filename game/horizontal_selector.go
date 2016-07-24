@@ -5,7 +5,7 @@ type HorizontalSelector struct {
   stone Stone
 }
 
-func (s *HorizontalSelector) Select(board *Board) *MatchedResult {
+func (s *HorizontalSelector) Matches(board *Board) *MatchedResult {
   result := MatchedResult {}
   groups := s.scanXAxisCellGroup(board)
 

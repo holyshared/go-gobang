@@ -5,7 +5,7 @@ type VerticalSelector struct {
   stone Stone
 }
 
-func (s *VerticalSelector) Select(board *Board) *MatchedResult {
+func (s *VerticalSelector) Matches(board *Board) *MatchedResult {
   result := MatchedResult {}
   groups := s.scanYAxisCellGroup(board)
 
