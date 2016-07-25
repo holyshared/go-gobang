@@ -4,8 +4,16 @@ import (
   "strconv"
 )
 
+func NewPoint(x, y int) Point {
+  return Point {
+    x: x,
+    y: y,
+  }
+}
+
 type Point struct {
-  x, y int
+  x int `json:"x"`
+  y int `json:"y"`
 }
 
 func (point Point) ToString() string {
