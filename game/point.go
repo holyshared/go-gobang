@@ -16,6 +16,6 @@ type Point struct {
   Y int `json:"y"`
 }
 
-func (point Point) ToString() string {
+func (point Point) String() string {
   return strconv.Itoa(point.X) + ":" + strconv.Itoa(point.Y)
 }

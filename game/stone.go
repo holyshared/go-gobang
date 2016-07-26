@@ -15,7 +15,7 @@ func (stone Stone) PutTo(cell *Cell) {
   cell.stone = stone
 }
 
-func (stone Stone) ToString() string {
+func (stone Stone) String() string {
   if (stone == Black) {
     return "B"
   } else {

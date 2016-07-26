@@ -72,7 +72,7 @@ func (board *Board) Print() {
       if (cell.IsEmpty()) {
         cells = append(cells, " ")
       } else {
-        cells = append(cells, cell.stone.ToString())
+        cells = append(cells, cell.stone.String())
       }
     }
     fmt.Println("|" + strings.Join(cells, "|") + "|")
