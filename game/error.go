@@ -2,32 +2,32 @@ package game
 
 func NewCellNotFoundError(point Point) CellNotFoundError {
   return CellNotFoundError {
-    message: "You have specified a not exist cell",
-    point: point,
+    Message: "You have specified a not exist cell",
+    Point: point,
   }
 }
 
 func NewAlreadyPlacedError(point Point) AlreadyPlacedError {
   return AlreadyPlacedError {
-    message: "Already the stone is placed",
-    point: point,
+    Message: "Already the stone is placed",
+    Point: point,
   }
 }
 
 type CellNotFoundError struct {
-  message string `json:"message"`
-  point Point `json:"point"`
+  Message string `json:"message"`
+  Point Point `json:"point"`
 }
 
 func (c CellNotFoundError) Error() string {
-  return c.message
+  return c.Message
 }
 
 type AlreadyPlacedError struct {
-  message string `json:"message"`
-  point Point `json:"point"`
+  Message string `json:"message"`
+  Point Point `json:"point"`
 }
 
 func (c AlreadyPlacedError) Error() string {
-  return c.message
+  return c.Message
 }
