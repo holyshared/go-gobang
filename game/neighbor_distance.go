@@ -51,14 +51,14 @@ type NeighborDistance struct {
 
 func (n NeighborDistance) prevPoint(cell *Cell) Point {
   return Point {
-    x: cell.x + n.prev.x,
-    y: cell.y + n.prev.y,
+    X: cell.X + n.prev.x,
+    Y: cell.Y + n.prev.y,
   }
 }
 
 func (n NeighborDistance) nextPoint(cell *Cell) Point {
   return Point {
-    x: cell.x + n.next.x,
-    y: cell.y + n.next.y,
+    X: cell.X + n.next.x,
+    Y: cell.Y + n.next.y,
   }
 }

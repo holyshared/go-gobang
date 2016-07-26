@@ -12,7 +12,7 @@ func NewBoard(height, width int) Board {
   for i := range cells {
     y := (i / size.width)
     x := i - (y * size.width)
-    cells[i] = Cell { Point { x: x, y: y }, 0 }
+    cells[i] = Cell { Point { X: x, Y: y }, 0 }
   }
   return Board { size, cells }
 }

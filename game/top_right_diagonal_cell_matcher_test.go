@@ -66,7 +66,7 @@ func TestTopRightDiagonalSelectorScanCellGroup(t *testing.T) {
 
   for _, group := range groups {
     for _, v := range group.cells {
-      cell := vboard.Select(v.x, v.y)
+      cell := vboard.Select(v.X, v.Y)
       Black.PutTo(cell)
       index[cell.ToString()] += 1
     }

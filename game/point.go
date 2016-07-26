@@ -6,16 +6,16 @@ import (
 
 func NewPoint(x, y int) Point {
   return Point {
-    x: x,
-    y: y,
+    X: x,
+    Y: y,
   }
 }
 
 type Point struct {
-  x int `json:"x"`
-  y int `json:"y"`
+  X int `json:"x"`
+  Y int `json:"y"`
 }
 
 func (point Point) ToString() string {
-  return strconv.Itoa(point.x) + ":" + strconv.Itoa(point.y)
+  return strconv.Itoa(point.X) + ":" + strconv.Itoa(point.Y)
 }
