@@ -1,4 +1,4 @@
-package game
+package gobang
 
 type MatchedResult struct {
   results []*ReachedResult

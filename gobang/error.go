@@ -1,4 +1,4 @@
-package game
+package gobang
 
 func NewCellNotFoundError(point Point) CellNotFoundError {
   return CellNotFoundError {
