@@ -1,4 +1,4 @@
-package game
+package gobang
 
 type ReachedMatcher interface {
   Matches(board *Board) *MatchedResult

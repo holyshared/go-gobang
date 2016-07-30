@@ -1,23 +1,23 @@
-package game
+package gobang
 
-func NewVerticalCellMatcher(stone Stone, count int) *VerticalCellMatcher {
-  return &VerticalCellMatcher { count: count, stone: stone }
+func NewHorizontalCellMatcher(stone Stone, count int) *HorizontalCellMatcher {
+  return &HorizontalCellMatcher { count: count, stone: stone, }
 }
 
-type VerticalCellMatcher struct {
+type HorizontalCellMatcher struct {
   count int
   stone Stone
 }
 
-func (s *VerticalCellMatcher) Matches(board *Board) *MatchedResult {
+func (s *HorizontalCellMatcher) Matches(board *Board) *MatchedResult {
   result := MatchedResult {}
-  groups := s.scanYAxisCellGroup(board)
+  groups := s.scanXAxisCellGroup(board)
 
   reachedSelector := ReachedSelector {
     stone: s.stone,
     count: s.count,
     board: board,
-    neighbor: NewVerticalNeighborDistance(),
+    neighbor: NewHorizontalNeighborDistance(),
   }
 
   for _, group := range groups {
@@ -32,15 +32,16 @@ func (s *VerticalCellMatcher) Matches(board *Board) *MatchedResult {
   return &result
 }
 
-func (s *VerticalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
+
+func (s *HorizontalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGroup {
   endY := board.Height() - 1
   endX := board.Width() - 1
   groups := make([]*CellGroup, 0)
 
-  for x := 0; x <= endX; x++ {
+  for y := 0; y <= endY; y++ {
     group := &CellGroup {}
 
-    for y := 0; y <= endY; y++ {
+    for x := 0; x <= endX; x++ {
       cell := board.Select(x, y)
       group.cells = append(group.cells, cell)
     }

@@ -1,4 +1,4 @@
-package game
+package gobang
 
 func NewCellReachedMatcher(stone Stone, count int) CellReachedMatcher {
   selectors := make([]ReachedMatcher, 0)

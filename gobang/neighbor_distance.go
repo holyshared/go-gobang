@@ -1,4 +1,4 @@
-package game
+package gobang
 
 func NewTopRightNeighborDistance() NeighborDistance {
   prev := PointDistance { x: 1,  y: -1 }

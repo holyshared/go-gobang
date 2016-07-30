@@ -1,36 +1,37 @@
-package game
+package gobang
 
 import (
   "testing"
 )
 
 /**
- * | | | | |B|B|B|B|B|B|
- * | | | |B|B|B|B|B|B|B|
- * | | |B|B|B|B|B|B|B|B|
- * | |B|B|B|B|B|B|B|B|B|
- * |B|B|B|B|B|B|B|B|B|B|
- * |B|B|B|B|B|B|B|B|B|B|
- * |B|B|B|B|B|B|B|B|B| |
- * |B|B|B|B|B|B|B|B| | |
- * |B|B|B|B|B|B|B| | | |
  * |B|B|B|B|B|B| | | | |
+ * |B|B|B|B|B|B|B| | | |
+ * |B|B|B|B|B|B|B|B| | |
+ * |B|B|B|B|B|B|B|B|B| |
+ * |B|B|B|B|B|B|B|B|B|B|
+ * |B|B|B|B|B|B|B|B|B|B|
+ * | |B|B|B|B|B|B|B|B|B|
+ * | | |B|B|B|B|B|B|B|B|
+ * | | | |B|B|B|B|B|B|B|
+ * | | | | |B|B|B|B|B|B|
  */
-func TestTopRightDiagonalSelector(t *testing.T) {
+func TestTopLeftDiagonalSelector(t *testing.T) {
   board := NewBoard(30, 30)
 
-  for x := 29; x >= 4; x-- {
-    TopRightAxisFillBoard(&board, x, 0)
+  for x := 0; x <= board.Width() - 5; x++ {
+    TopLeftFillBoard(&board, x, 0)
   }
-  for x := 23; x >= 4; x-- {
-    TopRightAxisFillBoard(&board, x, 6)
+  for x := 6; x <= board.Width() - 5; x++ {
+    TopLeftFillBoard(&board, x, 6)
   }
-  TopRightAxisFillBoard(&board, 29, 1)
-  TopRightAxisFillBoard(&board, 23, 7)
+
+  TopLeftFillBoard(&board, 0, 1)
+  TopLeftFillBoard(&board, 6, 7)
 
   board.Print()
 
-  selector := NewTopRightDiagonalCellMatcher(Black, 5)
+  selector := NewTopLeftDiagonalCellMatcher(Black, 5)
   result := selector.Matches(&board)
 
   if len(result.results) != 48 {
@@ -38,10 +39,10 @@ func TestTopRightDiagonalSelector(t *testing.T) {
   }
 }
 
-func TopRightAxisFillBoard(board *Board, startX int, startY int) {
+func TopLeftFillBoard(board *Board, startX int, startY int) {
   y := startY
 
-  for x := startX; x >= 0; x-- {
+  for x := startX; x <= board.Width() - 1; x++ {
     if y > startY + 4 {
       break
     }
@@ -51,13 +52,12 @@ func TopRightAxisFillBoard(board *Board, startX int, startY int) {
   }
 }
 
-
-func TestTopRightDiagonalSelectorScanCellGroup(t *testing.T) {
+func TestTopLeftDiagonalSelectorScanCellGroup(t *testing.T) {
   index := map[string]int{}
   sboard := NewBoard(10, 10)
   vboard := NewBoard(10, 10)
 
-  selector := NewTopRightDiagonalCellMatcher(Black, 5)
+  selector := NewTopLeftDiagonalCellMatcher(Black, 5)
   groups := selector.scanAllCellGroup(&sboard)
 
   if len(groups) != 11 {
