@@ -5,15 +5,15 @@ type GamePlayer struct {
   stone Stone
 }
 
-func (p *GamePlayer) PutStone(x, y int) (GameResult, error) {
+func (p *GamePlayer) PutStone(x, y int) (PutStoneResult, error) {
   board := p.game.CurrentBoard()
 
   if !board.Have(x, y) {
-    return 0, NewCellNotFoundError(NewPoint(x, y))
+    return Failed, NewCellNotFoundError(NewPoint(x, y))
   }
 
   if !board.IsCellEmpty(x, y) {
-    return 0, NewAlreadyPlacedError(NewPoint(x, y))
+    return Failed, NewAlreadyPlacedError(NewPoint(x, y))
   }
 
   cell := board.Select(x, y)
@@ -23,12 +23,12 @@ func (p *GamePlayer) PutStone(x, y int) (GameResult, error) {
   result := matcher.Matches(board)
 
   if result.HasResult() {
-    return Win, nil
+    return Reached, nil
   }
 
   if board.IsAllFilled() {
-    return Draw, nil
+    return Filled, nil
   }
 
-  return Skip, nil
+  return Continue, nil
 }
