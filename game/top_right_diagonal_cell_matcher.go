@@ -12,12 +12,16 @@ package game
  * | |B| | | | | | | | |
  * |B| | | | | | | | | |
  */
-type TopRightDiagonalSelector struct {
+func NewTopRightDiagonalCellMatcher(stone Stone, count int) *TopRightDiagonalCellMatcher {
+  return &TopRightDiagonalCellMatcher { count: count, stone: stone, }
+}
+
+type TopRightDiagonalCellMatcher struct {
   count int
   stone Stone
 }
 
-func (s *TopRightDiagonalSelector) Select(board *Board) *MatchedResult {
+func (s *TopRightDiagonalCellMatcher) Matches(board *Board) *MatchedResult {
   result := &MatchedResult {}
   groups := s.scanAllCellGroup(board)
 
@@ -41,7 +45,7 @@ func (s *TopRightDiagonalSelector) Select(board *Board) *MatchedResult {
 }
 
 
-func (s *TopRightDiagonalSelector) scanAllCellGroup(board *Board) []*CellGroup {
+func (s *TopRightDiagonalCellMatcher) scanAllCellGroup(board *Board) []*CellGroup {
   groups := make([]*CellGroup, 0)
   groups = append(groups, s.scanXAxisCellGroup(board)...)
   groups = append(groups, s.scanYAxisCellGroup(board)...)
@@ -60,7 +64,7 @@ func (s *TopRightDiagonalSelector) scanAllCellGroup(board *Board) []*CellGroup {
  * |B|B| | | | | | | | |
  * |B| | | | | | | | | |
  */
-func (s *TopRightDiagonalSelector) scanXAxisCellGroup(board *Board) []*CellGroup {
+func (s *TopRightDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGroup {
   endX := board.Width() - 1
   groups := make([]*CellGroup, 0)
 
@@ -91,7 +95,7 @@ func (s *TopRightDiagonalSelector) scanXAxisCellGroup(board *Board) []*CellGroup
  * | | |B|B|B|B|B| | | |
  * | |B|B|B|B|B| | | | |
  */
-func (s *TopRightDiagonalSelector) scanYAxisCellGroup(board *Board) []*CellGroup {
+func (s *TopRightDiagonalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
   maxY := board.Height() - 1
   endY := board.Height() - s.count
   groups := make([]*CellGroup, 0)

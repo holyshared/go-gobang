@@ -12,7 +12,7 @@ func NewBoard(height, width int) Board {
   for i := range cells {
     y := (i / size.width)
     x := i - (y * size.width)
-    cells[i] = Cell { Point { x: x, y: y }, 0 }
+    cells[i] = Cell { Point { X: x, Y: y }, 0 }
   }
   return Board { size, cells }
 }
@@ -41,6 +41,27 @@ func (board *Board) Width() int {
   return board.width
 }
 
+func (board *Board) IsCellEmpty(x, y int) bool {
+  cell := board.Select(x, y)
+  return cell.IsEmpty()
+}
+
+func (board *Board) IsAllFilled() bool {
+  endX := board.Width() - 1
+  endY := board.Height() - 1
+
+  for x := 0; x <= endX; x++ {
+    for y := 0; y <= endY; y++ {
+      if !board.IsCellEmpty(x, y) {
+        continue
+      }
+      return false
+    }
+  }
+
+  return true
+}
+
 func (board *Board) Print() {
   cells := make([]string, 0)
 
@@ -51,7 +72,7 @@ func (board *Board) Print() {
       if (cell.IsEmpty()) {
         cells = append(cells, " ")
       } else {
-        cells = append(cells, cell.stone.ToString())
+        cells = append(cells, cell.stone.String())
       }
     }
     fmt.Println("|" + strings.Join(cells, "|") + "|")

@@ -1,11 +1,15 @@
 package game
 
-type VerticalSelector struct {
+func NewVerticalCellMatcher(stone Stone, count int) *VerticalCellMatcher {
+  return &VerticalCellMatcher { count: count, stone: stone }
+}
+
+type VerticalCellMatcher struct {
   count int
   stone Stone
 }
 
-func (s *VerticalSelector) Select(board *Board) *MatchedResult {
+func (s *VerticalCellMatcher) Matches(board *Board) *MatchedResult {
   result := MatchedResult {}
   groups := s.scanYAxisCellGroup(board)
 
@@ -28,7 +32,7 @@ func (s *VerticalSelector) Select(board *Board) *MatchedResult {
   return &result
 }
 
-func (s *VerticalSelector) scanYAxisCellGroup(board *Board) []*CellGroup {
+func (s *VerticalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
   endY := board.Height() - 1
   endX := board.Width() - 1
   groups := make([]*CellGroup, 0)

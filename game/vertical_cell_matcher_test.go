@@ -23,8 +23,8 @@ func TestSelectorTopFilled(t *testing.T) {
 
   board.Print()
 
-  selector := NewVerticalSelector(Black, 5)
-  result := selector.Select(&board)
+  selector := NewVerticalCellMatcher(Black, 5)
+  result := selector.Matches(&board)
 
   if len(result.results) != 60 {
     t.Errorf("got %v\nwant %v", len(result.results), 60)
@@ -49,8 +49,8 @@ func TestSelectorBottomFilled(t *testing.T) {
   }
   board.Print()
 
-  selector := NewVerticalSelector(Black, 5)
-  result := selector.Select(&board)
+  selector := NewVerticalCellMatcher(Black, 5)
+  result := selector.Matches(&board)
 
   if len(result.results) != 60 {
     t.Errorf("got %v\nwant %v", len(result.results), 60)

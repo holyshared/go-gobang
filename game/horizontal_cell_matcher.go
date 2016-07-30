@@ -1,11 +1,15 @@
 package game
 
-type HorizontalSelector struct {
+func NewHorizontalCellMatcher(stone Stone, count int) *HorizontalCellMatcher {
+  return &HorizontalCellMatcher { count: count, stone: stone, }
+}
+
+type HorizontalCellMatcher struct {
   count int
   stone Stone
 }
 
-func (s *HorizontalSelector) Select(board *Board) *MatchedResult {
+func (s *HorizontalCellMatcher) Matches(board *Board) *MatchedResult {
   result := MatchedResult {}
   groups := s.scanXAxisCellGroup(board)
 
@@ -29,7 +33,7 @@ func (s *HorizontalSelector) Select(board *Board) *MatchedResult {
 }
 
 
-func (s *HorizontalSelector) scanXAxisCellGroup(board *Board) []*CellGroup {
+func (s *HorizontalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGroup {
   endY := board.Height() - 1
   endX := board.Width() - 1
   groups := make([]*CellGroup, 0)

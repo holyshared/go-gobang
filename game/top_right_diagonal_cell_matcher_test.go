@@ -30,8 +30,8 @@ func TestTopRightDiagonalSelector(t *testing.T) {
 
   board.Print()
 
-  selector := NewTopRightDiagonalSelector(Black, 5)
-  result := selector.Select(&board)
+  selector := NewTopRightDiagonalCellMatcher(Black, 5)
+  result := selector.Matches(&board)
 
   if len(result.results) != 48 {
     t.Errorf("got %v\nwant %v", len(result.results), 48)
@@ -57,7 +57,7 @@ func TestTopRightDiagonalSelectorScanCellGroup(t *testing.T) {
   sboard := NewBoard(10, 10)
   vboard := NewBoard(10, 10)
 
-  selector := NewTopRightDiagonalSelector(Black, 5)
+  selector := NewTopRightDiagonalCellMatcher(Black, 5)
   groups := selector.scanAllCellGroup(&sboard)
 
   if len(groups) != 11 {
@@ -66,9 +66,9 @@ func TestTopRightDiagonalSelectorScanCellGroup(t *testing.T) {
 
   for _, group := range groups {
     for _, v := range group.cells {
-      cell := vboard.Select(v.x, v.y)
+      cell := vboard.Select(v.X, v.Y)
       Black.PutTo(cell)
-      index[cell.ToString()] += 1
+      index[cell.String()] += 1
     }
   }
 
