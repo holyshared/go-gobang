@@ -1,9 +1,5 @@
 package game
 
-import (
-  "errors"
-)
-
 type GamePlayer struct {
   game *Game
   stone Stone
@@ -13,11 +9,11 @@ func (p *GamePlayer) PutStone(x, y int) (GameResult, error) {
   board := p.game.CurrentBoard()
 
   if !board.Have(x, y) {
-    return 0, errors.New("You have specified a not exist cell")
+    return 0, NewCellNotFoundError(NewPoint(x, y))
   }
 
   if !board.IsCellEmpty(x, y) {
-    return 0, errors.New("Already the stone is placed")
+    return 0, NewAlreadyPlacedError(NewPoint(x, y))
   }
 
   cell := board.Select(x, y)

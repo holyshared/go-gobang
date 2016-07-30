@@ -4,10 +4,18 @@ import (
   "strconv"
 )
 
-type Point struct {
-  x, y int
+func NewPoint(x, y int) Point {
+  return Point {
+    X: x,
+    Y: y,
+  }
 }
 
-func (point Point) ToString() string {
-  return strconv.Itoa(point.x) + ":" + strconv.Itoa(point.y)
+type Point struct {
+  X int `json:"x"`
+  Y int `json:"y"`
+}
+
+func (point Point) String() string {
+  return strconv.Itoa(point.X) + ":" + strconv.Itoa(point.Y)
 }
