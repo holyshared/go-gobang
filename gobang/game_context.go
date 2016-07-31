@@ -1,5 +1,17 @@
 package gobang
 
+func NewGameContext(rule *GameRule) *GameContext {
+  board := NewBoard(rule.BoardSize())
+
+  return &GameContext {
+    rule,
+    board,
+    nil,
+    nil,
+    nil,
+  }
+}
+
 type GameContext struct {
   *GameRule
   board *Board

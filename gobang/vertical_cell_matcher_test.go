@@ -5,7 +5,7 @@ import (
 )
 
 func TestSelectorTopFilled(t *testing.T) {
-  board := NewBoard(30, 30)
+  board := NewBoard(NewSize(30, 30))
 
   for y := 0; y <= 4; y++ {
     for x := 0; x <= board.Width() - 1; x++ {
@@ -24,7 +24,7 @@ func TestSelectorTopFilled(t *testing.T) {
   board.Print()
 
   selector := NewVerticalCellMatcher(Black, 5)
-  result := selector.Matches(&board)
+  result := selector.Matches(board)
 
   if len(result.results) != 60 {
     t.Errorf("got %v\nwant %v", len(result.results), 60)
@@ -32,7 +32,7 @@ func TestSelectorTopFilled(t *testing.T) {
 }
 
 func TestSelectorBottomFilled(t *testing.T) {
-  board := NewBoard(30, 30)
+  board := NewBoard(NewSize(30, 30))
 
   for y := 19; y <= 23; y++ {
     for x := 0; x <= board.Width() - 1; x++ {
@@ -50,7 +50,7 @@ func TestSelectorBottomFilled(t *testing.T) {
   board.Print()
 
   selector := NewVerticalCellMatcher(Black, 5)
-  result := selector.Matches(&board)
+  result := selector.Matches(board)
 
   if len(result.results) != 60 {
     t.Errorf("got %v\nwant %v", len(result.results), 60)

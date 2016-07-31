@@ -5,8 +5,7 @@ import (
   "strings"
 )
 
-func NewBoard(height, width int) Board {
-  size := NewSize(height, width)
+func NewBoard(size *Size) *Board {
   cells := make([]Cell, size.CellCount())
 
   for i := range cells {
@@ -14,7 +13,7 @@ func NewBoard(height, width int) Board {
     x := i - (y * size.width)
     cells[i] = Cell { Point { X: x, Y: y }, 0 }
   }
-  return Board { size, cells }
+  return &Board { size, cells }
 }
 
 type Board struct {

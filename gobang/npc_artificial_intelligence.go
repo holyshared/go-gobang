@@ -1,9 +1,7 @@
 package gobang
 
-func NewNpcArtificialIntelligence(game *GameContext) *NpcArtificialIntelligence {
-  return &NpcArtificialIntelligence {
-    game: game,
-  }
+func NewNpcArtificialIntelligence() *NpcArtificialIntelligence {
+  return &NpcArtificialIntelligence {}
 }
 
 type GobangArtificialIntelligence interface {

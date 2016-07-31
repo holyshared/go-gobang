@@ -1,5 +1,11 @@
 package gobang
 
+func NewGobangPlayer(stone Stone) *GobangPlayer {
+  return &GobangPlayer {
+    stone: stone,
+  }
+}
+
 type Player interface {
   PutStone(x, y int) (PutStoneResult, error)
 }
@@ -7,6 +13,10 @@ type Player interface {
 type GobangPlayer struct {
   stone Stone
   game *GameContext
+}
+
+func (player *GobangPlayer) JoinTo(game *GameContext) {
+  player.game = game
 }
 
 func (player *GobangPlayer) PutStone(x, y int) (PutStoneResult, error) {

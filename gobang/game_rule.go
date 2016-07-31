@@ -12,6 +12,10 @@ type GameRule struct {
   reachedStoneCount int
 }
 
+func (rule *GameRule) BoardSize() *Size {
+  return rule.Size
+}
+
 func (rule *GameRule) ReachedStoneCount() int {
   return rule.reachedStoneCount
 }
