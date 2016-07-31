@@ -10,7 +10,7 @@ type NpcArtificialIntelligence struct {
   game *Game
 }
 
-func (ai *NpcArtificialIntelligence) SelectCell() *Cell {
+func (ai *NpcArtificialIntelligence) SelectTargetCell() *Cell {
   cell := ai.selectGamePlayerReachedCell()
 
   if cell != nil {
