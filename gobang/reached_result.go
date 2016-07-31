@@ -40,6 +40,11 @@ func (result *ReachedResult) Clear() {
   result.neighborCells = result.neighborCells[0:0]
 }
 
+func (result *ReachedResult) HasEmptyNeighborCell() bool {
+  cells := result.EmptyNeighborCells()
+  return len(cells) > 0
+}
+
 func (result *ReachedResult) EmptyNeighborCells() []*Cell {
   cells := make([]*Cell, 0)
 

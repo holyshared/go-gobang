@@ -3,8 +3,8 @@ package gobang
 type Game struct {
   board *Board
   currentPlayer Player
-  player Player
-  npcPlayer Player
+  player *GamePlayer
+  npcPlayer *NpcPlayer
 }
 
 func (g *Game) CurrentBoard() *Board {
@@ -13,6 +13,14 @@ func (g *Game) CurrentBoard() *Board {
 
 func (g *Game) CurrentPlayer() Player {
   return g.currentPlayer
+}
+
+func (g *Game) GamePlayer() *GamePlayer {
+  return g.player
+}
+
+func (g *Game) NpcPlayer() *NpcPlayer {
+  return g.npcPlayer
 }
 
 func (g *Game) ChangeToNextPlayer() {
