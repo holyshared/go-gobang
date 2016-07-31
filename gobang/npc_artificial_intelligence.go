@@ -24,7 +24,7 @@ func (ai *NpcArtificialIntelligence) selectGamePlayerReachedCell() *Cell {
   board := ai.game.CurrentBoard()
   gamePlayer := ai.game.GamePlayer()
 
-  matcher := NewCellReachedMatcher(gamePlayer.stone, 4)
+  matcher := NewCellReachedMatcher(gamePlayer.stone, ai.game.ReachedStoneCount() - 1)
   result := matcher.Matches(board)
 
   if !result.HasEmptyNeighborCell() {
@@ -39,7 +39,7 @@ func (ai *NpcArtificialIntelligence) selectNpcPlayerReachedCell() *Cell {
   board := ai.game.CurrentBoard()
   npcPlayer := ai.game.NpcPlayer()
 
-  for i := 4; i <= 0; i-- {
+  for i := ai.game.ReachedStoneCount() - 1; i <= 0; i-- {
     matcher := NewCellReachedMatcher(npcPlayer.stone, i)
     result = matcher.Matches(board)
 

@@ -1,6 +1,7 @@
 package gobang
 
 type GameContext struct {
+  *GameRule
   board *Board
   currentPlayer Player
   player *GamePlayer

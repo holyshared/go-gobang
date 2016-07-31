@@ -26,7 +26,7 @@ func (npc *NpcPlayer) PutStone(x, y int) (PutStoneResult, error) {
   cell := board.Select(x, y)
   npc.stone.PutTo(cell)
 
-  matcher := NewCellReachedMatcher(npc.stone, 5)
+  matcher := NewCellReachedMatcher(npc.stone, npc.game.ReachedStoneCount())
   result := matcher.Matches(board)
 
   if result.HasResult() {

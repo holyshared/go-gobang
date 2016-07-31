@@ -19,7 +19,7 @@ func (p *GamePlayer) PutStone(x, y int) (PutStoneResult, error) {
   cell := board.Select(x, y)
   p.stone.PutTo(cell)
 
-  matcher := NewCellReachedMatcher(p.stone, 5)
+  matcher := NewCellReachedMatcher(p.stone, p.game.ReachedStoneCount())
   result := matcher.Matches(board)
 
   if result.HasResult() {
