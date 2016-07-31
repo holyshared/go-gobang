@@ -29,9 +29,7 @@ func (player *GobangPlayer) PutStone(x, y int) (PutStoneResult, error) {
   if !board.IsCellEmpty(x, y) {
     return Failed, NewAlreadyPlacedError(NewPoint(x, y))
   }
-
-  cell := board.Select(x, y)
-  player.stone.PutTo(cell)
+  player.putStoneTo(x, y)
 
   matcher := NewCellReachedMatcher(player.stone, player.game.ReachedStoneCount())
   result := matcher.Matches(board)
@@ -45,4 +43,11 @@ func (player *GobangPlayer) PutStone(x, y int) (PutStoneResult, error) {
   }
 
   return Continue, nil
+}
+
+func (player *GobangPlayer) putStoneTo(x, y int) {
+  board := player.game.CurrentBoard()
+
+  cell := board.Select(x, y)
+  player.stone.PutTo(cell)
 }
