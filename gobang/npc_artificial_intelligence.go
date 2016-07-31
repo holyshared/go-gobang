@@ -6,6 +6,10 @@ func NewNpcArtificialIntelligence(game *GameContext) *NpcArtificialIntelligence 
   }
 }
 
+type GobangArtificialIntelligence interface {
+  SelectTargetCell() *Cell
+}
+
 type NpcArtificialIntelligence struct {
   game *GameContext
 }
