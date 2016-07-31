@@ -5,11 +5,11 @@ type NpcPlayer struct {
   stone Stone
 }
 
-func (npc *NpcPlayer) SelectCell() *Cell {
+func (npc *NpcPlayer) SelectTargetCell() *Cell {
   ai := NpcArtificialIntelligence {
     game: npc.game,
   }
-  return ai.SelectCell()
+  return ai.SelectTargetCell()
 }
 
 func (npc *NpcPlayer) PutStone(x, y int) (PutStoneResult, error) {
