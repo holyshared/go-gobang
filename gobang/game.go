@@ -4,7 +4,7 @@ type Game struct {
   board *Board
   currentPlayer Player
   player *GamePlayer
-  npcPlayer Player
+  npcPlayer *NpcPlayer
 }
 
 func (g *Game) CurrentBoard() *Board {
@@ -19,7 +19,7 @@ func (g *Game) GamePlayer() *GamePlayer {
   return g.player
 }
 
-func (g *Game) NpcPlayer() Player {
+func (g *Game) NpcPlayer() *NpcPlayer {
   return g.npcPlayer
 }
 

@@ -8,7 +8,6 @@ type NpcPlayer struct {
 func (npc *NpcPlayer) SelectCell() *Cell {
   ai := NpcArtificialIntelligence {
     game: npc.game,
-    stone: npc.stone,
   }
   return ai.SelectCell()
 }

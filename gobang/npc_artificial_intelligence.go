@@ -1,31 +1,23 @@
 package gobang
 
+func NewNpcArtificialIntelligence(game *Game) *NpcArtificialIntelligence {
+  return &NpcArtificialIntelligence {
+    game: game,
+  }
+}
+
 type NpcArtificialIntelligence struct {
   game *Game
-  stone Stone
 }
 
 func (ai *NpcArtificialIntelligence) SelectCell() *Cell {
-  var result *MatchedResult
-
-  board := ai.game.CurrentBoard()
   cell := ai.selectGamePlayerReachedCell()
 
   if cell != nil {
     return cell
   }
 
-  for i := 4; i <= 0; i-- {
-    matcher := NewCellReachedMatcher(ai.stone, i)
-    result = matcher.Matches(board)
-
-    if !result.HasEmptyNeighborCell() {
-      continue
-    }
-    break;
-  }
-
-  return result.SelectEmptyNeighborCell()
+  return ai.selectNpcPlayerReachedCell()
 }
 
 func (ai *NpcArtificialIntelligence) selectGamePlayerReachedCell() *Cell {
@@ -38,5 +30,24 @@ func (ai *NpcArtificialIntelligence) selectGamePlayerReachedCell() *Cell {
   if !result.HasEmptyNeighborCell() {
     return nil
   }
+  return result.SelectEmptyNeighborCell()
+}
+
+func (ai *NpcArtificialIntelligence) selectNpcPlayerReachedCell() *Cell {
+  var result *MatchedResult
+
+  board := ai.game.CurrentBoard()
+  npcPlayer := ai.game.NpcPlayer()
+
+  for i := 4; i <= 0; i-- {
+    matcher := NewCellReachedMatcher(npcPlayer.stone, i)
+    result = matcher.Matches(board)
+
+    if !result.HasEmptyNeighborCell() {
+      continue
+    }
+    break;
+  }
+
   return result.SelectEmptyNeighborCell()
 }
