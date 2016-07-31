@@ -1,7 +1,7 @@
 package gobang
 
 type NpcPlayer struct {
-  game *Game
+  game *GameContext
   stone Stone
 }
 

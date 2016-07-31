@@ -1,29 +1,29 @@
 package gobang
 
-type Game struct {
+type GameContext struct {
   board *Board
   currentPlayer Player
   player *GamePlayer
   npcPlayer *NpcPlayer
 }
 
-func (g *Game) CurrentBoard() *Board {
+func (g *GameContext) CurrentBoard() *Board {
   return g.board
 }
 
-func (g *Game) CurrentPlayer() Player {
+func (g *GameContext) CurrentPlayer() Player {
   return g.currentPlayer
 }
 
-func (g *Game) GamePlayer() *GamePlayer {
+func (g *GameContext) GamePlayer() *GamePlayer {
   return g.player
 }
 
-func (g *Game) NpcPlayer() *NpcPlayer {
+func (g *GameContext) NpcPlayer() *NpcPlayer {
   return g.npcPlayer
 }
 
-func (g *Game) ChangeToNextPlayer() {
+func (g *GameContext) ChangeToNextPlayer() {
   var player Player
 
   if (g.currentPlayer == g.npcPlayer) {

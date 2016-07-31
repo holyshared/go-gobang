@@ -1,13 +1,13 @@
 package gobang
 
-func NewNpcArtificialIntelligence(game *Game) *NpcArtificialIntelligence {
+func NewNpcArtificialIntelligence(game *GameContext) *NpcArtificialIntelligence {
   return &NpcArtificialIntelligence {
     game: game,
   }
 }
 
 type NpcArtificialIntelligence struct {
-  game *Game
+  game *GameContext
 }
 
 func (ai *NpcArtificialIntelligence) SelectTargetCell() *Cell {
