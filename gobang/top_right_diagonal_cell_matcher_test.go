@@ -17,21 +17,21 @@ import (
  * |B|B|B|B|B|B| | | | |
  */
 func TestTopRightDiagonalSelector(t *testing.T) {
-  board := NewBoard(30, 30)
+  board := NewBoard(NewSize(30, 30))
 
   for x := 29; x >= 4; x-- {
-    TopRightAxisFillBoard(&board, x, 0)
+    TopRightAxisFillBoard(board, x, 0)
   }
   for x := 23; x >= 4; x-- {
-    TopRightAxisFillBoard(&board, x, 6)
+    TopRightAxisFillBoard(board, x, 6)
   }
-  TopRightAxisFillBoard(&board, 29, 1)
-  TopRightAxisFillBoard(&board, 23, 7)
+  TopRightAxisFillBoard(board, 29, 1)
+  TopRightAxisFillBoard(board, 23, 7)
 
   board.Print()
 
   selector := NewTopRightDiagonalCellMatcher(Black, 5)
-  result := selector.Matches(&board)
+  result := selector.Matches(board)
 
   if len(result.results) != 48 {
     t.Errorf("got %v\nwant %v", len(result.results), 48)
@@ -54,11 +54,11 @@ func TopRightAxisFillBoard(board *Board, startX int, startY int) {
 
 func TestTopRightDiagonalSelectorScanCellGroup(t *testing.T) {
   index := map[string]int{}
-  sboard := NewBoard(10, 10)
-  vboard := NewBoard(10, 10)
+  sboard := NewBoard(NewSize(10, 10))
+  vboard := NewBoard(NewSize(10, 10))
 
   selector := NewTopRightDiagonalCellMatcher(Black, 5)
-  groups := selector.scanAllCellGroup(&sboard)
+  groups := selector.scanAllCellGroup(sboard)
 
   if len(groups) != 11 {
     t.Errorf("got %v\nwant %v", len(groups), 11)
