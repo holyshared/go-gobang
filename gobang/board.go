@@ -66,11 +66,15 @@ func (board *Board) IsAllFilled() bool {
 }
 
 func (board *Board) Print() {
+  var point Point
   cells := make([]string, 0)
 
   for y := 0; y <= board.Height() - 1; y++ {
     for x := 0; x <= board.Width() - 1; x++ {
-      cell := board.Select(NewPoint(x, y))
+      point.X = x
+      point.Y = y
+
+      cell := board.Select(point)
 
       if (cell.IsEmpty()) {
         cells = append(cells, " ")
