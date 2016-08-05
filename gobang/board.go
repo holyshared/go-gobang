@@ -40,18 +40,22 @@ func (board *Board) Width() int {
   return board.width
 }
 
-func (board *Board) IsCellEmpty(x, y int) bool {
-  cell := board.Select(NewPoint(x, y))
+func (board *Board) IsCellEmpty(point Point) bool {
+  cell := board.Select(point)
   return cell.IsEmpty()
 }
 
 func (board *Board) IsAllFilled() bool {
+  var point Point
   endX := board.Width() - 1
   endY := board.Height() - 1
 
   for x := 0; x <= endX; x++ {
     for y := 0; y <= endY; y++ {
-      if !board.IsCellEmpty(x, y) {
+      point.X = x
+      point.Y = y
+
+      if !board.IsCellEmpty(point) {
         continue
       }
       return false

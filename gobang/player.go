@@ -27,7 +27,7 @@ func (player *GobangPlayer) PutStone(x, y int) (PutStoneResult, error) {
     return Failed, NewCellNotFoundError(point)
   }
 
-  if !board.IsCellEmpty(x, y) {
+  if !board.IsCellEmpty(point) {
     return Failed, NewAlreadyPlacedError(point)
   }
   player.putStoneTo(x, y)
