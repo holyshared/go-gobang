@@ -7,7 +7,7 @@ func NewGobangPlayer(stone Stone) *GobangPlayer {
 }
 
 type Player interface {
-  PutStone(x, y int) (PutStoneResult, error)
+  PutStone(point Point) (PutStoneResult, error)
 }
 
 type GobangPlayer struct {
@@ -19,8 +19,7 @@ func (player *GobangPlayer) JoinTo(game *GameContext) {
   player.game = game
 }
 
-func (player *GobangPlayer) PutStone(x, y int) (PutStoneResult, error) {
-  point := NewPoint(x, y)
+func (player *GobangPlayer) PutStone(point Point) (PutStoneResult, error) {
   board := player.game.CurrentBoard()
 
   if !board.Have(point) {
@@ -30,7 +29,7 @@ func (player *GobangPlayer) PutStone(x, y int) (PutStoneResult, error) {
   if !board.IsCellEmpty(point) {
     return Failed, NewAlreadyPlacedError(point)
   }
-  player.putStoneTo(x, y)
+  player.putStoneTo(point)
 
   matcher := NewCellReachedMatcher(player.stone, player.game.ReachedStoneCount())
   result := matcher.Matches(board)
@@ -46,9 +45,9 @@ func (player *GobangPlayer) PutStone(x, y int) (PutStoneResult, error) {
   return Continue, nil
 }
 
-func (player *GobangPlayer) putStoneTo(x, y int) {
+func (player *GobangPlayer) putStoneTo(point Point) {
   board := player.game.CurrentBoard()
 
-  cell := board.Select(NewPoint(x, y))
+  cell := board.Select(point)
   player.stone.PutTo(cell)
 }
