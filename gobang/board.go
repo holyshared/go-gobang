@@ -26,9 +26,9 @@ func (board *Board) Select(point Point) *Cell {
   return &board.cells[index]
 }
 
-func (board *Board) Have(x, y int) bool {
-  isXRange := x >= 0 && x <= board.width - 1
-  isYRange := y >= 0 && y <= board.height - 1
+func (board *Board) Have(point Point) bool {
+  isXRange := point.X >= 0 && point.X <= board.width - 1
+  isYRange := point.Y >= 0 && point.Y <= board.height - 1
   return isXRange && isYRange
 }
 

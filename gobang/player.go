@@ -20,14 +20,15 @@ func (player *GobangPlayer) JoinTo(game *GameContext) {
 }
 
 func (player *GobangPlayer) PutStone(x, y int) (PutStoneResult, error) {
+  point := NewPoint(x, y)
   board := player.game.CurrentBoard()
 
-  if !board.Have(x, y) {
-    return Failed, NewCellNotFoundError(NewPoint(x, y))
+  if !board.Have(point) {
+    return Failed, NewCellNotFoundError(point)
   }
 
   if !board.IsCellEmpty(x, y) {
-    return Failed, NewAlreadyPlacedError(NewPoint(x, y))
+    return Failed, NewAlreadyPlacedError(point)
   }
   player.putStoneTo(x, y)
 
