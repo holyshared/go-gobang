@@ -1,13 +1,13 @@
 package gobang
 
-func NewCellNotFoundError(point Point) CellNotFoundError {
+func NewCellNotFoundError(point *Point) CellNotFoundError {
   return CellNotFoundError {
     Message: "You have specified a not exist cell",
     Point: point,
   }
 }
 
-func NewAlreadyPlacedError(point Point) AlreadyPlacedError {
+func NewAlreadyPlacedError(point *Point) AlreadyPlacedError {
   return AlreadyPlacedError {
     Message: "Already the stone is placed",
     Point: point,
@@ -16,7 +16,7 @@ func NewAlreadyPlacedError(point Point) AlreadyPlacedError {
 
 type CellNotFoundError struct {
   Message string `json:"message"`
-  Point Point `json:"point"`
+  Point *Point `json:"point"`
 }
 
 func (c CellNotFoundError) Error() string {
@@ -25,7 +25,7 @@ func (c CellNotFoundError) Error() string {
 
 type AlreadyPlacedError struct {
   Message string `json:"message"`
-  Point Point `json:"point"`
+  Point *Point `json:"point"`
 }
 
 func (c AlreadyPlacedError) Error() string {

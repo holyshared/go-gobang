@@ -34,6 +34,7 @@ func (s *HorizontalCellMatcher) Matches(board *Board) *MatchedResult {
 
 
 func (s *HorizontalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGroup {
+  point := &Point {}
   endY := board.Height() - 1
   endX := board.Width() - 1
   groups := make([]*CellGroup, 0)
@@ -42,7 +43,9 @@ func (s *HorizontalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGroup {
     group := &CellGroup {}
 
     for x := 0; x <= endX; x++ {
-      cell := board.Select(NewPoint(x, y))
+      point.X = x
+      point.Y = y
+      cell := board.Select(point)
       group.cells = append(group.cells, cell)
     }
     groups = append(groups, group)

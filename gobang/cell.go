@@ -1,7 +1,7 @@
 package gobang
 
 type Cell struct {
-  Point
+  *Point
   stone Stone
 }
 

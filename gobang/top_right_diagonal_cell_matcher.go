@@ -65,6 +65,7 @@ func (s *TopRightDiagonalCellMatcher) scanAllCellGroup(board *Board) []*CellGrou
  * |B| | | | | | | | | |
  */
 func (s *TopRightDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGroup {
+  point := &Point {}
   endX := board.Width() - 1
   groups := make([]*CellGroup, 0)
 
@@ -72,7 +73,9 @@ func (s *TopRightDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGr
     y := 0
     group := &CellGroup {}
     for x := startX; x >= 0; x-- {
-      cell := board.Select(NewPoint(x, y))
+      point.X = x
+      point.Y = y
+      cell := board.Select(point)
       group.cells = append(group.cells, cell)
       y++
     }
@@ -96,6 +99,7 @@ func (s *TopRightDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGr
  * | |B|B|B|B|B| | | | |
  */
 func (s *TopRightDiagonalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
+  point := &Point {}
   maxY := board.Height() - 1
   endY := board.Height() - s.count
   groups := make([]*CellGroup, 0)
@@ -105,7 +109,9 @@ func (s *TopRightDiagonalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGr
     group := &CellGroup {}
 
     for y := startY; y <= maxY; y++ {
-      cell := board.Select(NewPoint(x, y))
+      point.X = x
+      point.Y = y
+      cell := board.Select(point)
       group.cells = append(group.cells, cell)
       x--
     }

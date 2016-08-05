@@ -33,6 +33,7 @@ func (s *VerticalCellMatcher) Matches(board *Board) *MatchedResult {
 }
 
 func (s *VerticalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
+  point := &Point {}
   endY := board.Height() - 1
   endX := board.Width() - 1
   groups := make([]*CellGroup, 0)
@@ -41,7 +42,9 @@ func (s *VerticalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
     group := &CellGroup {}
 
     for y := 0; y <= endY; y++ {
-      cell := board.Select(NewPoint(x, y))
+      point.X = x
+      point.Y = y
+      cell := board.Select(point)
       group.cells = append(group.cells, cell)
     }
     groups = append(groups, group)
