@@ -42,7 +42,7 @@ func (s *HorizontalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGroup {
     group := &CellGroup {}
 
     for x := 0; x <= endX; x++ {
-      cell := board.Select(x, y)
+      cell := board.Select(NewPoint(x, y))
       group.cells = append(group.cells, cell)
     }
     groups = append(groups, group)

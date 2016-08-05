@@ -21,8 +21,8 @@ type Board struct {
   cells []Cell
 }
 
-func (board *Board) Select(x, y int) *Cell {
-  index := (y * board.width) + x
+func (board *Board) Select(point Point) *Cell {
+  index := (point.Y * board.width) + point.X
   return &board.cells[index]
 }
 
@@ -41,7 +41,7 @@ func (board *Board) Width() int {
 }
 
 func (board *Board) IsCellEmpty(x, y int) bool {
-  cell := board.Select(x, y)
+  cell := board.Select(NewPoint(x, y))
   return cell.IsEmpty()
 }
 
@@ -66,7 +66,7 @@ func (board *Board) Print() {
 
   for y := 0; y <= board.Height() - 1; y++ {
     for x := 0; x <= board.Width() - 1; x++ {
-      cell := board.Select(x, y)
+      cell := board.Select(NewPoint(x, y))
 
       if (cell.IsEmpty()) {
         cells = append(cells, " ")

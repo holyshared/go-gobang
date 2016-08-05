@@ -48,6 +48,6 @@ func (player *GobangPlayer) PutStone(x, y int) (PutStoneResult, error) {
 func (player *GobangPlayer) putStoneTo(x, y int) {
   board := player.game.CurrentBoard()
 
-  cell := board.Select(x, y)
+  cell := board.Select(NewPoint(x, y))
   player.stone.PutTo(cell)
 }
