@@ -16,9 +16,18 @@ type CellReachedMatcher struct {
 
 func (s *CellReachedMatcher) Matches(board *Board) *MatchedResult {
   result := &MatchedResult {}
+  ch := make(chan *MatchedResult, len(s.selectors))
+
+  defer close(ch)
 
   for _, selector := range s.selectors {
-    result.Merge(selector.Matches(board))
+    go func(selector ReachedMatcher, board *Board) {
+      ch <- selector.Matches(board)
+    }(selector, board)
+  }
+
+  for res := range ch {
+    result.Merge(res)
   }
 
   return result
