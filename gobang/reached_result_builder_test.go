@@ -13,10 +13,11 @@ func TestEmptyNeighborCells(t *testing.T) {
   cells = append(cells, &Cell { &Point { X: 2, Y: 0, }, Black, })
   neighborCells = append(neighborCells, &Cell { &Point { X: 3, Y: 0, }, Black, })
 
-  res := ReachedResult {
+  builder := ReachedResultBuilder {
     cells: cells,
     neighborCells: neighborCells,
   }
+  res := builder.ReachedResult()
 
   emptyCells := res.EmptyNeighborCells()
 
@@ -32,11 +33,12 @@ func TestEmptyNeighborCells(t *testing.T) {
   cells = append(cells, &Cell { &Point { X: 2, Y: 0, }, Black, })
   neighborCells = append(neighborCells, &Cell { &Point { X: 3, Y: 0, }, 0, })
 
-  res = ReachedResult {
+  builder = ReachedResultBuilder {
     cells: cells,
     neighborCells: neighborCells,
   }
 
+  res = builder.ReachedResult()
   emptyCells = res.EmptyNeighborCells()
 
   if len(emptyCells) <= 0 {

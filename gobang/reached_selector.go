@@ -8,37 +8,38 @@ type ReachedSelector struct {
 }
 
 func (s ReachedSelector) Select(group *CellGroup) []*ReachedResult {
-  result := &ReachedResult {}
+  builder := &ReachedResultBuilder { count: s.count }
   results := make([]*ReachedResult, 0)
 
   for _, cell := range group.cells {
     if cell.Have(s.stone) == false {
-      result.Clear()
+      builder.Clear()
       continue
     }
-    result.AddCell(cell)
+    builder.AddCell(cell)
 
-    if !result.IsReached(s.count) {
+    if !builder.IsReached() {
       continue
     }
 
-    first := result.First()
+    first := builder.FirstCell()
     prevPoint := s.neighbor.prevPoint(first)
 
     if s.board.HaveCell(prevPoint) {
       p := s.board.SelectCell(prevPoint)
-      result.AddNeighborCell(p)
+      builder.AddNeighborCell(p)
     }
 
-    last := result.Last()
+    last := builder.LastCell()
     nextPoint := s.neighbor.nextPoint(last)
 
     if s.board.HaveCell(nextPoint) {
       p := s.board.SelectCell(nextPoint)
-      result.AddNeighborCell(p)
+      builder.AddNeighborCell(p)
     }
-    results = append(results, result)
-    result = &ReachedResult {}
+
+    results = append(results, builder.ReachedResult())
+    builder = &ReachedResultBuilder { count: s.count }
   }
 
   return results;
