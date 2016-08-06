@@ -80,7 +80,7 @@ func (s *TopLeftDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGro
       }
       point.X = x
       point.Y = y
-      cell := board.Select(point)
+      cell := board.SelectCell(point)
       group.cells = append(group.cells, cell)
       y++
     }
@@ -120,7 +120,7 @@ func (s *TopLeftDiagonalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGro
       }
       point.X = x
       point.Y = y
-      cell := board.Select(point)
+      cell := board.SelectCell(point)
       group.cells = append(group.cells, cell)
       x++
     }

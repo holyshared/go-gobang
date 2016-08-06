@@ -21,12 +21,12 @@ type Board struct {
   cells []Cell
 }
 
-func (board *Board) Select(point *Point) *Cell {
+func (board *Board) SelectCell(point *Point) *Cell {
   index := (point.Y * board.width) + point.X
   return &board.cells[index]
 }
 
-func (board *Board) Have(point *Point) bool {
+func (board *Board) HaveCell(point *Point) bool {
   isXRange := point.X >= 0 && point.X <= board.width - 1
   isYRange := point.Y >= 0 && point.Y <= board.height - 1
   return isXRange && isYRange
@@ -41,7 +41,7 @@ func (board *Board) Width() int {
 }
 
 func (board *Board) IsCellEmpty(point *Point) bool {
-  cell := board.Select(point)
+  cell := board.SelectCell(point)
   return cell.IsEmpty()
 }
 
@@ -74,7 +74,7 @@ func (board *Board) Print() {
       point.X = x
       point.Y = y
 
-      cell := board.Select(point)
+      cell := board.SelectCell(point)
 
       if (cell.IsEmpty()) {
         cells = append(cells, " ")
