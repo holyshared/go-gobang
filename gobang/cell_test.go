@@ -3,7 +3,6 @@ package gobang
 import (
   "testing"
   "encoding/json"
-  "fmt"
 )
 
 func TestCellToJSON(t *testing.T) {
@@ -16,8 +15,6 @@ func TestCellToJSON(t *testing.T) {
 
   actual := string(bytes)
   expected := "{\"point\":{\"x\":1,\"y\":1},\"stone\":1}"
-
-  fmt.Println(actual)
 
   if actual != expected {
     t.Errorf("got %v\nwant %v", actual, expected)
