@@ -1,7 +1,19 @@
 package gobang
 
+func NewCell(x, y int, stone Stone) *Cell {
+  point := &Point {
+    X: x,
+    Y: y,
+  }
+
+  return &Cell {
+    point,
+    stone,
+  }
+} 
+
 type Cell struct {
-  Point
+  *Point
   stone Stone
 }
 

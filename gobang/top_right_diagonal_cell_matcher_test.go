@@ -45,7 +45,7 @@ func TopRightAxisFillBoard(board *Board, startX int, startY int) {
     if y > startY + 4 {
       break
     }
-    cell := board.Select(x, y)
+    cell := board.SelectCell(NewPoint(x, y))
     Black.PutTo(cell)
     y++
   }
@@ -66,7 +66,7 @@ func TestTopRightDiagonalSelectorScanCellGroup(t *testing.T) {
 
   for _, group := range groups {
     for _, v := range group.cells {
-      cell := vboard.Select(v.X, v.Y)
+      cell := vboard.SelectCell(NewPoint(v.X, v.Y))
       Black.PutTo(cell)
       index[cell.String()] += 1
     }

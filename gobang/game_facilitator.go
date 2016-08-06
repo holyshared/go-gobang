@@ -4,9 +4,16 @@ type GameFacilitator struct {
   game *GameContext
 }
 
-func (f *GameFacilitator) PlayerPutStone(x, y int) (GameResult, error) {
+func (f *GameFacilitator) PlayerSelectCell(point *Point) (*Cell, error) {
   player := f.game.GamePlayer()
-  result, err := player.PutStone(x, y)
+  cell, err := player.SelectBoardCell(point)
+
+  return cell, err
+}
+
+func (f *GameFacilitator) PlayerPutStoneTo(cell *Cell) (GameResult, error) {
+  player := f.game.GamePlayer()
+  result, err := player.PutStoneTo(cell)
 
   if err != nil {
     return 0, err // FIXME GameResult
@@ -28,7 +35,7 @@ func (f *GameFacilitator) ChangeToNextPlayer() {
 func (f *GameFacilitator) NpcPlayerPutStone() (GameResult, error) {
   player := f.game.NpcPlayer()
   cell := player.SelectTargetCell()
-  result, err := player.PutStone(cell.X, cell.Y)
+  result, err := player.PutStoneTo(cell)
 
   if err != nil {
     return 0, err // FIXME GameResult

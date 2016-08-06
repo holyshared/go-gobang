@@ -25,16 +25,16 @@ func (s ReachedSelector) Select(group *CellGroup) []*ReachedResult {
     first := result.First()
     prevPoint := s.neighbor.prevPoint(first)
 
-    if s.board.Have(prevPoint.X, prevPoint.Y) {
-      p := s.board.Select(prevPoint.X, prevPoint.Y)
+    if s.board.HaveCell(prevPoint) {
+      p := s.board.SelectCell(prevPoint)
       result.AddNeighborCell(p)
     }
 
     last := result.Last()
     nextPoint := s.neighbor.nextPoint(last)
 
-    if s.board.Have(nextPoint.X, nextPoint.Y) {
-      p := s.board.Select(nextPoint.X, nextPoint.Y)
+    if s.board.HaveCell(nextPoint) {
+      p := s.board.SelectCell(nextPoint)
       result.AddNeighborCell(p)
     }
     results = append(results, result)

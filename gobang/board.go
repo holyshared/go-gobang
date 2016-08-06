@@ -11,7 +11,7 @@ func NewBoard(size *Size) *Board {
   for i := range cells {
     y := (i / size.width)
     x := i - (y * size.width)
-    cells[i] = Cell { Point { X: x, Y: y }, 0 }
+    cells[i] = Cell { &Point { X: x, Y: y }, 0 }
   }
   return &Board { size, cells }
 }
@@ -21,14 +21,14 @@ type Board struct {
   cells []Cell
 }
 
-func (board *Board) Select(x, y int) *Cell {
-  index := (y * board.width) + x
+func (board *Board) SelectCell(point *Point) *Cell {
+  index := (point.Y * board.width) + point.X
   return &board.cells[index]
 }
 
-func (board *Board) Have(x, y int) bool {
-  isXRange := x >= 0 && x <= board.width - 1
-  isYRange := y >= 0 && y <= board.height - 1
+func (board *Board) HaveCell(point *Point) bool {
+  isXRange := point.X >= 0 && point.X <= board.width - 1
+  isYRange := point.Y >= 0 && point.Y <= board.height - 1
   return isXRange && isYRange
 }
 
@@ -40,18 +40,22 @@ func (board *Board) Width() int {
   return board.width
 }
 
-func (board *Board) IsCellEmpty(x, y int) bool {
-  cell := board.Select(x, y)
+func (board *Board) IsCellEmpty(point *Point) bool {
+  cell := board.SelectCell(point)
   return cell.IsEmpty()
 }
 
 func (board *Board) IsAllFilled() bool {
+  var point *Point
   endX := board.Width() - 1
   endY := board.Height() - 1
 
   for x := 0; x <= endX; x++ {
     for y := 0; y <= endY; y++ {
-      if !board.IsCellEmpty(x, y) {
+      point.X = x
+      point.Y = y
+
+      if !board.IsCellEmpty(point) {
         continue
       }
       return false
@@ -62,11 +66,15 @@ func (board *Board) IsAllFilled() bool {
 }
 
 func (board *Board) Print() {
+  point := &Point {}
   cells := make([]string, 0)
 
   for y := 0; y <= board.Height() - 1; y++ {
     for x := 0; x <= board.Width() - 1; x++ {
-      cell := board.Select(x, y)
+      point.X = x
+      point.Y = y
+
+      cell := board.SelectCell(point)
 
       if (cell.IsEmpty()) {
         cells = append(cells, " ")
