@@ -17,13 +17,13 @@ func NewBoard(size *Size) *Board {
 }
 
 type Board struct {
-  *Size
-  cells []*Cell
+  *Size `json:"size"`
+  Cells []*Cell `json:"cells"`
 }
 
 func (board *Board) SelectCell(point *Point) *Cell {
   index := (point.Y * board.Width()) + point.X
-  return board.cells[index]
+  return board.Cells[index]
 }
 
 func (board *Board) HaveCell(point *Point) bool {
