@@ -6,24 +6,24 @@ import (
 )
 
 func NewBoard(size *Size) *Board {
-  cells := make([]Cell, size.CellCount())
+  cells := make([]*Cell, size.CellCount())
 
   for i := range cells {
     y := (i / size.width)
     x := i - (y * size.width)
-    cells[i] = Cell { &Point { X: x, Y: y }, 0 }
+    cells[i] = &Cell { &Point { X: x, Y: y }, 0 }
   }
   return &Board { size, cells }
 }
 
 type Board struct {
   *Size
-  cells []Cell
+  cells []*Cell
 }
 
 func (board *Board) SelectCell(point *Point) *Cell {
   index := (point.Y * board.width) + point.X
-  return &board.cells[index]
+  return board.cells[index]
 }
 
 func (board *Board) HaveCell(point *Point) bool {
