@@ -13,7 +13,10 @@ func NewBoard(size *Size) *Board {
     x := i - (y * size.Width)
     cells[i] = &Cell { &Point { X: x, Y: y }, 0 }
   }
-  return &Board { size, cells }
+  return &Board {
+    Size: size,
+    Cells: cells,
+  }
 }
 
 type Board struct {

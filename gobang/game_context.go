@@ -4,11 +4,11 @@ func NewGameContext(rule *GameRule) *GameContext {
   board := NewBoard(rule.BoardSize())
 
   return &GameContext {
-    rule,
-    board,
-    nil,
-    nil,
-    nil,
+    GameRule: rule,
+    board: board,
+    currentPlayer: nil,
+    player: nil,
+    npcPlayer: nil,
   }
 }
 

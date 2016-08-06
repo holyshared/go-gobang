@@ -5,8 +5,8 @@ func NewNpcPlayer(stone Stone) *NpcPlayer {
   player := NewGobangPlayer(stone)
 
   return &NpcPlayer {
-    player,
-    ai,
+    GobangPlayer: player,
+    GobangArtificialIntelligence: ai,
   }
 }
 

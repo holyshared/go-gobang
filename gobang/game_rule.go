@@ -2,8 +2,8 @@ package gobang
 
 func NewGameRule(size *Size, reachedCount int) *GameRule {
   return &GameRule {
-    size,
-    reachedCount,
+    Size: size,
+    reachedStoneCount: reachedCount,
   }
 }
 

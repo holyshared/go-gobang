@@ -7,8 +7,8 @@ func NewCell(x, y int, stone Stone) *Cell {
   }
 
   return &Cell {
-    point,
-    stone,
+    Point: point,
+    Stone: stone,
   }
 }
 
