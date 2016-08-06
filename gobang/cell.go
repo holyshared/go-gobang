@@ -10,17 +10,17 @@ func NewCell(x, y int, stone Stone) *Cell {
     point,
     stone,
   }
-} 
+}
 
 type Cell struct {
-  *Point
-  stone Stone
+  *Point `json:"point"`
+  Stone Stone `json:"stone"`
 }
 
 func (cell *Cell) IsEmpty() bool {
-  return cell.stone != Black && cell.stone != White
+  return cell.Stone != Black && cell.Stone != White
 }
 
 func (cell *Cell) Have(stone Stone) bool {
-  return cell.stone == stone
+  return cell.Stone == stone
 }
