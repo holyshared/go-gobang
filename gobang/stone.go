@@ -12,7 +12,7 @@ func (stone Stone) Eq(other Stone) bool  {
 }
 
 func (stone Stone) PutTo(cell *Cell) {
-  cell.stone = stone
+  cell.Stone = stone
 }
 
 func (stone Stone) String() string {

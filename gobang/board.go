@@ -6,38 +6,38 @@ import (
 )
 
 func NewBoard(size *Size) *Board {
-  cells := make([]Cell, size.CellCount())
+  cells := make([]*Cell, size.CellCount())
 
   for i := range cells {
-    y := (i / size.width)
-    x := i - (y * size.width)
-    cells[i] = Cell { &Point { X: x, Y: y }, 0 }
+    y := (i / size.Width)
+    x := i - (y * size.Width)
+    cells[i] = &Cell { &Point { X: x, Y: y }, 0 }
   }
   return &Board { size, cells }
 }
 
 type Board struct {
-  *Size
-  cells []Cell
+  *Size `json:"size"`
+  Cells []*Cell `json:"cells"`
 }
 
 func (board *Board) SelectCell(point *Point) *Cell {
-  index := (point.Y * board.width) + point.X
-  return &board.cells[index]
+  index := (point.Y * board.Width()) + point.X
+  return board.Cells[index]
 }
 
 func (board *Board) HaveCell(point *Point) bool {
-  isXRange := point.X >= 0 && point.X <= board.width - 1
-  isYRange := point.Y >= 0 && point.Y <= board.height - 1
+  isXRange := point.X >= 0 && point.X <= board.Width() - 1
+  isYRange := point.Y >= 0 && point.Y <= board.Height() - 1
   return isXRange && isYRange
 }
 
 func (board *Board) Height() int {
-  return board.height
+  return board.Size.Height
 }
 
 func (board *Board) Width() int {
-  return board.width
+  return board.Size.Width
 }
 
 func (board *Board) IsCellEmpty(point *Point) bool {
@@ -79,7 +79,7 @@ func (board *Board) Print() {
       if (cell.IsEmpty()) {
         cells = append(cells, " ")
       } else {
-        cells = append(cells, cell.stone.String())
+        cells = append(cells, cell.Stone.String())
       }
     }
     fmt.Println("|" + strings.Join(cells, "|") + "|")
