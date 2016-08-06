@@ -13,11 +13,12 @@ func (f *GameFacilitator) PlayerSelectCell(point *Point) (*Cell, error) {
 
 func (f *GameFacilitator) PlayerPutStoneTo(cell *Cell) (GameResult, error) {
   player := f.game.GamePlayer()
-  result, err := player.PutStoneTo(cell)
+  err := player.PutStoneTo(cell)
 
   if err != nil {
     return 0, err // FIXME GameResult
   }
+  result := f.game.CheckBoard()
 
   if result == Reached {
     return Win, nil
@@ -35,11 +36,12 @@ func (f *GameFacilitator) ChangeToNextPlayer() {
 func (f *GameFacilitator) NpcPlayerPutStone() (GameResult, error) {
   player := f.game.NpcPlayer()
   cell := player.SelectTargetCell()
-  result, err := player.PutStoneTo(cell)
+  err := player.PutStoneTo(cell)
 
   if err != nil {
     return 0, err // FIXME GameResult
   }
+  result := f.game.CheckBoard()
 
   if result == Reached {
     return Lose, nil

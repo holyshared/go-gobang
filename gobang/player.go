@@ -7,12 +7,17 @@ func NewGobangPlayer(stone Stone) *GobangPlayer {
 }
 
 type Player interface {
-  PutStoneTo(cell *Cell) (PutStoneResult, error)
+  Stone() Stone
+  PutStoneTo(cell *Cell) error
 }
 
 type GobangPlayer struct {
   stone Stone
   game *GameContext
+}
+
+func (player *GobangPlayer) Stone() Stone {
+  return player.stone
 }
 
 func (player *GobangPlayer) JoinTo(game *GameContext) {
@@ -23,24 +28,11 @@ func (player *GobangPlayer) SelectBoardCell(point *Point) (*Cell, error) {
   return player.game.SelectBoardCell(point)
 }
 
-func (player *GobangPlayer) PutStoneTo(cell *Cell) (PutStoneResult, error) {
-  board := player.game.CurrentBoard()
-
+func (player *GobangPlayer) PutStoneTo(cell *Cell) error {
   if !cell.IsEmpty() {
-    return Failed, NewAlreadyPlacedError(cell)
+    return NewAlreadyPlacedError(cell)
   }
   player.stone.PutTo(cell)
 
-  matcher := NewCellReachedMatcher(player.stone, player.game.ReachedStoneCount())
-  result := matcher.Matches(board)
-
-  if result.HasResult() {
-    return Reached, nil
-  }
-
-  if board.IsAllFilled() {
-    return Filled, nil
-  }
-
-  return Continue, nil
+  return nil
 }

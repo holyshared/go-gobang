@@ -54,3 +54,20 @@ func (g *GameContext) ChangeToNextPlayer() {
 
   g.currentPlayer = player
 }
+
+func (g *GameContext) CheckBoard() PutStoneResult {
+  player := g.CurrentPlayer()
+
+  matcher := NewCellReachedMatcher(player.Stone(), g.ReachedStoneCount())
+  result := matcher.Matches(g.board)
+
+  if result.HasResult() {
+    return Reached
+  }
+
+  if g.board.IsAllFilled() {
+    return Filled
+  }
+
+  return Continue
+}
