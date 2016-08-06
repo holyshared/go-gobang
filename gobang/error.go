@@ -7,10 +7,10 @@ func NewCellNotFoundError(point *Point) CellNotFoundError {
   }
 }
 
-func NewAlreadyPlacedError(point *Point) AlreadyPlacedError {
+func NewAlreadyPlacedError(cell *Cell) AlreadyPlacedError {
   return AlreadyPlacedError {
     Message: "Already the stone is placed",
-    Point: point,
+    Point: cell.Point,
   }
 }
 

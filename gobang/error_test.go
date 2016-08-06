@@ -22,7 +22,7 @@ func TestCellNotFoundErrorToJSON(t *testing.T) {
 }
 
 func TestAlreadyPlacedErrorToJSON(t *testing.T) {
-  error := NewAlreadyPlacedError(NewPoint(1, 1))
+  error := NewAlreadyPlacedError(NewCell(1, 1, Black))
   bytes, err := json.Marshal(error)
 
   if err != nil {

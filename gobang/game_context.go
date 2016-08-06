@@ -24,6 +24,13 @@ func (g *GameContext) CurrentBoard() *Board {
   return g.board
 }
 
+func (g *GameContext) SelectBoardCell(point *Point) (*Cell, error) {
+  if !g.board.Have(point) {
+    return nil, NewCellNotFoundError(point)
+  }
+  return g.board.Select(point), nil
+}
+
 func (g *GameContext) CurrentPlayer() Player {
   return g.currentPlayer
 }
