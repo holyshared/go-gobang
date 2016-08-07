@@ -42,9 +42,7 @@ func (s *VerticalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
     group := &CellGroup {}
 
     for y := 0; y <= endY; y++ {
-      point.X = x
-      point.Y = y
-      cell := board.SelectCell(point)
+      cell := board.SelectCell( point.SetTo(x, y) )
       group.cells = append(group.cells, cell)
     }
     groups = append(groups, group)

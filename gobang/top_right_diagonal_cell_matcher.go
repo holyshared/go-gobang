@@ -73,9 +73,7 @@ func (s *TopRightDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGr
     y := 0
     group := &CellGroup {}
     for x := startX; x >= 0; x-- {
-      point.X = x
-      point.Y = y
-      cell := board.SelectCell(point)
+      cell := board.SelectCell( point.SetTo(x, y) )
       group.cells = append(group.cells, cell)
       y++
     }
@@ -109,9 +107,7 @@ func (s *TopRightDiagonalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGr
     group := &CellGroup {}
 
     for y := startY; y <= maxY; y++ {
-      point.X = x
-      point.Y = y
-      cell := board.SelectCell(point)
+      cell := board.SelectCell( point.SetTo(x, y) )
       group.cells = append(group.cells, cell)
       x--
     }
