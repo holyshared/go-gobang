@@ -54,10 +54,6 @@ func (g *GameContext) ChangeToNextPlayer() {
 
   g.currentPlayer = player
 }
-// FIXME Remove
-func (g *GameContext) EmptyCells() []*Cell {
-  return g.board.EmptyCells()
-}
 
 func (g *GameContext) CheckBoard() PutStoneResult {
   player := g.CurrentPlayer()

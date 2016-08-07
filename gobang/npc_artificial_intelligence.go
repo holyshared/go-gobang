@@ -48,7 +48,8 @@ func (ai *NpcArtificialIntelligence) selectGamePlayerReachedCell() *Cell {
 }
 
 func (ai *NpcArtificialIntelligence) selectEmptyCell() *Cell {
-  cells := ai.game.EmptyCells()
+  board := ai.game.CurrentBoard()
+  cells := board.SelectCells(EmptyCell())
   index := rand.Intn(len(cells) - 1)
   return cells[index]
 }
