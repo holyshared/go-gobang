@@ -68,6 +68,26 @@ func (board *Board) IsAllFilled() bool {
   return true
 }
 
+func (board *Board) EmptyCells() []*Cell {
+  var point *Point
+  endX := board.Width() - 1
+  endY := board.Height() - 1
+  cells := make([]*Cell, 0)
+
+  for x := 0; x <= endX; x++ {
+    for y := 0; y <= endY; y++ {
+      point.X = x
+      point.Y = y
+
+      if !board.IsCellEmpty(point) {
+        continue
+      }
+      cells = append(cells, board.SelectCell(point))
+    }
+  }
+  return cells
+}
+
 func (board *Board) Print() {
   point := &Point {}
   cells := make([]string, 0)
