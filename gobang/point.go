@@ -16,6 +16,12 @@ type Point struct {
   Y int `json:"y"`
 }
 
+func (point *Point) SetTo(x, y int) *Point {
+  point.X = x
+  point.Y = y
+  return point
+}
+
 func (point *Point) String() string {
   return strconv.Itoa(point.X) + ":" + strconv.Itoa(point.Y)
 }

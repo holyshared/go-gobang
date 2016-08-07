@@ -29,6 +29,26 @@ func (board *Board) SelectCell(point *Point) *Cell {
   return board.Cells[index]
 }
 
+func (board *Board) SelectCells(matcher CellMatcher) []*Cell {
+  var point *Point
+  endX := board.Width() - 1
+  endY := board.Height() - 1
+  cells := make([]*Cell, 0)
+
+  for x := 0; x <= endX; x++ {
+    for y := 0; y <= endY; y++ {
+      cell := board.SelectCell( point.SetTo(x, y) )
+
+      if !matcher.Matches(cell) {
+        continue
+      }
+      cells = append(cells, cell)
+    }
+  }
+
+  return cells
+}
+
 func (board *Board) HaveCell(point *Point) bool {
   isXRange := point.X >= 0 && point.X <= board.Width() - 1
   isYRange := point.Y >= 0 && point.Y <= board.Height() - 1
@@ -55,10 +75,7 @@ func (board *Board) IsAllFilled() bool {
 
   for x := 0; x <= endX; x++ {
     for y := 0; y <= endY; y++ {
-      point.X = x
-      point.Y = y
-
-      if !board.IsCellEmpty(point) {
+      if !board.IsCellEmpty( point.SetTo(x, y) ) {
         continue
       }
       return false
@@ -74,10 +91,7 @@ func (board *Board) Print() {
 
   for y := 0; y <= board.Height() - 1; y++ {
     for x := 0; x <= board.Width() - 1; x++ {
-      point.X = x
-      point.Y = y
-
-      cell := board.SelectCell(point)
+      cell := board.SelectCell( point.SetTo(x, y) )
 
       if (cell.IsEmpty()) {
         cells = append(cells, " ")

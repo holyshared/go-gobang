@@ -1,5 +1,9 @@
 package gobang
 
+import (
+  "math/rand"
+)
+
 func NewNpcArtificialIntelligence() *NpcArtificialIntelligence {
   return &NpcArtificialIntelligence {}
 }
@@ -13,13 +17,21 @@ type NpcArtificialIntelligence struct {
 }
 
 func (ai *NpcArtificialIntelligence) SelectTargetCell() *Cell {
-  cell := ai.selectGamePlayerReachedCell()
+  var cell *Cell
+
+  cell = ai.selectGamePlayerReachedCell()
 
   if cell != nil {
     return cell
   }
 
-  return ai.selectNpcPlayerReachedCell()
+  cell = ai.selectNpcPlayerReachedCell()
+
+  if cell != nil {
+    return cell
+  }
+
+  return ai.selectEmptyCell()
 }
 
 func (ai *NpcArtificialIntelligence) selectGamePlayerReachedCell() *Cell {
@@ -33,6 +45,13 @@ func (ai *NpcArtificialIntelligence) selectGamePlayerReachedCell() *Cell {
     return nil
   }
   return result.SelectEmptyNeighborCell()
+}
+
+func (ai *NpcArtificialIntelligence) selectEmptyCell() *Cell {
+  board := ai.game.CurrentBoard()
+  cells := board.SelectCells(EmptyCell())
+  index := rand.Intn(len(cells) - 1)
+  return cells[index]
 }
 
 func (ai *NpcArtificialIntelligence) selectNpcPlayerReachedCell() *Cell {
