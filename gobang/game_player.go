@@ -4,8 +4,8 @@ type GamePlayer struct {
   *GobangPlayer
 }
 
-func NewGamePlayer(stone Stone) *GamePlayer {
-  player := NewGobangPlayer(stone)
+func NewGamePlayer(stone Stone, game *GameContext) *GamePlayer {
+  player := NewGobangPlayer(stone, game)
 
   return &GamePlayer {
     GobangPlayer: player,

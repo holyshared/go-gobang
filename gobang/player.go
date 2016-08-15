@@ -1,8 +1,9 @@
 package gobang
 
-func NewGobangPlayer(stone Stone) *GobangPlayer {
+func NewGobangPlayer(stone Stone, game *GameContext) *GobangPlayer {
   return &GobangPlayer {
     stone: stone,
+    game: game,
   }
 }
 

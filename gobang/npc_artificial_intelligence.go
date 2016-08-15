@@ -4,8 +4,10 @@ import (
   "math/rand"
 )
 
-func NewNpcArtificialIntelligence() *NpcArtificialIntelligence {
-  return &NpcArtificialIntelligence {}
+func NewNpcArtificialIntelligence(game *GameContext) *NpcArtificialIntelligence {
+  return &NpcArtificialIntelligence {
+    game: game,
+  }
 }
 
 type GobangArtificialIntelligence interface {
