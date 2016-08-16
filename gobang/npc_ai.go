@@ -4,9 +4,9 @@ import (
   "math/rand"
 )
 
-func NewNpcAI(game *GameContext) *NpcAI {
+func NewNpcAI(ctx *NpcAIContext) *NpcAI {
   return &NpcAI {
-    game: game,
+    ctx: ctx,
   }
 }
 
@@ -15,7 +15,7 @@ type GobangAI interface {
 }
 
 type NpcAI struct {
-  game *GameContext
+  ctx *NpcAIContext
 }
 
 func (ai *NpcAI) SelectTargetCell() *Cell {
@@ -37,11 +37,11 @@ func (ai *NpcAI) SelectTargetCell() *Cell {
 }
 
 func (ai *NpcAI) selectGamePlayerReachedCell() *Cell {
-  board := ai.game.CurrentBoard()
-  gamePlayer := ai.game.GamePlayer()
+//  board := ai.game.CurrentBoard()
+//  gamePlayer := ai.game.GamePlayer()
 
-  matcher := NewCellReachedMatcher(gamePlayer.stone, ai.game.ReachedStoneCount() - 1)
-  result := matcher.Matches(board)
+  matcher := NewCellReachedMatcher(ai.ctx.PlayerStone(), ai.ctx.ReachedStoneCount() - 1)
+  result := matcher.Matches(ai.ctx.Board())
 
   if !result.HasEmptyNeighborCell() {
     return nil
@@ -50,7 +50,7 @@ func (ai *NpcAI) selectGamePlayerReachedCell() *Cell {
 }
 
 func (ai *NpcAI) selectEmptyCell() *Cell {
-  board := ai.game.CurrentBoard()
+  board := ai.ctx.Board()
   cells := board.SelectCells(EmptyCell())
   index := rand.Intn(len(cells) - 1)
   return cells[index]
@@ -59,12 +59,12 @@ func (ai *NpcAI) selectEmptyCell() *Cell {
 func (ai *NpcAI) selectNpcPlayerReachedCell() *Cell {
   var result *MatchedResult
 
-  board := ai.game.CurrentBoard()
-  npcPlayer := ai.game.NpcPlayer()
+  //board := ai.game.CurrentBoard()
+//  npcPlayer := ai.game.NpcPlayer()
 
-  for i := ai.game.ReachedStoneCount() - 1; i <= 0; i-- {
-    matcher := NewCellReachedMatcher(npcPlayer.stone, i)
-    result = matcher.Matches(board)
+  for i := ai.ctx.ReachedStoneCount() - 1; i <= 0; i-- {
+    matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), i)
+    result = matcher.Matches(ai.ctx.Board())
 
     if !result.HasEmptyNeighborCell() {
       continue
