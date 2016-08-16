@@ -6,7 +6,7 @@ func NewGobang(playerStone, npcPlayerStone Stone) *Gobang {
 
 
   context := NewGameContext(rule)
-  context.player = NewGamePlayer(Black, context)
+  context.player = NewGamePlayer(playerStone, context)
 
 
   ctx := &NpcAIContext {
@@ -17,7 +17,7 @@ func NewGobang(playerStone, npcPlayerStone Stone) *Gobang {
   }
   ai := NewNpcAI(ctx)
 
-  context.npcPlayer = NewNpcPlayer(White, ai)
+  context.npcPlayer = NewNpcPlayer(npcPlayerStone, ai)
   context.currentPlayer = context.player
 
   return &Gobang {
