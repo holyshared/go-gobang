@@ -1,7 +1,6 @@
 package gobang
 
 func NewGameContext(rule *GameRule, playerStone, npcPlayerStone Stone) *GameContext {
-//  rule := DefaultGameRule()
   board := NewBoard(rule.BoardSize())
   player := NewGamePlayer(playerStone, board)
 
@@ -13,14 +12,6 @@ func NewGameContext(rule *GameRule, playerStone, npcPlayerStone Stone) *GameCont
   }
   ai := NewNpcAI(ctx)
   npcPlayer := NewNpcPlayer(npcPlayerStone, ai)
-
-
-//  board: board,
-  
-   
-
-
-//  board := NewBoard(rule.BoardSize())
 
   return &GameContext {
     GameRule: rule,
