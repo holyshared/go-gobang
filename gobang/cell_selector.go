@@ -1,5 +1,6 @@
 package gobang
 
 type CellSelector interface {
-  SelectCell(point *Point) (*Cell, error)
+  HaveCell(point *Point) bool
+  SelectCell(point *Point) *Cell
 }

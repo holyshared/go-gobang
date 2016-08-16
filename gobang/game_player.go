@@ -13,5 +13,8 @@ type GamePlayer struct {
 }
 
 func (player *GamePlayer) SelectBoardCell(point *Point) (*Cell, error) {
-  return player.selector.SelectCell(point)
+  if !player.selector.HaveCell(point) {
+    return nil, NewCellNotFoundError(point)
+  }
+  return player.selector.SelectCell(point), nil
 }
