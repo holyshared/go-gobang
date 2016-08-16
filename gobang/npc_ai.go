@@ -37,9 +37,6 @@ func (ai *NpcAI) SelectTargetCell() *Cell {
 }
 
 func (ai *NpcAI) selectGamePlayerReachedCell() *Cell {
-//  board := ai.game.CurrentBoard()
-//  gamePlayer := ai.game.GamePlayer()
-
   matcher := NewCellReachedMatcher(ai.ctx.PlayerStone(), ai.ctx.ReachedStoneCount() - 1)
   result := matcher.Matches(ai.ctx.Board())
 
@@ -58,9 +55,6 @@ func (ai *NpcAI) selectEmptyCell() *Cell {
 
 func (ai *NpcAI) selectNpcPlayerReachedCell() *Cell {
   var result *MatchedResult
-
-  //board := ai.game.CurrentBoard()
-//  npcPlayer := ai.game.NpcPlayer()
 
   for i := ai.ctx.ReachedStoneCount() - 1; i <= 0; i-- {
     matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), i)

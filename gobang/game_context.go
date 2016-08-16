@@ -1,14 +1,33 @@
 package gobang
 
-func NewGameContext(rule *GameRule) *GameContext {
+func NewGameContext(rule *GameRule, playerStone, npcPlayerStone Stone) *GameContext {
+//  rule := DefaultGameRule()
   board := NewBoard(rule.BoardSize())
+  player := NewGamePlayer(playerStone, board)
+
+  ctx := &NpcAIContext {
+    rule: rule,
+    board: board,
+    playerStone: playerStone,
+    npcPlayerStone: npcPlayerStone,
+  }
+  ai := NewNpcAI(ctx)
+  npcPlayer := NewNpcPlayer(npcPlayerStone, ai)
+
+
+//  board: board,
+  
+   
+
+
+//  board := NewBoard(rule.BoardSize())
 
   return &GameContext {
     GameRule: rule,
     board: board,
-    currentPlayer: nil,
-    player: nil,
-    npcPlayer: nil,
+    currentPlayer: player,
+    player: player,
+    npcPlayer: npcPlayer,
   }
 }
 
