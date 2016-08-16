@@ -1,8 +1,8 @@
 package gobang
 
-func NewNpcPlayer(stone Stone, ai GobangAI, selector CellSelector) *NpcPlayer {
+func NewNpcPlayer(stone Stone, ai GobangAI) *NpcPlayer {
   return &NpcPlayer {
-    GobangPlayer: NewGobangPlayer(stone, selector),
+    GobangPlayer: NewGobangPlayer(stone),
     GobangAI: ai,
   }
 }

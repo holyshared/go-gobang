@@ -5,7 +5,7 @@ func NewGobang() *Gobang {
   context.player = NewGamePlayer(Black, context)
 
   ai := NewNpcAI(context)
-  context.npcPlayer = NewNpcPlayer(White, ai, context)
+  context.npcPlayer = NewNpcPlayer(White, ai)
   context.currentPlayer = context.player
 
   return &Gobang {
