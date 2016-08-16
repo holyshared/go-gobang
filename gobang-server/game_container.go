@@ -7,15 +7,15 @@ import (
 
 func NewGameContainer() *GameContainer {
   return &GameContainer {
-    sessions: map[*melody.Session]*gobang.GameFacilitator{},
+    sessions: map[*melody.Session]*gobang.Gobang{},
   }
 }
 
 type GameContainer struct {
-  sessions map[*melody.Session]*gobang.GameFacilitator
+  sessions map[*melody.Session]*gobang.Gobang
 }
 
-func (c *GameContainer) Register(s *melody.Session, game *gobang.GameFacilitator) {
+func (c *GameContainer) Register(s *melody.Session, game *gobang.Gobang) {
   c.sessions[s] = game
 }
 
