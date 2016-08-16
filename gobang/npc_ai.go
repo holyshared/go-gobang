@@ -4,21 +4,21 @@ import (
   "math/rand"
 )
 
-func NewNpcArtificialIntelligence(game *GameContext) *NpcArtificialIntelligence {
-  return &NpcArtificialIntelligence {
+func NewNpcAI(game *GameContext) *NpcAI {
+  return &NpcAI {
     game: game,
   }
 }
 
-type GobangArtificialIntelligence interface {
+type GobangAI interface {
   SelectTargetCell() *Cell
 }
 
-type NpcArtificialIntelligence struct {
+type NpcAI struct {
   game *GameContext
 }
 
-func (ai *NpcArtificialIntelligence) SelectTargetCell() *Cell {
+func (ai *NpcAI) SelectTargetCell() *Cell {
   var cell *Cell
 
   cell = ai.selectGamePlayerReachedCell()
@@ -36,7 +36,7 @@ func (ai *NpcArtificialIntelligence) SelectTargetCell() *Cell {
   return ai.selectEmptyCell()
 }
 
-func (ai *NpcArtificialIntelligence) selectGamePlayerReachedCell() *Cell {
+func (ai *NpcAI) selectGamePlayerReachedCell() *Cell {
   board := ai.game.CurrentBoard()
   gamePlayer := ai.game.GamePlayer()
 
@@ -49,14 +49,14 @@ func (ai *NpcArtificialIntelligence) selectGamePlayerReachedCell() *Cell {
   return result.SelectEmptyNeighborCell()
 }
 
-func (ai *NpcArtificialIntelligence) selectEmptyCell() *Cell {
+func (ai *NpcAI) selectEmptyCell() *Cell {
   board := ai.game.CurrentBoard()
   cells := board.SelectCells(EmptyCell())
   index := rand.Intn(len(cells) - 1)
   return cells[index]
 }
 
-func (ai *NpcArtificialIntelligence) selectNpcPlayerReachedCell() *Cell {
+func (ai *NpcAI) selectNpcPlayerReachedCell() *Cell {
   var result *MatchedResult
 
   board := ai.game.CurrentBoard()

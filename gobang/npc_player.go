@@ -1,13 +1,13 @@
 package gobang
 
-func NewNpcPlayer(stone Stone, ai GobangArtificialIntelligence, selector CellSelector) *NpcPlayer {
+func NewNpcPlayer(stone Stone, ai GobangAI, selector CellSelector) *NpcPlayer {
   return &NpcPlayer {
     GobangPlayer: NewGobangPlayer(stone, selector),
-    GobangArtificialIntelligence: ai,
+    GobangAI: ai,
   }
 }
 
 type NpcPlayer struct {
   *GobangPlayer
-  GobangArtificialIntelligence
+  GobangAI
 }
