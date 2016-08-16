@@ -63,5 +63,6 @@ func (app *App) OnMessage(s *melody.Session, msg []byte) {
       gobang.White,
     )
     app.Register(s, game)
+    s.Write(GameStartMessage(game))
   }
 }

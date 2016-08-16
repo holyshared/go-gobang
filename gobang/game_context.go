@@ -1,5 +1,9 @@
 package gobang
 
+import (
+  "encoding/json"
+)
+
 func NewGameContext(rule *GameRule, playerStone, npcPlayerStone Stone) *GameContext {
   board := NewBoard(rule.BoardSize())
   player := NewGamePlayer(playerStone, board)
@@ -80,4 +84,21 @@ func (g *GameContext) CheckBoard() PutStoneResult {
   }
 
   return Continue
+}
+
+func (g *GameContext) MarshalJSON() ([]byte, error) {
+  jsonObject := struct {
+    Rule *GameRule `json:"rule"`
+    Board *Board `json:"board"`
+    CurrentPlayer Player `json:"currentPlayer"`
+    Player *GamePlayer `json:"player"`
+    NpcPlayer *NpcPlayer `json:"npcPlayer"`
+  }{
+    Rule: g.GameRule,
+    Board: g.board,
+    CurrentPlayer: g.currentPlayer,
+    Player: g.player,
+    NpcPlayer: g.npcPlayer,
+  }
+  return json.Marshal(jsonObject)
 }
