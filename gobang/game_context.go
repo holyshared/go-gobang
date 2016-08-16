@@ -24,7 +24,7 @@ func (g *GameContext) CurrentBoard() *Board {
   return g.board
 }
 
-func (g *GameContext) SelectBoardCell(point *Point) (*Cell, error) {
+func (g *GameContext) SelectCell(point *Point) (*Cell, error) {
   if !g.board.HaveCell(point) {
     return nil, NewCellNotFoundError(point)
   }

@@ -1,9 +1,9 @@
 package gobang
 
-func NewGobangPlayer(stone Stone, game *GameContext) *GobangPlayer {
+func NewGobangPlayer(stone Stone, selector CellSelector) *GobangPlayer {
   return &GobangPlayer {
     stone: stone,
-    game: game,
+    selector: selector,
   }
 }
 
@@ -14,19 +14,15 @@ type Player interface {
 
 type GobangPlayer struct {
   stone Stone
-  game *GameContext
+  selector CellSelector
 }
 
 func (player *GobangPlayer) Stone() Stone {
   return player.stone
 }
 
-func (player *GobangPlayer) JoinTo(game *GameContext) {
-  player.game = game
-}
-
 func (player *GobangPlayer) SelectBoardCell(point *Point) (*Cell, error) {
-  return player.game.SelectBoardCell(point)
+  return player.selector.SelectCell(point)
 }
 
 func (player *GobangPlayer) PutStoneTo(cell *Cell) error {

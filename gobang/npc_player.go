@@ -1,10 +1,8 @@
 package gobang
 
-func NewNpcPlayer(stone Stone, ai GobangArtificialIntelligence, game *GameContext) *NpcPlayer {
-  player := NewGobangPlayer(stone, game)
-
+func NewNpcPlayer(stone Stone, ai GobangArtificialIntelligence, selector CellSelector) *NpcPlayer {
   return &NpcPlayer {
-    GobangPlayer: player,
+    GobangPlayer: NewGobangPlayer(stone, selector),
     GobangArtificialIntelligence: ai,
   }
 }

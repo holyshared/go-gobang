@@ -4,10 +4,8 @@ type GamePlayer struct {
   *GobangPlayer
 }
 
-func NewGamePlayer(stone Stone, game *GameContext) *GamePlayer {
-  player := NewGobangPlayer(stone, game)
-
+func NewGamePlayer(stone Stone, selector CellSelector) *GamePlayer {
   return &GamePlayer {
-    GobangPlayer: player,
+    GobangPlayer: NewGobangPlayer(stone, selector),
   }
 }
