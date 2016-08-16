@@ -1,24 +1,30 @@
 package gobang
 
+func NewGameFacilitator(ctx *GameContext) *GameFacilitator {
+  return &GameFacilitator {
+    ctx: ctx,
+  }
+}
+
 type GameFacilitator struct {
-  game *GameContext
+  ctx *GameContext
 }
 
 func (f *GameFacilitator) PlayerSelectCell(point *Point) (*Cell, error) {
-  player := f.game.GamePlayer()
+  player := f.ctx.GamePlayer()
   cell, err := player.SelectBoardCell(point)
 
   return cell, err
 }
 
 func (f *GameFacilitator) PlayerPutStoneTo(cell *Cell) (GameProgressResult, error) {
-  player := f.game.GamePlayer()
+  player := f.ctx.GamePlayer()
   err := player.PutStoneTo(cell)
 
   if err != nil {
     return Retry, err
   }
-  result := f.game.CheckBoard()
+  result := f.ctx.CheckBoard()
 
   if result == Reached {
     return Win, nil
@@ -30,18 +36,18 @@ func (f *GameFacilitator) PlayerPutStoneTo(cell *Cell) (GameProgressResult, erro
 }
 
 func (f *GameFacilitator) ChangeToNextPlayer() {
-  f.game.ChangeToNextPlayer()
+  f.ctx.ChangeToNextPlayer()
 }
 
 func (f *GameFacilitator) NpcPlayerPutStone() (GameProgressResult, error) {
-  player := f.game.NpcPlayer()
+  player := f.ctx.NpcPlayer()
   cell := player.SelectTargetCell()
   err := player.PutStoneTo(cell)
 
   if err != nil {
     return Retry, err
   }
-  result := f.game.CheckBoard()
+  result := f.ctx.CheckBoard()
 
   if result == Reached {
     return Lose, nil
