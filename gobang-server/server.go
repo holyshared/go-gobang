@@ -4,12 +4,15 @@ import (
   "github.com/gin-gonic/gin"
   "github.com/olahol/melody"
   "github.com/Sirupsen/logrus"
+  "github.com/holyshared/learn-golang/gobang"
+  "encoding/json"
 )
 
 func NewApp() *App {
   app := &App {
     Melody: melody.New(),
     Logger: logrus.New(),
+    GameContainer: NewGameContainer(),
   }
   app.Start()
 
@@ -19,6 +22,7 @@ func NewApp() *App {
 type App struct {
   *melody.Melody
   *logrus.Logger
+  *GameContainer
 }
 
 func (app *App) Start() {
@@ -40,6 +44,24 @@ func (app *App) OnDisconnect(s *melody.Session) {
 }
 
 func (app *App) OnMessage(s *melody.Session, msg []byte) {
+  var message Message
+
   app.Info("recived message")
   app.Melody.Broadcast(msg)
+
+  err := json.Unmarshal(msg, &message)
+
+  if err != nil {
+    app.Warnf("recived message error: %v", err)
+    return
+  }
+
+  if (message.Type == GameStart) {
+    game := gobang.NewGobang(
+      gobang.DefaultGameRule(),
+      gobang.Black,
+      gobang.White,
+    )
+    app.Register(s, game)
+  }
 }
