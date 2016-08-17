@@ -47,7 +47,6 @@ func (app *App) OnMessage(s *melody.Session, msg []byte) {
   var message Message
 
   app.Info("recived message")
-  app.Melody.Broadcast(msg)
 
   err := json.Unmarshal(msg, &message)
 
