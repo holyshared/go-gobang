@@ -75,13 +75,16 @@ func (app *App) startGame(s *melody.Session, message *GameStartMessage) {
 }
 
 func (app *App) selectCell(s *melody.Session, message *SelectCellMessage) {
+  var err error
+  var result gobang.GameProgressResult
+
   app.Infof("player cell selected: ", message)
 
   game := app.Lookup(s)
-  result, err := game.PlayerPutStoneTo(message.Body)
+  result, err = game.PlayerPutStoneTo(message.Body)
 
   if err != nil {
-    app.Warnf("select faild", err)
+    app.Warnf("put stone faild: ", err)
     s.Write(SendPutFailedMessage(err))
     return
   }
@@ -92,10 +95,10 @@ func (app *App) selectCell(s *melody.Session, message *SelectCellMessage) {
     return
   }
 
-  result, nerr := game.NpcPlayerPutStone()
+  result, err = game.NpcPlayerPutStone()
 
-  if nerr != nil {
-    app.Warnf("select faild", nerr)
+  if err != nil {
+    app.Fatalf("put stone faild: ", err)
     return
   }
 
