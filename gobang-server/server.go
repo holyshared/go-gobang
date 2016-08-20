@@ -40,6 +40,7 @@ func (app *App) OnConnect(s *melody.Session) {
 
 func (app *App) OnDisconnect(s *melody.Session) {
   app.Info("disconnected")
+  app.Unregister(s)
 }
 
 func (app *App) OnMessage(s *melody.Session, msg []byte) {
