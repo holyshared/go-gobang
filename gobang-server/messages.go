@@ -10,6 +10,7 @@ const (
   SelectCell = "selectCell"
   NexTurn = "nexTurn"
   GameEnd = "finish"
+  PutFailed = "putFailed"
 )
 
 type Message struct {
@@ -111,6 +112,15 @@ func SendGameEndMessage(result gobang.GameProgressResult, gobang *gobang.Gobang)
       Game: gobang,
       Result: result,
     },
+  }
+  res, _ := json.Marshal(message)
+  return res
+}
+
+func SendPutFailedMessage(reason error) []byte {
+  message := &Message {
+    Type: PutFailed,
+    Body: reason,
   }
   res, _ := json.Marshal(message)
   return res

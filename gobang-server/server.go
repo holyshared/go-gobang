@@ -82,6 +82,7 @@ func (app *App) selectCell(s *melody.Session, message *SelectCellMessage) {
 
   if err != nil {
     app.Warnf("select faild", err)
+    s.Write(SendPutFailedMessage(err))
     return
   }
 

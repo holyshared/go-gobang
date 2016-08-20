@@ -32,7 +32,7 @@ func (g *Gobang) PlayerPutStoneTo(point *Point) (GameProgressResult, error) {
   }
   g.changeToNextPlayer()
 
-  return result, err 
+  return result, nil 
 }
 
 func (g *Gobang) NpcPlayerPutStone() (GameProgressResult, error) {
