@@ -5,7 +5,6 @@ import (
   "github.com/olahol/melody"
   "github.com/Sirupsen/logrus"
   "github.com/holyshared/learn-golang/gobang"
-  "encoding/json"
 )
 
 func NewApp() *App {
@@ -44,24 +43,66 @@ func (app *App) OnDisconnect(s *melody.Session) {
 }
 
 func (app *App) OnMessage(s *melody.Session, msg []byte) {
-  var message Message
+  var message interface{}
 
   app.Info("recived message")
-
-  err := json.Unmarshal(msg, &message)
+  message, err := UnmarshalMessage(msg)
 
   if err != nil {
     app.Warnf("recived message error: %v", err)
     return
   }
 
-  if (message.Type == GameStart) {
-    game := gobang.NewGobang(
-      gobang.DefaultGameRule(),
-      gobang.Black,
-      gobang.White,
-    )
-    app.Register(s, game)
-    s.Write(GameStartMessage(game))
+  switch message := message.(type) {
+  default:
+    app.Warnf("recived message is not support: %v", message)
+  case *GameStartMessage:
+    app.startGame(s, message)
+  case *SelectCellMessage:
+    app.selectCell(s, message)
   }
+}
+
+func (app *App) startGame(s *melody.Session, message *GameStartMessage) {
+  app.Infof("game started: ", message)
+  game := gobang.NewGobang(
+    gobang.DefaultGameRule(),
+    gobang.Black,
+    gobang.White,
+  )
+  app.Register(s, game)
+  s.Write(SendGameStartMessage(game))
+}
+
+func (app *App) selectCell(s *melody.Session, message *SelectCellMessage) {
+  app.Infof("player cell selected: ", message)
+
+  game := app.Lookup(s)
+  result, err := game.PlayerPutStoneTo(message.Body)
+
+  if err != nil {
+    app.Warnf("select faild", err)
+    return
+  }
+
+  if result == gobang.Win || result == gobang.Draw {
+    app.Unregister(s)
+    s.Write(SendGameEndMessage(result, game))
+    return
+  }
+
+  result, nerr := game.NpcPlayerPutStone()
+
+  if nerr != nil {
+    app.Warnf("select faild", nerr)
+    return
+  }
+
+  if result == gobang.Lose || result == gobang.Draw {
+    app.Unregister(s)
+    s.Write(SendGameEndMessage(result, game))
+    return
+  }
+
+  s.Write(SendNextTurnMessage(game))
 }

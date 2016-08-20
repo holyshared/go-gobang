@@ -9,16 +9,16 @@ func NewGobang(rule *GameRule, playerStone, npcPlayerStone Stone) *Gobang {
   facilitator := NewGameFacilitator(context)
 
   return &Gobang {
-    GameContext: context,
+//    GameContext: context,
     GameFacilitator: facilitator,
   }
 }
 
 type Gobang struct {
-  *GameContext
+  //*GameContext
   *GameFacilitator
 }
 
 func (g *Gobang) MarshalJSON() ([]byte, error) {
-  return json.Marshal(g.GameContext)
+  return json.Marshal(g.GameFacilitator.ctx)
 }
