@@ -1,0 +1,42 @@
+#container {
+  width: 630px;
+  margin: 15px auto;
+  text-align: center;
+}
+
+#board  {
+  overflow: hidden;
+  width: 630px;
+  padding: 0px;
+  margin: 0px 0px 15px 0px;
+  border-right: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+}
+
+#board li {
+  padding: 0px;
+  margin: 0px;
+  display: block;
+  border-top: 1px solid #cccccc;
+  border-left: 1px solid #cccccc;
+  width: 20px;
+  height: 20px;
+  float: left;
+}
+
+#start {
+  display: inline-block;
+  padding: 10px 15px;
+}
+
+#start.hidden {
+  display: none;
+}
+
+.display {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
