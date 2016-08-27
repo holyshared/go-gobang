@@ -105,7 +105,6 @@
       } else if (cell.stone === 2) {
         c.innerText = 'W';
       }
-      i++;
     }
   }
 
