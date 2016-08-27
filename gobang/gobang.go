@@ -41,6 +41,7 @@ func (g *Gobang) NpcPlayerPutStone() (GameProgressResult, error) {
   if err != nil {
     return Retry, err //FIXME Fatal
   }
+  g.changeToNextPlayer()
 
   return result, nil 
 }
