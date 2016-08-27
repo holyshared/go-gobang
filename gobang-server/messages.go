@@ -8,7 +8,7 @@ import (
 const (
   GameStart = "start"
   SelectCell = "selectCell"
-  NexTurn = "nexTurn"
+  NexTurn = "nextTurn"
   GameEnd = "finish"
   PutFailed = "putFailed"
 )
