@@ -36,7 +36,7 @@ func (r *MatchedResult) SelectEmptyNeighborCell() *Cell {
     cells = append(cells, result.EmptyNeighborCells()...)
   }
 
-  if len(cells) <= 0{
+  if len(cells) <= 0 {
     return nil
   }
 

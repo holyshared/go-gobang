@@ -56,7 +56,7 @@ func (ai *NpcAI) selectEmptyCell() *Cell {
 func (ai *NpcAI) selectNpcPlayerReachedCell() *Cell {
   var result *MatchedResult
 
-  for i := ai.ctx.ReachedStoneCount() - 1; i <= 0; i-- {
+  for i := ai.ctx.ReachedStoneCount() - 1; i > 0; i-- {
     matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), i)
     result = matcher.Matches(ai.ctx.Board())
 
