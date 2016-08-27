@@ -48,3 +48,24 @@ func TestHasNotReachedResults(t *testing.T) {
     t.Errorf("got %v\nwant %v", cell, nil)
   }
 }
+
+func TestHasEmptyNeighborCell(t *testing.T) {
+  reachedResults := make([]*ReachedResult, 0)
+
+  emptyNeighborCells := make([]*Cell, 0)
+  emptyNeighborCells = append(emptyNeighborCells, NewCell(1, 0, 0) )
+
+  reachedResults = append(reachedResults,  &ReachedResult{
+    cells: make([]*Cell, 0),
+    neighborCells: make([]*Cell, 0),
+    emptyNeighborCells: emptyNeighborCells,
+  })
+
+  result := &MatchedResult{ results: reachedResults }
+
+  cell := result.SelectEmptyNeighborCell()
+
+  if cell == nil {
+    t.Errorf("got %v\nwant neighbor cell", cell)
+  }
+}

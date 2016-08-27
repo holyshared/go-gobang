@@ -40,6 +40,10 @@ func (r *MatchedResult) SelectEmptyNeighborCell() *Cell {
     return nil
   }
 
+  if len(cells) <= 1 {
+    return cells[0]
+  }
+
   index := rand.Intn(len(cells) - 1)
 
   return cells[index]
