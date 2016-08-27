@@ -90,6 +90,8 @@ func (app *App) selectCell(s *melody.Session, message *SelectCellMessage) {
     return
   }
 
+  app.Infof("player selected done")
+
   if result == gobang.Win || result == gobang.Draw {
     app.Unregister(s)
     s.Write(SendGameEndMessage(result, game))
@@ -108,6 +110,7 @@ func (app *App) selectCell(s *melody.Session, message *SelectCellMessage) {
     s.Write(SendGameEndMessage(result, game))
     return
   }
+  app.Infof("player turn")
 
   s.Write(SendNextTurnMessage(game))
 }
