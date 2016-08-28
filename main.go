@@ -3,7 +3,7 @@ package main
 import (
   "github.com/gin-gonic/gin"
   "github.com/gin-gonic/contrib/static"
-  gobang "github.com/holyshared/learn-golang/gobang-server"
+  gobang "github.com/holyshared/go-gobang/gobang-server"
 )
 
 func main() {

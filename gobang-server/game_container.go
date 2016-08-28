@@ -2,7 +2,7 @@ package server
 
 import (
   "github.com/olahol/melody"
-  "github.com/holyshared/learn-golang/gobang"
+  "github.com/holyshared/go-gobang/gobang"
 )
 
 func NewGameContainer() *GameContainer {

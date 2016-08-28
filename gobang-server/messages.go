@@ -1,7 +1,7 @@
 package server
 
 import (
-  "github.com/holyshared/learn-golang/gobang"
+  "github.com/holyshared/go-gobang/gobang"
   "encoding/json"
 )
 

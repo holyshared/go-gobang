@@ -4,7 +4,7 @@ import (
   "github.com/gin-gonic/gin"
   "github.com/olahol/melody"
   "github.com/Sirupsen/logrus"
-  "github.com/holyshared/learn-golang/gobang"
+  "github.com/holyshared/go-gobang/gobang"
 )
 
 func NewApp() *App {
