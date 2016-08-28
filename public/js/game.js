@@ -1,5 +1,10 @@
 (function (global) {
 
+  var Stone = {
+    Black: 1,
+    White: 2
+  };
+
   function App(uri, output) {
     this.websocket = new WebSocket(uri);
     this.websocket.onopen = this.onOpen.bind(this);
@@ -100,9 +105,9 @@
       var c = this.cells[i];
       var cell = game.board.cells[i];
 
-      if (cell.stone === 1) {
+      if (cell.stone === Stone.Black) {
         c.innerText = 'B';
-      } else if (cell.stone === 2) {
+      } else if (cell.stone === Stone.White) {
         c.innerText = 'W';
       }
     }
