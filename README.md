@@ -1,3 +1,16 @@
-# learn-golang
+# Gobang for golang
 
-[![Build Status](https://travis-ci.org/holyshared/learn-golang.svg?branch=master)](https://travis-ci.org/holyshared/learn-golang)
+[![Build Status](https://travis-ci.org/holyshared/go-gobang.svg?branch=master)](https://travis-ci.org/holyshared/go-gobang)
+
+## Build of the game server
+
+Please execute the following command to build a game server.
+
+	make setup
+	make build
+
+## Running the test
+
+You can test with the following command.
+
+	make test
