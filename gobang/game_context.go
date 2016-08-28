@@ -1,14 +1,28 @@
 package gobang
 
-func NewGameContext(rule *GameRule) *GameContext {
+import (
+  "encoding/json"
+)
+
+func NewGameContext(rule *GameRule, playerStone, npcPlayerStone Stone) *GameContext {
   board := NewBoard(rule.BoardSize())
+  player := NewGamePlayer(playerStone, board)
+
+  ctx := &NpcAIContext {
+    rule: rule,
+    board: board,
+    playerStone: playerStone,
+    npcPlayerStone: npcPlayerStone,
+  }
+  ai := NewNpcAI(ctx)
+  npcPlayer := NewNpcPlayer(npcPlayerStone, ai)
 
   return &GameContext {
     GameRule: rule,
     board: board,
-    currentPlayer: nil,
-    player: nil,
-    npcPlayer: nil,
+    currentPlayer: player,
+    player: player,
+    npcPlayer: npcPlayer,
   }
 }
 
@@ -24,7 +38,7 @@ func (g *GameContext) CurrentBoard() *Board {
   return g.board
 }
 
-func (g *GameContext) SelectBoardCell(point *Point) (*Cell, error) {
+func (g *GameContext) SelectCell(point *Point) (*Cell, error) {
   if !g.board.HaveCell(point) {
     return nil, NewCellNotFoundError(point)
   }
@@ -70,4 +84,21 @@ func (g *GameContext) CheckBoard() PutStoneResult {
   }
 
   return Continue
+}
+
+func (g *GameContext) MarshalJSON() ([]byte, error) {
+  jsonObject := struct {
+    Rule *GameRule `json:"rule"`
+    Board *Board `json:"board"`
+    CurrentPlayer Player `json:"currentPlayer"`
+    Player *GamePlayer `json:"player"`
+    NpcPlayer *NpcPlayer `json:"npcPlayer"`
+  }{
+    Rule: g.GameRule,
+    Board: g.board,
+    CurrentPlayer: g.currentPlayer,
+    Player: g.player,
+    NpcPlayer: g.npcPlayer,
+  }
+  return json.Marshal(jsonObject)
 }

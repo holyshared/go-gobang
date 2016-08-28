@@ -30,7 +30,7 @@ func (board *Board) SelectCell(point *Point) *Cell {
 }
 
 func (board *Board) SelectCells(matcher CellMatcher) []*Cell {
-  var point *Point
+  point := &Point{}
   endX := board.Width() - 1
   endY := board.Height() - 1
   cells := make([]*Cell, 0)
@@ -69,13 +69,13 @@ func (board *Board) IsCellEmpty(point *Point) bool {
 }
 
 func (board *Board) IsAllFilled() bool {
-  var point *Point
+  point := &Point{}
   endX := board.Width() - 1
   endY := board.Height() - 1
 
   for x := 0; x <= endX; x++ {
     for y := 0; y <= endY; y++ {
-      if !board.IsCellEmpty( point.SetTo(x, y) ) {
+      if !board.IsCellEmpty(point.SetTo(x, y)) {
         continue
       }
       return false

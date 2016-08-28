@@ -1,13 +1,20 @@
 package gobang
 
-type GamePlayer struct {
-  *GobangPlayer
+func NewGamePlayer(stone Stone, selector CellSelector) *GamePlayer {
+  return &GamePlayer {
+    GobangPlayer: NewGobangPlayer(stone),
+    selector: selector,
+  }
 }
 
-func NewGamePlayer(stone Stone) *GamePlayer {
-  player := NewGobangPlayer(stone)
+type GamePlayer struct {
+  *GobangPlayer
+  selector CellSelector
+}
 
-  return &GamePlayer {
-    GobangPlayer: player,
+func (player *GamePlayer) SelectBoardCell(point *Point) (*Cell, error) {
+  if !player.selector.HaveCell(point) {
+    return nil, NewCellNotFoundError(point)
   }
+  return player.selector.SelectCell(point), nil
 }

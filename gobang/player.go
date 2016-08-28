@@ -1,5 +1,9 @@
 package gobang
 
+import (
+  "encoding/json"
+)
+
 func NewGobangPlayer(stone Stone) *GobangPlayer {
   return &GobangPlayer {
     stone: stone,
@@ -9,23 +13,15 @@ func NewGobangPlayer(stone Stone) *GobangPlayer {
 type Player interface {
   Stone() Stone
   PutStoneTo(cell *Cell) error
+  MarshalJSON() ([]byte, error)
 }
 
 type GobangPlayer struct {
   stone Stone
-  game *GameContext
 }
 
 func (player *GobangPlayer) Stone() Stone {
   return player.stone
-}
-
-func (player *GobangPlayer) JoinTo(game *GameContext) {
-  player.game = game
-}
-
-func (player *GobangPlayer) SelectBoardCell(point *Point) (*Cell, error) {
-  return player.game.SelectBoardCell(point)
 }
 
 func (player *GobangPlayer) PutStoneTo(cell *Cell) error {
@@ -35,4 +31,13 @@ func (player *GobangPlayer) PutStoneTo(cell *Cell) error {
   player.stone.PutTo(cell)
 
   return nil
+}
+
+func (player *GobangPlayer) MarshalJSON() ([]byte, error) {
+  jsonObject := struct {
+    Stone Stone `json:"stone"`
+  }{
+    Stone: player.Stone(),
+  }
+  return json.Marshal(jsonObject)
 }

@@ -1,11 +1,12 @@
 package gobang
 
 func NewCellReachedMatcher(stone Stone, count int) CellReachedMatcher {
-  selectors := make([]ReachedMatcher, 0)
-  selectors = append(selectors, NewVerticalCellMatcher(stone, count))
-  selectors = append(selectors, NewHorizontalCellMatcher(stone, count))
-  selectors = append(selectors, NewTopLeftDiagonalCellMatcher(stone, count))
-  selectors = append(selectors, NewTopRightDiagonalCellMatcher(stone, count))
+  selectors := []ReachedMatcher {
+    NewVerticalCellMatcher(stone, count),
+    NewHorizontalCellMatcher(stone, count),
+    NewTopLeftDiagonalCellMatcher(stone, count),
+    NewTopRightDiagonalCellMatcher(stone, count),
+  }
 
   return CellReachedMatcher { selectors: selectors }
 }
@@ -26,8 +27,8 @@ func (s *CellReachedMatcher) Matches(board *Board) *MatchedResult {
     }(selector, board)
   }
 
-  for res := range ch {
-    result.Merge(res)
+  for i := len(s.selectors); i > 0; i-- {
+    result.Merge(<-ch)
   }
 
   return result
