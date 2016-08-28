@@ -4,6 +4,24 @@
     Black: 1,
     White: 2
   };
+  var GameResult = {
+    Win: 1,
+    Lose: 2,
+    Draw: 3
+  };
+  var GameResultMessage = {};
+  GameResultMessage[GameResult.Win] = {
+    class: 'win',
+    message: 'You win'
+  };
+  GameResultMessage[GameResult.Lose] = {
+    class: 'lose',
+    message: 'You lose'
+  };
+  GameResultMessage[GameResult.Draw] = {
+    class: 'draw',
+    message: 'Draw game'
+  };
 
   function App(uri, output) {
     this.websocket = new WebSocket(uri);
@@ -16,6 +34,8 @@
     this.cells = [];
     this.board = document.getElementById('board');
     this.board.addEventListener('click', this.handleEvent.bind(this), false);
+
+    this.message = document.getElementById('game-message');
 
     this.startButton = document.getElementById('start');
     this.startButton.addEventListener('click', this.onStartClick.bind(this), false);
@@ -43,6 +63,9 @@
       this.initBoard(msg.body.game);
     } else if (msg.type === 'nextTurn') {
       this.renderBoard(msg.body.game);
+    } else if (msg.type === 'finish') {
+      this.renderBoard(msg.body.game);
+      this.renderMessage(msg.body.result);
     }
   }
 
@@ -111,6 +134,12 @@
         c.innerText = 'W';
       }
     }
+  }
+
+  App.prototype.renderMessage = function(status) {
+    var message = GameResultMessage[status];
+    this.message.innerText = message.message;
+    this.message.classList.add(message.class);
   }
 
   global.App = App;

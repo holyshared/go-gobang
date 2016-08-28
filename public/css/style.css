@@ -40,3 +40,20 @@
 .hidden {
   display: none;
 }
+
+.message {
+  font-weight: bold;
+  font-size: 180%;
+}
+
+.win {
+  color: #009900;
+}
+
+.lose {
+  color: #cc0000;
+}
+
+.draw {
+  color: #cc7a00;
+}
