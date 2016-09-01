@@ -44,23 +44,21 @@ func (app *App) OnDisconnect(s *melody.Session) {
 }
 
 func (app *App) OnMessage(s *melody.Session, msg []byte) {
-  var message interface{}
-
   app.Info("recived message")
-  message, err := UnmarshalMessage(msg)
+  message, err := DecodeMessage(msg)
 
   if err != nil {
     app.Warnf("recived message error: %v", err)
     return
   }
 
-  switch message := message.(type) {
+  switch recivedMessage := message.(type) {
   default:
-    app.Warnf("recived message is not support: %v", message)
+    app.Warnf("recived message is not support: %v", recivedMessage)
   case *GameStartMessage:
-    app.startGame(s, message)
+    app.startGame(s, recivedMessage)
   case *SelectCellMessage:
-    app.selectCell(s, message)
+    app.selectCell(s, recivedMessage)
   }
 }
 
