@@ -14,7 +14,7 @@ const (
   PutFailed = "putFailed"
 )
 
-type Message struct {
+type OutgoingMessage struct {
   Type string `json:"type"`
   Body interface{} `json:"body"`
 }
@@ -33,18 +33,11 @@ func (msg *UnkownMessageError) Error() string {
 }
 
 type GameStartMessage struct {
-  Type string `json:"type"`
   Body interface{} `json:"body"`
 }
 
 type SelectCellMessage struct {
-  Type string `json:"type"`
   Body *gobang.Point `json:"body"`
-}
-
-type GameEndMessage struct {
-  Type string `json:"type"`
-  Body *GameResult `json:"body"`
 }
 
 type CurrentGame struct {
@@ -69,16 +62,19 @@ func DecodeMessage(data []byte) (interface{}, error) {
 
 func (m *ReceiveMessage) decodeBody() (interface{}, error) {
   var body interface{}
+  var err error
 
   switch m.Type {
   default:
     return nil, &UnkownMessageError { ReceiveMessage: m }
   case GameStart:
     body = &GameStartMessage{}
+    err = json.Unmarshal(m.Body, body)
   case SelectCell:
-    body = &SelectCellMessage{}
+    p := gobang.NewPoint(0, 0)
+    err = json.Unmarshal(m.Body, p)
+    body = &SelectCellMessage{ Body: p }
   }
-  err := json.Unmarshal(m.Body, body)
 
   if err != nil {
     return nil, err
@@ -88,7 +84,7 @@ func (m *ReceiveMessage) decodeBody() (interface{}, error) {
 }
 
 func SendGameStartMessage(gobang *gobang.Gobang) []byte {
-  message := &Message {
+  message := &OutgoingMessage {
     Type: GameStart,
     Body: &CurrentGame {
       Game: gobang,
@@ -99,7 +95,7 @@ func SendGameStartMessage(gobang *gobang.Gobang) []byte {
 }
 
 func SendNextTurnMessage(gobang *gobang.Gobang) []byte {
-  message := &Message {
+  message := &OutgoingMessage {
     Type: NexTurn,
     Body: &CurrentGame {
       Game: gobang,
@@ -110,7 +106,7 @@ func SendNextTurnMessage(gobang *gobang.Gobang) []byte {
 }
 
 func SendGameEndMessage(result gobang.GameProgressResult, gobang *gobang.Gobang) []byte {
-  message := &GameEndMessage {
+  message := &OutgoingMessage {
     Type: GameEnd,
     Body: &GameResult {
       Game: gobang,
@@ -122,7 +118,7 @@ func SendGameEndMessage(result gobang.GameProgressResult, gobang *gobang.Gobang)
 }
 
 func SendPutFailedMessage(reason error) []byte {
-  message := &Message {
+  message := &OutgoingMessage {
     Type: PutFailed,
     Body: reason,
   }
