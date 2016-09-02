@@ -1,13 +1,8 @@
 package gobang
 
 func NewCell(x, y int, stone Stone) *Cell {
-  point := &Point {
-    x: x,
-    y: y,
-  }
-
   return &Cell {
-    Point2D: point,
+    Point2D: NewPoint(x, y),
     Stone: stone,
   }
 }

@@ -33,7 +33,7 @@ func (s *VerticalCellMatcher) Matches(board *Board) *MatchedResult {
 }
 
 func (s *VerticalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
-  point := &Point {}
+  point := DefaultPoint()
   endY := board.Height() - 1
   endX := board.Width() - 1
   groups := make([]*CellGroup, 0)

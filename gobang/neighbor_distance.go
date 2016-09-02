@@ -50,15 +50,15 @@ type NeighborDistance struct {
 }
 
 func (n NeighborDistance) prevPoint(cell *Cell) Point2D {
-  return &Point {
-    x: cell.X() + n.prev.x,
-    y: cell.Y() + n.prev.y,
-  }
+  return NewPoint(
+    cell.X() + n.prev.x,
+    cell.Y() + n.prev.y,
+  )
 }
 
 func (n NeighborDistance) nextPoint(cell *Cell) Point2D {
-  return &Point {
-    x: cell.X() + n.next.x,
-    y: cell.Y() + n.next.y,
-  }
+  return NewPoint(
+    cell.X() + n.next.x,
+    cell.Y() + n.next.y,
+  )
 }

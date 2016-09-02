@@ -11,7 +11,7 @@ func NewBoard(size *Size) *Board {
   for i := range cells {
     y := (i / size.Width)
     x := i - (y * size.Width)
-    cells[i] = &Cell { &Point { x: x, y: y }, 0 }
+    cells[i] = &Cell { NewPoint(x, y), 0 }
   }
   return &Board {
     Size: size,
@@ -30,7 +30,7 @@ func (board *Board) SelectCell(point Point2D) *Cell {
 }
 
 func (board *Board) SelectCells(matcher CellMatcher) []*Cell {
-  point := &Point{}
+  point := DefaultPoint()
   endX := board.Width() - 1
   endY := board.Height() - 1
   cells := make([]*Cell, 0)
@@ -69,7 +69,7 @@ func (board *Board) IsCellEmpty(point Point2D) bool {
 }
 
 func (board *Board) IsAllFilled() bool {
-  point := &Point{}
+  point := DefaultPoint()
   endX := board.Width() - 1
   endY := board.Height() - 1
 
@@ -86,7 +86,7 @@ func (board *Board) IsAllFilled() bool {
 }
 
 func (board *Board) Print() {
-  point := &Point {}
+  point := DefaultPoint()
   cells := make([]string, 0)
 
   for y := 0; y <= board.Height() - 1; y++ {

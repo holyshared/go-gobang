@@ -5,11 +5,15 @@ import (
   "encoding/json"
 )
 
-func NewPoint(x, y int) *Point {
+func NewPoint(x, y int) Point2D {
   return &Point {
     x: x,
     y: y,
   }
+}
+
+func DefaultPoint() Point2D {
+  return NewPoint(0, 0)
 }
 
 type Point2D interface {
@@ -20,8 +24,8 @@ type Point2D interface {
 }
 
 type Point struct {
-  x int `json:"x"`
-  y int `json:"y"`
+  x int
+  y int
 }
 
 func (point *Point) X() int {

@@ -64,7 +64,7 @@ func (s *TopLeftDiagonalCellMatcher) scanAllCellGroup(board *Board) []*CellGroup
  * | | | | | | | | | |B|
  */
 func (s *TopLeftDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGroup {
-  point := &Point {}
+  point := DefaultPoint()
   maxX := board.Width() - 1
   endX := board.Width() - s.count
   groups := make([]*CellGroup, 0)
@@ -102,7 +102,7 @@ func (s *TopLeftDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGro
  * | | | | |B|B|B|B|B| |
  */
 func (s *TopLeftDiagonalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
-  point := &Point {}
+  point := DefaultPoint()
   maxY := board.Height() - 1
   endY := board.Height() - s.count
   groups := make([]*CellGroup, 0)
