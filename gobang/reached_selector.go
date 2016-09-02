@@ -12,7 +12,7 @@ func (s ReachedSelector) Select(group *CellGroup) []*ReachedResult {
   results := make([]*ReachedResult, 0)
 
   for _, cell := range group.cells {
-    if cell.Have(s.stone) == false {
+    if cell.HaveStone(s.stone) == false {
       builder.Clear()
       continue
     }

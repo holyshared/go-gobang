@@ -16,7 +16,7 @@ func (cell *Cell) IsEmpty() bool {
   return cell.Stone != Black && cell.Stone != White
 }
 
-func (cell *Cell) Have(stone Stone) bool {
+func (cell *Cell) HaveStone(stone Stone) bool {
   return cell.Stone == stone
 }
 
