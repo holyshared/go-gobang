@@ -12,7 +12,7 @@ type GamePlayer struct {
   selector CellSelector
 }
 
-func (player *GamePlayer) SelectBoardCell(point *Point) (*Cell, error) {
+func (player *GamePlayer) SelectBoardCell(point Point2D) (*Cell, error) {
   if !player.selector.HaveCell(point) {
     return nil, NewCellNotFoundError(point)
   }

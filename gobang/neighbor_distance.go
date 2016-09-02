@@ -49,16 +49,16 @@ type NeighborDistance struct {
   next PointDistance
 }
 
-func (n NeighborDistance) prevPoint(cell *Cell) *Point {
+func (n NeighborDistance) prevPoint(cell *Cell) Point2D {
   return &Point {
-    X: cell.X + n.prev.x,
-    Y: cell.Y + n.prev.y,
+    x: cell.X() + n.prev.x,
+    y: cell.Y() + n.prev.y,
   }
 }
 
-func (n NeighborDistance) nextPoint(cell *Cell) *Point {
+func (n NeighborDistance) nextPoint(cell *Cell) Point2D {
   return &Point {
-    X: cell.X + n.next.x,
-    Y: cell.Y + n.next.y,
+    x: cell.X() + n.next.x,
+    y: cell.Y() + n.next.y,
   }
 }

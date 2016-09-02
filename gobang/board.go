@@ -11,7 +11,7 @@ func NewBoard(size *Size) *Board {
   for i := range cells {
     y := (i / size.Width)
     x := i - (y * size.Width)
-    cells[i] = &Cell { &Point { X: x, Y: y }, 0 }
+    cells[i] = &Cell { &Point { x: x, y: y }, 0 }
   }
   return &Board {
     Size: size,
@@ -24,8 +24,8 @@ type Board struct {
   Cells []*Cell `json:"cells"`
 }
 
-func (board *Board) SelectCell(point *Point) *Cell {
-  index := (point.Y * board.Width()) + point.X
+func (board *Board) SelectCell(point Point2D) *Cell {
+  index := (point.Y() * board.Width()) + point.X()
   return board.Cells[index]
 }
 
@@ -49,9 +49,9 @@ func (board *Board) SelectCells(matcher CellMatcher) []*Cell {
   return cells
 }
 
-func (board *Board) HaveCell(point *Point) bool {
-  isXRange := point.X >= 0 && point.X <= board.Width() - 1
-  isYRange := point.Y >= 0 && point.Y <= board.Height() - 1
+func (board *Board) HaveCell(point Point2D) bool {
+  isXRange := point.X() >= 0 && point.X() <= board.Width() - 1
+  isYRange := point.Y() >= 0 && point.Y() <= board.Height() - 1
   return isXRange && isYRange
 }
 
@@ -63,7 +63,7 @@ func (board *Board) Width() int {
   return board.Size.Width
 }
 
-func (board *Board) IsCellEmpty(point *Point) bool {
+func (board *Board) IsCellEmpty(point Point2D) bool {
   cell := board.SelectCell(point)
   return cell.IsEmpty()
 }
