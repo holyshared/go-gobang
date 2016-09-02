@@ -33,7 +33,7 @@ func (msg *UnkownMessageError) Error() string {
 }
 
 type GameStartMessage struct {
-  Body interface{} `json:"body"`
+  Stone gobang.Stone `json:"stone"`
 }
 
 type SelectCellMessage struct {
