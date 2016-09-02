@@ -15,3 +15,4 @@ build:
 
 test:
 	go test ./gobang
+	go test ./gobang-server
