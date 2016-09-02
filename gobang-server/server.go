@@ -44,32 +44,42 @@ func (app *App) OnDisconnect(s *melody.Session) {
 }
 
 func (app *App) OnMessage(s *melody.Session, msg []byte) {
-  var message interface{}
-
   app.Info("recived message")
-  message, err := UnmarshalMessage(msg)
+  message, err := DecodeMessage(msg)
 
   if err != nil {
     app.Warnf("recived message error: %v", err)
     return
   }
 
-  switch message := message.(type) {
+  switch recivedMessage := message.(type) {
   default:
-    app.Warnf("recived message is not support: %v", message)
+    app.Warnf("recived message is not support: %v", recivedMessage)
   case *GameStartMessage:
-    app.startGame(s, message)
+    app.startGame(s, recivedMessage)
   case *SelectCellMessage:
-    app.selectCell(s, message)
+    app.selectCell(s, recivedMessage)
   }
 }
 
 func (app *App) startGame(s *melody.Session, message *GameStartMessage) {
+  var playerStone gobang.Stone
+  var npcPlayerStone gobang.Stone
+
   app.Infof("game started: ", message)
+
+  if message.Stone == gobang.Black {
+    playerStone = gobang.Black
+    npcPlayerStone = gobang.White
+  } else {
+    playerStone = gobang.White
+    npcPlayerStone = gobang.Black
+  }
+
   game := gobang.NewGobang(
     gobang.DefaultGameRule(),
-    gobang.Black,
-    gobang.White,
+    playerStone,
+    npcPlayerStone,
   )
   app.Register(s, game)
   s.Write(SendGameStartMessage(game))
@@ -82,7 +92,7 @@ func (app *App) selectCell(s *melody.Session, message *SelectCellMessage) {
   app.Infof("player cell selected: ", message)
 
   game := app.Lookup(s)
-  result, err = game.PlayerPutStoneTo(message.Body)
+  result, err = game.PlayerPutStoneTo(message)
 
   if err != nil {
     app.Warnf("put stone faild: ", err)

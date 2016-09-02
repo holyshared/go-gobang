@@ -24,6 +24,7 @@
   };
 
   function App(uri, output) {
+    this.selectedStone = Stone.Black;
     this.websocket = new WebSocket(uri);
     this.websocket.onopen = this.onOpen.bind(this);
     this.websocket.onclose = this.onClose.bind(this);
@@ -36,6 +37,10 @@
     this.board.addEventListener('click', this.handleEvent.bind(this), false);
 
     this.message = document.getElementById('game-message');
+
+    this.startMenu = document.getElementById('startMenu');
+    this.startMenu.addEventListener('click', this.handleEvent.bind(this), false);
+    this.startMenus = document.querySelectorAll('#startMenu li a');
 
     this.startButton = document.getElementById('start');
     this.startButton.addEventListener('click', this.onStartClick.bind(this), false);
@@ -59,9 +64,11 @@
   
     if (msg.type === 'start') {
       this.board.setAttribute('class', 'display');
-      this.startButton.setAttribute('class', 'hidden');
+      this.startMenu.setAttribute('class', 'hidden');
+      this.message.innerText = 'Your turn';
       this.initBoard(msg.body.game);
     } else if (msg.type === 'nextTurn') {
+      this.message.innerText = 'Your turn';
       this.renderBoard(msg.body.game);
     } else if (msg.type === 'finish') {
       this.renderBoard(msg.body.game);
@@ -73,19 +80,41 @@
     console.log(evt)
   }
 
+  App.prototype.handleEvent = function(evt) {
+    var target = evt.target;
+
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    if (target.nodeName === 'LI' && target.dataset.type === 'cell') {
+      this.onCellClick(evt);
+    } else if (target.nodeName === 'A' && target.dataset.stone) {
+      this.onStoneClick(evt);
+    }
+  }
+  
   App.prototype.onStartClick = function(evt) {
     var msg = JSON.stringify({
       type: 'start',
-      body: null
+      body: {
+        stone: this.selectedStone
+      }
     });
     this.websocket.send(msg);
   }
 
-  App.prototype.handleEvent = function(evt) {
-    if (evt.target.nodeName !== 'LI') {
-      return;
-    }
-    this.onCellClick(evt);
+  App.prototype.onStoneClick = function(evt) {
+    var target = evt.target;
+    var stone = target.dataset.stone;
+
+    console.log(this.startMenus);
+
+    this.startMenus.forEach(function (menu) {
+      menu.classList.remove('selected');
+    });
+
+    target.classList.add('selected');
+    this.selectedStone = parseInt(stone, 10);
   }
 
   App.prototype.onCellClick = function(evt) {
@@ -114,6 +143,7 @@
         var c = document.createElement('li');
         c.dataset.x = x;
         c.dataset.y = y;
+        c.dataset.type = 'cell';
         this.board.appendChild(c);
         this.cells.push(c);
         i++;
@@ -129,9 +159,9 @@
       var cell = game.board.cells[i];
 
       if (cell.stone === Stone.Black) {
-        c.innerText = 'B';
+        c.innerText = '⚫️';
       } else if (cell.stone === Stone.White) {
-        c.innerText = 'W';
+        c.innerText = '⚪️';
       }
     }
   }

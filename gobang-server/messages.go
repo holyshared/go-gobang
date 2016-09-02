@@ -1,8 +1,9 @@
 package server
 
 import (
-  "github.com/holyshared/go-gobang/gobang"
+  "fmt"
   "encoding/json"
+  "github.com/holyshared/go-gobang/gobang"
 )
 
 const (
@@ -13,32 +14,30 @@ const (
   PutFailed = "putFailed"
 )
 
-type Message struct {
+type OutgoingMessage struct {
   Type string `json:"type"`
   Body interface{} `json:"body"`
 }
 
-type UnkownMessage struct {
-  *Message
+type ReceiveMessage struct {
+  Type string `json:"type"`
+  Body json.RawMessage `json:"body"`
 }
 
-func (msg *UnkownMessage) Error() string {
-  return msg.Type
+type UnkownMessageError struct {
+  *ReceiveMessage
+}
+
+func (msg *UnkownMessageError) Error() string {
+  return fmt.Sprintf("'%s' is not a valid message type", msg.Type)
 }
 
 type GameStartMessage struct {
-  Type string `json:"type"`
-  Body interface{} `json:"body"`
+  Stone gobang.Stone `json:"stone"`
 }
 
 type SelectCellMessage struct {
-  Type string `json:"type"`
-  Body *gobang.Point `json:"body"`
-}
-
-type GameEndMessage struct {
-  Type string `json:"type"`
-  Body *GameResult `json:"body"`
+  gobang.Point2D
 }
 
 type CurrentGame struct {
@@ -50,41 +49,34 @@ type GameResult struct {
   Result gobang.GameProgressResult `json:"result"`
 }
 
-func UnmarshalMessage(msg []byte) (interface{}, error) {
-  msgType, err := UnmarshalMessageType(msg)
+func DecodeMessage(data []byte) (interface{}, error) {
+  message := &ReceiveMessage{}
+  err := json.Unmarshal(data, message)
 
   if err != nil {
     return nil, err
   }
 
-  if msgType.Type == GameStart {
-    s := new(GameStartMessage)
-    err := json.Unmarshal(msg, s)
-    return s, err
-  } else if msgType.Type == SelectCell {
-    s := new(SelectCellMessage)
-    err := json.Unmarshal(msg, s)
-    return s, err
-  }
-
-  return nil, &UnkownMessage {
-    Message: msgType,
-  }
+  return message.decodeBody()
 }
 
-func UnmarshalMessageType(msg []byte) (*Message, error) {
-  message := new(Message)
-  err := json.Unmarshal(msg, message)
-
-  if err != nil {
-    return nil, err
+func (m *ReceiveMessage) decodeBody() (interface{}, error) {
+  switch m.Type {
+  default:
+    return nil, &UnkownMessageError { ReceiveMessage: m }
+  case GameStart:
+    body := &GameStartMessage{}
+    err := json.Unmarshal(m.Body, body)
+    return body, err
+  case SelectCell:
+    body := &SelectCellMessage{ Point2D: gobang.DefaultPoint() }
+    err := json.Unmarshal(m.Body, body.Point2D)
+    return body, err
   }
-
-  return message, nil
 }
 
 func SendGameStartMessage(gobang *gobang.Gobang) []byte {
-  message := &Message {
+  message := &OutgoingMessage {
     Type: GameStart,
     Body: &CurrentGame {
       Game: gobang,
@@ -95,7 +87,7 @@ func SendGameStartMessage(gobang *gobang.Gobang) []byte {
 }
 
 func SendNextTurnMessage(gobang *gobang.Gobang) []byte {
-  message := &Message {
+  message := &OutgoingMessage {
     Type: NexTurn,
     Body: &CurrentGame {
       Game: gobang,
@@ -106,7 +98,7 @@ func SendNextTurnMessage(gobang *gobang.Gobang) []byte {
 }
 
 func SendGameEndMessage(result gobang.GameProgressResult, gobang *gobang.Gobang) []byte {
-  message := &GameEndMessage {
+  message := &OutgoingMessage {
     Type: GameEnd,
     Body: &GameResult {
       Game: gobang,
@@ -118,7 +110,7 @@ func SendGameEndMessage(result gobang.GameProgressResult, gobang *gobang.Gobang)
 }
 
 func SendPutFailedMessage(reason error) []byte {
-  message := &Message {
+  message := &OutgoingMessage {
     Type: PutFailed,
     Body: reason,
   }

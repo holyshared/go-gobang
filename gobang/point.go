@@ -56,3 +56,17 @@ func (point *Point) MarshalJSON() ([]byte, error) {
   }
   return json.Marshal(object)
 }
+
+func (point *Point) UnmarshalJSON(data []byte) error {
+  object := struct {
+    X int `json:"x"`
+    Y int `json:"y"`
+  }{}
+  err := json.Unmarshal(data, &object)
+
+  if err != nil {
+    return err
+  }
+  point.SetTo(object.X, object.Y)
+  return nil
+}
