@@ -29,8 +29,28 @@
   padding: 10px 15px;
 }
 
-#start.hidden {
-  display: none;
+#startMenu {
+  width: 250px;
+  margin: 0px auto;
+  padding: 20px 15px 15px 15px;
+  text-align: center;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+
+#stones {
+  width: 150px;
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 0px auto 20px auto;
+  padding: 0px;
+}
+
+#stones li {
+  list-style: none;
+  text-align: center;
+  flex-grow: 1;
+  padding: 0px;
 }
 
 .display {

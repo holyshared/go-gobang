@@ -37,6 +37,8 @@
 
     this.message = document.getElementById('game-message');
 
+    this.startMenu = document.getElementById('startMenu');
+
     this.startButton = document.getElementById('start');
     this.startButton.addEventListener('click', this.onStartClick.bind(this), false);
   }
@@ -59,7 +61,7 @@
   
     if (msg.type === 'start') {
       this.board.setAttribute('class', 'display');
-      this.startButton.setAttribute('class', 'hidden');
+      this.startMenu.setAttribute('class', 'hidden');
       this.initBoard(msg.body.game);
     } else if (msg.type === 'nextTurn') {
       this.renderBoard(msg.body.game);
