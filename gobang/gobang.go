@@ -5,7 +5,7 @@ import (
 )
 
 type GameFacilitator interface {
-  PlayerPutStoneTo(point *Point) (GameProgressResult, error)
+  PlayerPutStoneTo(point Point2D) (GameProgressResult, error)
   NpcPlayerPutStone() (GameProgressResult, error)
 }
 
@@ -19,7 +19,7 @@ type Gobang struct {
   ctx *GameContext
 }
 
-func (g *Gobang) PlayerPutStoneTo(point *Point) (GameProgressResult, error) {
+func (g *Gobang) PlayerPutStoneTo(point Point2D) (GameProgressResult, error) {
   cell, err := g.playerSelectCell(point)
 
   if err != nil {
@@ -46,7 +46,7 @@ func (g *Gobang) NpcPlayerPutStone() (GameProgressResult, error) {
   return result, nil 
 }
 
-func (g *Gobang) playerSelectCell(point *Point) (*Cell, error) {
+func (g *Gobang) playerSelectCell(point Point2D) (*Cell, error) {
   player := g.ctx.GamePlayer()
   cell, err := player.SelectBoardCell(point)
 

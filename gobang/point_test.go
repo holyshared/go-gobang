@@ -6,7 +6,7 @@ import (
 )
 
 func TestPointToJSON(t *testing.T) {
-  point := Point { X: 1, Y: 1 }
+  point := &Point { x: 1, y: 1 }
   bytes, err := json.Marshal(point)
 
   if err != nil {

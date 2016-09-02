@@ -2,12 +2,13 @@ package gobang
 
 import (
   "strconv"
+  "encoding/json"
 )
 
 func NewPoint(x, y int) *Point {
   return &Point {
-    X: x,
-    Y: y,
+    x: x,
+    y: y,
   }
 }
 
@@ -19,16 +20,35 @@ type Point2D interface {
 }
 
 type Point struct {
-  X int `json:"x"`
-  Y int `json:"y"`
+  x int `json:"x"`
+  y int `json:"y"`
 }
 
-func (point *Point) SetTo(x, y int) *Point {
-  point.X = x
-  point.Y = y
+func (point *Point) X() int {
+  return point.x
+}
+
+func (point *Point) Y() int {
+  return point.y
+}
+
+func (point *Point) SetTo(x, y int) Point2D {
+  point.x = x
+  point.y = y
   return point
 }
 
 func (point *Point) String() string {
-  return strconv.Itoa(point.X) + ":" + strconv.Itoa(point.Y)
+  return strconv.Itoa(point.x) + ":" + strconv.Itoa(point.y)
+}
+
+func (point *Point) MarshalJSON() ([]byte, error) {
+  object := struct {
+    X int `json:"x"`
+    Y int `json:"y"`
+  }{
+    X: point.X(),
+    Y: point.Y(),
+  }
+  return json.Marshal(object)
 }

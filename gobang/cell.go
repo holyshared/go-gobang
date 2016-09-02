@@ -2,18 +2,18 @@ package gobang
 
 func NewCell(x, y int, stone Stone) *Cell {
   point := &Point {
-    X: x,
-    Y: y,
+    x: x,
+    y: y,
   }
 
   return &Cell {
-    Point: point,
+    Point2D: point,
     Stone: stone,
   }
 }
 
 type Cell struct {
-  *Point `json:"point"`
+  Point2D `json:"point"`
   Stone Stone `json:"stone"`
 }
 
@@ -23,4 +23,8 @@ func (cell *Cell) IsEmpty() bool {
 
 func (cell *Cell) Have(stone Stone) bool {
   return cell.Stone == stone
+}
+
+func (cell *Cell) Point() Point2D {
+  return cell.Point2D
 }
