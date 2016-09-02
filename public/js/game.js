@@ -76,7 +76,9 @@
   App.prototype.onStartClick = function(evt) {
     var msg = JSON.stringify({
       type: 'start',
-      body: null
+      body: {
+        stone: Stone.Black
+      }
     });
     this.websocket.send(msg);
   }

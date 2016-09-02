@@ -63,11 +63,23 @@ func (app *App) OnMessage(s *melody.Session, msg []byte) {
 }
 
 func (app *App) startGame(s *melody.Session, message *GameStartMessage) {
+  var playerStone gobang.Stone
+  var npcPlayerStone gobang.Stone
+
   app.Infof("game started: ", message)
+
+  if message.Stone == gobang.Black {
+    playerStone = gobang.Black
+    npcPlayerStone = gobang.White
+  } else {
+    playerStone = gobang.White
+    npcPlayerStone = gobang.Black
+  }
+
   game := gobang.NewGobang(
     gobang.DefaultGameRule(),
-    gobang.Black,
-    gobang.White,
+    playerStone,
+    npcPlayerStone,
   )
   app.Register(s, game)
   s.Write(SendGameStartMessage(game))
