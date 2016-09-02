@@ -11,6 +11,13 @@ func NewPoint(x, y int) *Point {
   }
 }
 
+type Point2D interface {
+  X() int
+  Y() int
+  SetTo(x, y int) Point2D
+  String() string
+}
+
 type Point struct {
   X int `json:"x"`
   Y int `json:"y"`
