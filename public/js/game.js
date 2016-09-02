@@ -65,10 +65,8 @@
     if (msg.type === 'start') {
       this.board.setAttribute('class', 'display');
       this.startMenu.setAttribute('class', 'hidden');
-      this.message.innerText = 'Your turn';
       this.initBoard(msg.body.game);
     } else if (msg.type === 'nextTurn') {
-      this.message.innerText = 'Your turn';
       this.renderBoard(msg.body.game);
     } else if (msg.type === 'finish') {
       this.renderBoard(msg.body.game);
