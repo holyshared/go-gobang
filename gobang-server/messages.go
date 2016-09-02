@@ -37,7 +37,7 @@ type GameStartMessage struct {
 }
 
 type SelectCellMessage struct {
-  Body *gobang.Point `json:"body"`
+  gobang.Point2D
 }
 
 type CurrentGame struct {
@@ -61,26 +61,18 @@ func DecodeMessage(data []byte) (interface{}, error) {
 }
 
 func (m *ReceiveMessage) decodeBody() (interface{}, error) {
-  var body interface{}
-  var err error
-
   switch m.Type {
   default:
     return nil, &UnkownMessageError { ReceiveMessage: m }
   case GameStart:
-    body = &GameStartMessage{}
-    err = json.Unmarshal(m.Body, body)
+    body := &GameStartMessage{}
+    err := json.Unmarshal(m.Body, body)
+    return body, err
   case SelectCell:
-    p := gobang.NewPoint(0, 0)
-    err = json.Unmarshal(m.Body, p)
-    body = &SelectCellMessage{ Body: p }
+    body := &SelectCellMessage{ Point2D: gobang.DefaultPoint() }
+    err := json.Unmarshal(m.Body, body.Point2D)
+    return body, err
   }
-
-  if err != nil {
-    return nil, err
-  }
-
-  return body, nil
 }
 
 func SendGameStartMessage(gobang *gobang.Gobang) []byte {

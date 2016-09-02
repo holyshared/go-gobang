@@ -80,7 +80,7 @@ func (app *App) selectCell(s *melody.Session, message *SelectCellMessage) {
   app.Infof("player cell selected: ", message)
 
   game := app.Lookup(s)
-  result, err = game.PlayerPutStoneTo(message.Body)
+  result, err = game.PlayerPutStoneTo(message)
 
   if err != nil {
     app.Warnf("put stone faild: ", err)
