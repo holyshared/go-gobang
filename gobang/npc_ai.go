@@ -68,11 +68,24 @@ func (ai *NpcAI) selectEmptyCell() *Cell {
 func (ai *NpcAI) selectNpcPlayerReachedCell() *Cell {
   var result *MatchedResult
 
-  for i := ai.ctx.ReachedStoneCount() - 1; i > 0; i-- {
+  matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), ai.ctx.ReachedStoneCount() - 1)
+  result = matcher.Matches(ai.ctx.Board())
+
+  if result.HasEmptyNeighborCell() {
+    return result.SelectEmptyNeighborCell()
+  }
+
+  // 3, 2, 1 ....
+  for i := ai.ctx.ReachedStoneCount() - 2; i > 0; i-- {
     matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), i)
     result = matcher.Matches(ai.ctx.Board())
 
-    if !result.HasEmptyNeighborCell() {
+    // 5 - 3 = 2 
+    // 5 - 2 = 3
+    // 5 - 1 = 4
+    remainCellCount := ai.ctx.ReachedStoneCount() - i
+
+    if !result.HaveReachedRemainCell(remainCellCount) {
       continue
     }
     break;

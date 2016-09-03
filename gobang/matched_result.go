@@ -35,6 +35,19 @@ func (r *MatchedResult) HasEmptyNeighborCell() bool {
   return has
 }
 
+func (r *MatchedResult) HaveReachedRemainCell(remainCount int) bool {
+  has := false
+
+  for _, result := range r.results {
+    if result.ContinuousEmptyCellCount() < remainCount {
+      continue
+    }
+    has = true
+    break
+  }
+  return has
+}
+
 func (r *MatchedResult) SelectOnly(num NeighborCellNumber) *MatchedResult {
   results := make([]*ReachedResult, 0)
 

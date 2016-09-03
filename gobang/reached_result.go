@@ -54,3 +54,7 @@ func (result *ReachedResult) HasEmptyNeighborCell() bool {
 func (result *ReachedResult) EmptyNeighborCells() []*Cell {
   return result.emptyNeighborCells
 }
+
+func (result *ReachedResult) ContinuousEmptyCellCount() int {
+  return result.continuousEmptyCellCount
+}
