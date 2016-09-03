@@ -11,7 +11,7 @@ func (num NeighborCellNumber) Value() int {
   return int(num)
 }
 
-func NewReachedResult(cells, neighborCells, emptyNeighborCells []*Cell) *ReachedResult {
+func NewReachedResult(cells, emptyNeighborCells []*Cell) *ReachedResult {
   var reachedType NeighborCellNumber
   emptyCellCount := len(emptyNeighborCells)
 
@@ -27,7 +27,6 @@ func NewReachedResult(cells, neighborCells, emptyNeighborCells []*Cell) *Reached
   return &ReachedResult {
     reachedType: reachedType,
     cells: cells,
-    neighborCells: neighborCells,
     emptyNeighborCells: emptyNeighborCells,
   }
 }
@@ -35,7 +34,6 @@ func NewReachedResult(cells, neighborCells, emptyNeighborCells []*Cell) *Reached
 type ReachedResult struct {
   reachedType NeighborCellNumber
   cells []*Cell
-  neighborCells []*Cell
   emptyNeighborCells []*Cell
 }
 

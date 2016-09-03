@@ -8,7 +8,6 @@ func TestHasReachedResults(t *testing.T) {
   reachedResults := make([]*ReachedResult, 0)
   reachedResults = append(reachedResults,  &ReachedResult{
     cells: make([]*Cell, 0),
-    neighborCells: make([]*Cell, 0),
     emptyNeighborCells: make([]*Cell, 0),
   })
 
@@ -57,7 +56,6 @@ func TestHasEmptyNeighborCell(t *testing.T) {
 
   reachedResults = append(reachedResults,  &ReachedResult{
     cells: make([]*Cell, 0),
-    neighborCells: make([]*Cell, 0),
     emptyNeighborCells: emptyNeighborCells,
   })
 

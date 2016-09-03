@@ -52,7 +52,6 @@ func (result *ReachedResultBuilder) emptyNeighborCells() []*Cell {
 func (result *ReachedResultBuilder) ReachedResult() *ReachedResult {
   return NewReachedResult(
     result.cells,
-    result.neighborCells,
     result.emptyNeighborCells(),
   )
 }
