@@ -8,9 +8,18 @@ func (g *CellGroup) SelectReached(selector ReachedSelector) []*ReachedResult {
   return selector.Select(g)
 }
 
+// XXX Should I use sort package?
 func (g *CellGroup) countEmptyCellToFirst(i int) int {
   cells := g.cells[0:i + 1]
-  return countNeighborEmptyCell(cells)
+  reverseCells := make([]*Cell, len(cells))
+  reverseIndex := 0
+
+  for j := len(cells) - 1; j >= 0; j-- {
+    reverseCells[reverseIndex] = cells[j]
+    reverseIndex++
+  }
+
+  return countNeighborEmptyCell(reverseCells)
 }
 
 func (g *CellGroup) countEmptyCellToLast(i int) int {
