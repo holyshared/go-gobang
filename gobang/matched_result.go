@@ -4,6 +4,12 @@ import (
   "math/rand"
 )
 
+func NewMatchedResult(results []*ReachedResult) * MatchedResult {
+  return &MatchedResult {
+    results: results,
+  }
+}
+
 type MatchedResult struct {
   results []*ReachedResult
 }
@@ -27,6 +33,33 @@ func (r *MatchedResult) HasEmptyNeighborCell() bool {
     break
   }
   return has
+}
+
+func (r *MatchedResult) HaveReachedRemainCell(remainCount int) bool {
+  has := false
+
+  for _, result := range r.results {
+    if result.ContinuousEmptyCellCount() < remainCount {
+      continue
+    }
+    has = true
+    break
+  }
+  return has
+}
+
+func (r *MatchedResult) SelectOnly(num NeighborCellNumber) *MatchedResult {
+  results := make([]*ReachedResult, 0)
+
+  for _, result := range r.results {
+    if !result.IsNeighborEmpty(num) {
+      continue
+    }
+    results = append(results, result)
+    break
+  }
+
+  return NewMatchedResult(results)
 }
 
 func (r *MatchedResult) SelectEmptyNeighborCell() *Cell {
