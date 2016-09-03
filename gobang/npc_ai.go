@@ -37,13 +37,25 @@ func (ai *NpcAI) SelectTargetCell() *Cell {
 }
 
 func (ai *NpcAI) selectGamePlayerReachedCell() *Cell {
-  matcher := NewCellReachedMatcher(ai.ctx.PlayerStone(), ai.ctx.ReachedStoneCount() - 1)
+  matcher := NewCellReachedMatcher(ai.ctx.PlayerStone(), ai.ctx.ReachedStoneCount() - OneSide.Value())
   result := matcher.Matches(ai.ctx.Board())
 
-  if !result.HasEmptyNeighborCell() {
-    return nil
+  oneSideResult := result.SelectOnly(OneSide)
+
+  if oneSideResult.HasEmptyNeighborCell() {
+    return result.SelectEmptyNeighborCell()
   }
-  return result.SelectEmptyNeighborCell()
+
+  matcher = NewCellReachedMatcher(ai.ctx.PlayerStone(), ai.ctx.ReachedStoneCount() - BothSides.Value())
+  result = matcher.Matches(ai.ctx.Board())
+
+  bothSidesResult := result.SelectOnly(BothSides)
+
+  if bothSidesResult.HasEmptyNeighborCell() {
+    return bothSidesResult.SelectEmptyNeighborCell()
+  }
+
+  return nil
 }
 
 func (ai *NpcAI) selectEmptyCell() *Cell {
