@@ -5,6 +5,7 @@ type ReachedResultBuilder struct {
   cells []*Cell
   firstNeighborCell *Cell
   lastNeighborCell *Cell
+  continuousEmptyCellCount int
 }
 
 func (result *ReachedResultBuilder) FirstCell() *Cell {
@@ -41,6 +42,10 @@ func (result *ReachedResultBuilder) SetFirstNeighborCell(cell *Cell) {
 
 func (result *ReachedResultBuilder) SetLastNeighborCell(cell *Cell) {
   result.lastNeighborCell = cell
+}
+
+func (result *ReachedResultBuilder) SetContinuousEmptyCellCount(count int) {
+  result.continuousEmptyCellCount = count
 }
 
 func (result *ReachedResultBuilder) emptyNeighborCells() []*Cell {

@@ -10,6 +10,10 @@ func (g *CellGroup) SelectReached(selector ReachedSelector) []*ReachedResult {
 
 // XXX Should I use sort package?
 func (g *CellGroup) countEmptyCellToFirst(i int) int {
+  if i <= 0 {
+    return 0
+  }
+
   cells := g.cells[0:i + 1]
   reverseCells := make([]*Cell, len(cells))
   reverseIndex := 0

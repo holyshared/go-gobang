@@ -11,7 +11,7 @@ func (s ReachedSelector) Select(group *CellGroup) []*ReachedResult {
   builder := &ReachedResultBuilder { count: s.count }
   results := make([]*ReachedResult, 0)
 
-  for _, cell := range group.cells {
+  for num, cell := range group.cells {
     if cell.HaveStone(s.stone) == false {
       builder.Clear()
       continue
@@ -37,6 +37,14 @@ func (s ReachedSelector) Select(group *CellGroup) []*ReachedResult {
       p := s.board.SelectCell(nextPoint)
       builder.SetLastNeighborCell(p)
     }
+
+    emptyCount := 0
+    firstIndex := num - (s.count - 1)
+    lastIndex := firstIndex + s.count
+
+    emptyCount += group.countEmptyCellToFirst(firstIndex)
+    emptyCount += group.countEmptyCellToLast(lastIndex)
+    builder.SetContinuousEmptyCellCount(emptyCount)
 
     results = append(results, builder.ReachedResult())
     builder = &ReachedResultBuilder { count: s.count }
