@@ -71,5 +71,6 @@ func (result *ReachedResultBuilder) ReachedResult() *ReachedResult {
   return NewReachedResult(
     result.cells,
     result.emptyNeighborCells(),
+    result.continuousEmptyCellCount,
   )
 }

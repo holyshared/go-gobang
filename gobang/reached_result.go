@@ -11,7 +11,7 @@ func (num NeighborCellNumber) Value() int {
   return int(num)
 }
 
-func NewReachedResult(cells, emptyNeighborCells []*Cell) *ReachedResult {
+func NewReachedResult(cells, emptyNeighborCells []*Cell, continuousEmptyCellCount int) *ReachedResult {
   var reachedType NeighborCellNumber
   emptyCellCount := len(emptyNeighborCells)
 
@@ -28,6 +28,7 @@ func NewReachedResult(cells, emptyNeighborCells []*Cell) *ReachedResult {
     reachedType: reachedType,
     cells: cells,
     emptyNeighborCells: emptyNeighborCells,
+    continuousEmptyCellCount: continuousEmptyCellCount,
   }
 }
 
@@ -35,6 +36,7 @@ type ReachedResult struct {
   reachedType NeighborCellNumber
   cells []*Cell
   emptyNeighborCells []*Cell
+  continuousEmptyCellCount int
 }
 
 func (result *ReachedResult) IsEmpty() bool {
