@@ -10,13 +10,10 @@ func TestEmptyNeighborCells(t *testing.T) {
     NewCell(1, 0, Black),
     NewCell(2, 0, Black),
   }
-  neighborCells := []*Cell {
-    NewCell(3, 0, Black),
-  }
 
   builder := ReachedResultBuilder {
     cells: cells,
-    neighborCells: neighborCells,
+    lastNeighborCell: NewCell(3, 0, Black),
   }
   res := builder.ReachedResult()
 
@@ -31,13 +28,10 @@ func TestEmptyNeighborCells(t *testing.T) {
     NewCell(1, 0, Black),
     NewCell(2, 0, Black),
   }
-  neighborCells = []*Cell {
-    NewCell(3, 0, 0),
-  }
 
   builder = ReachedResultBuilder {
     cells: cells,
-    neighborCells: neighborCells,
+    lastNeighborCell: NewCell(3, 0, 0),
   }
 
   res = builder.ReachedResult()

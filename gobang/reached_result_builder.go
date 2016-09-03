@@ -3,7 +3,8 @@ package gobang
 type ReachedResultBuilder struct {
   count int
   cells []*Cell
-  neighborCells []*Cell
+  firstNeighborCell *Cell
+  lastNeighborCell *Cell
 }
 
 func (result *ReachedResultBuilder) FirstCell() *Cell {
@@ -28,19 +29,31 @@ func (result *ReachedResultBuilder) AddCell(cell *Cell) {
   result.cells = append(result.cells, cell)
 }
 
-func (result *ReachedResultBuilder) AddNeighborCell(cell *Cell) {
-  result.neighborCells = append(result.neighborCells, cell)
-}
-
 func (result *ReachedResultBuilder) Clear() {
   result.cells = result.cells[0:0]
-  result.neighborCells = result.neighborCells[0:0]
+  result.firstNeighborCell = nil
+  result.lastNeighborCell = nil
+}
+
+func (result *ReachedResultBuilder) SetFirstNeighborCell(cell *Cell) {
+  result.firstNeighborCell = cell
+}
+
+func (result *ReachedResultBuilder) SetLastNeighborCell(cell *Cell) {
+  result.lastNeighborCell = cell
 }
 
 func (result *ReachedResultBuilder) emptyNeighborCells() []*Cell {
   cells := make([]*Cell, 0)
+  neighborCells := []*Cell {
+    result.firstNeighborCell,
+    result.lastNeighborCell,
+  }
 
-  for _, cell := range result.neighborCells {
+  for _, cell := range neighborCells {
+    if cell == nil {
+      continue
+    }
     if !cell.IsEmpty() {
       continue
     }

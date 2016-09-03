@@ -27,7 +27,7 @@ func (s ReachedSelector) Select(group *CellGroup) []*ReachedResult {
 
     if s.board.HaveCell(prevPoint) {
       p := s.board.SelectCell(prevPoint)
-      builder.AddNeighborCell(p)
+      builder.SetFirstNeighborCell(p)
     }
 
     last := builder.LastCell()
@@ -35,7 +35,7 @@ func (s ReachedSelector) Select(group *CellGroup) []*ReachedResult {
 
     if s.board.HaveCell(nextPoint) {
       p := s.board.SelectCell(nextPoint)
-      builder.AddNeighborCell(p)
+      builder.SetLastNeighborCell(p)
     }
 
     results = append(results, builder.ReachedResult())
