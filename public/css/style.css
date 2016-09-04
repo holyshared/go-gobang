@@ -3,14 +3,14 @@ body {
 }
 
 #container {
-  width: 630px;
+  width: 525px;
   margin: 15px auto;
   text-align: center;
 }
 
 #board  {
   overflow: hidden;
-  width: 630px;
+  width: 525px;
   padding: 0px;
   margin: 0px 0px 15px 0px;
   border-right: 1px solid #cccccc;

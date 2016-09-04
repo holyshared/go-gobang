@@ -12,7 +12,7 @@ func NewGameRule(size *Size, reachedCount int) *GameRule {
 }
 
 func DefaultGameRule() *GameRule {
-  return NewGameRule(NewSize(30, 30), 5)
+  return NewGameRule(NewSize(25, 25), 5)
 }
 
 type GameRule struct {
