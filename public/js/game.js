@@ -50,6 +50,7 @@
     this.retryButton = document.getElementById('retry');
     this.retryButton.addEventListener('click', this.handleEvent.bind(this), false);
 
+    this.gameStarted = false;
     this.initilalized = false;
   }
 
@@ -73,9 +74,11 @@
       this.board.setAttribute('class', 'display');
       this.startMenu.setAttribute('class', 'hidden');
       this.render(msg.body.game);
+      this.gameStarted = true;
     } else if (msg.type === 'nextTurn') {
       this.render(msg.body.game);
     } else if (msg.type === 'finish') {
+      this.gameStarted = false;
       this.render(msg.body.game);
       this.renderMessage(msg.body.result);
       this.retryMenu.classList.remove('hidden');
@@ -92,7 +95,7 @@
     evt.preventDefault();
     evt.stopPropagation();
 
-    if (target.nodeName === 'LI' && target.dataset.type === 'cell') {
+    if (target.nodeName === 'LI' && target.dataset.type === 'cell' && this.gameStarted) {
       this.onCellClick(evt);
     } else if (target.nodeName === 'A' && target.dataset.stone) {
       this.onStoneClick(evt);
@@ -122,6 +125,7 @@
     });
     this.websocket.send(msg);
     this.clearMessage();
+    this.retryMenu.classList.add('hidden');
   }
 
   App.prototype.onStoneClick = function(evt) {
