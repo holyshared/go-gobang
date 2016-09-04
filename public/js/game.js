@@ -43,7 +43,7 @@
     this.startMenus = document.querySelectorAll('#startMenu li a');
 
     this.startButton = document.getElementById('start');
-    this.startButton.addEventListener('click', this.onStartClick.bind(this), false);
+    this.startButton.addEventListener('click', this.handleEvent.bind(this), false);
   }
 
   App.createApp = function(uri, output) {
@@ -88,9 +88,11 @@
       this.onCellClick(evt);
     } else if (target.nodeName === 'A' && target.dataset.stone) {
       this.onStoneClick(evt);
+    } else if (target.nodeName === 'BUTTON') {
+      this.onStartClick(evt);
     }
   }
-  
+
   App.prototype.onStartClick = function(evt) {
     var msg = JSON.stringify({
       type: 'start',
