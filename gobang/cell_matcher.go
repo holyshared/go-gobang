@@ -1,16 +1,16 @@
 package gobang
 
 type CellMatcher interface {
-  Matches(cell *Cell) bool
+	Matches(cell *Cell) bool
 }
 
 func EmptyCell() *EmptyCellMatcher {
-  return &EmptyCellMatcher {}
+	return &EmptyCellMatcher{}
 }
 
 type EmptyCellMatcher struct {
 }
 
 func (matcher *EmptyCellMatcher) Matches(cell *Cell) bool {
-  return cell.IsEmpty()
+	return cell.IsEmpty()
 }

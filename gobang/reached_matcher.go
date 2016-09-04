@@ -1,5 +1,5 @@
 package gobang
 
 type ReachedMatcher interface {
-  Matches(board *Board) *MatchedResult
+	Matches(board *Board) *MatchedResult
 }
