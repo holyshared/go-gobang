@@ -21,15 +21,15 @@ type NpcAI struct {
 func (ai *NpcAI) SelectTargetCell() *Cell {
 	var cell *Cell
 
-	cell = ai.selectGamePlayerBlockCell()
-
-	if cell != nil {
+	if cell = ai.selectNpcPlayerReachedCell(); cell != nil {
 		return cell
 	}
 
-	cell = ai.selectNpcPlayerReachedCell()
+	if cell = ai.selectGamePlayerBlockCell(); cell != nil {
+		return cell
+	}
 
-	if cell != nil {
+	if cell = ai.selectNpcPlayerReachChanceCell(); cell != nil {
 		return cell
 	}
 
@@ -76,27 +76,22 @@ func (ai *NpcAI) selectGamePlayerReachChanceCell() *Cell {
 	return nil
 }
 
-func (ai *NpcAI) selectEmptyCell() *Cell {
-	board := ai.ctx.Board()
-	cells := board.SelectCells(EmptyCell())
-	index := rand.Intn(len(cells) - 1)
-	return cells[index]
-}
-
 func (ai *NpcAI) selectNpcPlayerReachedCell() *Cell {
-	var result *MatchedResult
-
-	matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), ai.ctx.ReachedStoneCount()-1)
-	result = matcher.Matches(ai.ctx.Board())
+	matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), ai.ctx.ReachedStoneCount() - 1)
+	result := matcher.Matches(ai.ctx.Board())
 
 	if result.HasEmptyNeighborCell() {
 		return result.SelectEmptyNeighborCell()
 	}
 
+	return nil
+}
+
+func (ai *NpcAI) selectNpcPlayerReachChanceCell() *Cell {
 	// 3, 2, 1 ....
 	for i := ai.ctx.ReachedStoneCount() - 2; i > 0; i-- {
 		matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), i)
-		result = matcher.Matches(ai.ctx.Board())
+		result := matcher.Matches(ai.ctx.Board())
 
 		// 5 - 3 = 2
 		// 5 - 2 = 3
@@ -106,8 +101,17 @@ func (ai *NpcAI) selectNpcPlayerReachedCell() *Cell {
 		if !result.HaveReachedRemainCell(remainCellCount) {
 			continue
 		}
-		break
+
+		return result.SelectEmptyNeighborCell()
 	}
 
-	return result.SelectEmptyNeighborCell()
+	return nil
+}
+
+func (ai *NpcAI) selectEmptyCell() *Cell {
+	board := ai.ctx.Board()
+	cells := board.SelectCells(EmptyCell())
+	index := rand.Intn(len(cells) - 1)
+
+	return cells[index]
 }
