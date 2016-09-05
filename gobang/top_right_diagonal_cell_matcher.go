@@ -13,43 +13,42 @@ package gobang
  * |B| | | | | | | | | |
  */
 func NewTopRightDiagonalCellMatcher(stone Stone, count int) *TopRightDiagonalCellMatcher {
-  return &TopRightDiagonalCellMatcher { count: count, stone: stone, }
+	return &TopRightDiagonalCellMatcher{count: count, stone: stone}
 }
 
 type TopRightDiagonalCellMatcher struct {
-  count int
-  stone Stone
+	count int
+	stone Stone
 }
 
 func (s *TopRightDiagonalCellMatcher) Matches(board *Board) *MatchedResult {
-  result := &MatchedResult {}
-  groups := s.scanAllCellGroup(board)
+	result := &MatchedResult{}
+	groups := s.scanAllCellGroup(board)
 
-  reachedSelector := ReachedSelector {
-    stone: s.stone,
-    count: s.count,
-    board: board,
-    neighbor: NewTopRightNeighborDistance(),
-  }
+	reachedSelector := ReachedSelector{
+		stone:    s.stone,
+		count:    s.count,
+		board:    board,
+		neighbor: NewTopRightNeighborDistance(),
+	}
 
-  for _, group := range groups {
-    results := group.SelectReached(reachedSelector)
+	for _, group := range groups {
+		results := group.SelectReached(reachedSelector)
 
-    if len(results) <= 0 {
-      continue
-    }
-    result.results = append(result.results, results...)
-  }
+		if len(results) <= 0 {
+			continue
+		}
+		result.results = append(result.results, results...)
+	}
 
-  return result
+	return result
 }
 
-
 func (s *TopRightDiagonalCellMatcher) scanAllCellGroup(board *Board) []*CellGroup {
-  groups := make([]*CellGroup, 0)
-  groups = append(groups, s.scanXAxisCellGroup(board)...)
-  groups = append(groups, s.scanYAxisCellGroup(board)...)
-  return groups
+	groups := make([]*CellGroup, 0)
+	groups = append(groups, s.scanXAxisCellGroup(board)...)
+	groups = append(groups, s.scanYAxisCellGroup(board)...)
+	return groups
 }
 
 /**
@@ -65,23 +64,23 @@ func (s *TopRightDiagonalCellMatcher) scanAllCellGroup(board *Board) []*CellGrou
  * |B| | | | | | | | | |
  */
 func (s *TopRightDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGroup {
-  point := &Point {}
-  endX := board.Width() - 1
-  groups := make([]*CellGroup, 0)
+	point := DefaultPoint()
+	endX := board.Width() - 1
+	groups := make([]*CellGroup, 0)
 
-  for startX := s.count - 1; startX <= endX; startX++ {
-    y := 0
-    group := &CellGroup {}
-    for x := startX; x >= 0; x-- {
-      cell := board.SelectCell( point.SetTo(x, y) )
-      group.cells = append(group.cells, cell)
-      y++
-    }
-    groups = append(groups, group)
-    group = &CellGroup {}
-  }
+	for startX := s.count - 1; startX <= endX; startX++ {
+		y := 0
+		group := &CellGroup{}
+		for x := startX; x >= 0; x-- {
+			cell := board.SelectCell(point.SetTo(x, y))
+			group.cells = append(group.cells, cell)
+			y++
+		}
+		groups = append(groups, group)
+		group = &CellGroup{}
+	}
 
-  return groups
+	return groups
 }
 
 /**
@@ -97,23 +96,23 @@ func (s *TopRightDiagonalCellMatcher) scanXAxisCellGroup(board *Board) []*CellGr
  * | |B|B|B|B|B| | | | |
  */
 func (s *TopRightDiagonalCellMatcher) scanYAxisCellGroup(board *Board) []*CellGroup {
-  point := &Point {}
-  maxY := board.Height() - 1
-  endY := board.Height() - s.count
-  groups := make([]*CellGroup, 0)
+	point := DefaultPoint()
+	maxY := board.Height() - 1
+	endY := board.Height() - s.count
+	groups := make([]*CellGroup, 0)
 
-  for startY := 1; startY <= endY; startY++ {
-    x := board.Width() - 1
-    group := &CellGroup {}
+	for startY := 1; startY <= endY; startY++ {
+		x := board.Width() - 1
+		group := &CellGroup{}
 
-    for y := startY; y <= maxY; y++ {
-      cell := board.SelectCell( point.SetTo(x, y) )
-      group.cells = append(group.cells, cell)
-      x--
-    }
-    groups = append(groups, group)
-    group = &CellGroup {}
-  }
+		for y := startY; y <= maxY; y++ {
+			cell := board.SelectCell(point.SetTo(x, y))
+			group.cells = append(group.cells, cell)
+			x--
+		}
+		groups = append(groups, group)
+		group = &CellGroup{}
+	}
 
-  return groups
+	return groups
 }

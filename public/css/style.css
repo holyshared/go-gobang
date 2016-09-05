@@ -1,12 +1,16 @@
+body {
+  font-size: 62.5%;
+}
+
 #container {
-  width: 630px;
+  width: 525px;
   margin: 15px auto;
   text-align: center;
 }
 
 #board  {
   overflow: hidden;
-  width: 630px;
+  width: 525px;
   padding: 0px;
   margin: 0px 0px 15px 0px;
   border-right: 1px solid #cccccc;
@@ -24,13 +28,50 @@
   float: left;
 }
 
-#start {
+.btn {
   display: inline-block;
   padding: 10px 15px;
+  font-size: 140%;
+  border-radius: 5px;
+  background: none;
+  border: 1px solid #cccccc;
+  box-shadow: #dddddd 1px 1px 1px;
 }
 
-#start.hidden {
-  display: none;
+#startMenu {
+  width: 280px;
+  margin: 0px auto;
+  padding: 40px 15px 15px 15px;
+  text-align: center;
+  border: 3px solid #cccccc;
+  border-radius: 5px;
+  box-shadow: #dddddd 1px 1px 1px;
+}
+
+#stones {
+  width: 180px;
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 0px auto 40px auto;
+  padding: 0px;
+}
+
+#stones li {
+  list-style: none;
+  text-align: center;
+  flex-grow: 1;
+  padding: 0px;
+}
+
+#stones li a {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 15px 15px;
+  font-size: 180%;
+}
+
+#stones li a.selected {
+  background: #cccccc;
 }
 
 .display {

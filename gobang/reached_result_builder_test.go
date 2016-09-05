@@ -1,47 +1,43 @@
 package gobang
 
 import (
-  "testing"
+	"testing"
 )
 
 func TestEmptyNeighborCells(t *testing.T) {
-  cells := make([]*Cell, 0)
-  neighborCells := make([]*Cell, 0)
+	cells := []*Cell{
+		NewCell(0, 0, Black),
+		NewCell(1, 0, Black),
+		NewCell(2, 0, Black),
+	}
 
-  cells = append(cells, &Cell { &Point { X: 0, Y: 0, }, Black, })
-  cells = append(cells, &Cell { &Point { X: 1, Y: 0, }, Black, })
-  cells = append(cells, &Cell { &Point { X: 2, Y: 0, }, Black, })
-  neighborCells = append(neighborCells, &Cell { &Point { X: 3, Y: 0, }, Black, })
+	builder := ReachedResultBuilder{
+		cells:            cells,
+		lastNeighborCell: NewCell(3, 0, Black),
+	}
+	res := builder.ReachedResult()
 
-  builder := ReachedResultBuilder {
-    cells: cells,
-    neighborCells: neighborCells,
-  }
-  res := builder.ReachedResult()
+	emptyCells := res.EmptyNeighborCells()
 
-  emptyCells := res.EmptyNeighborCells()
+	if len(emptyCells) > 0 {
+		t.Errorf("got %v\nwant %v", len(emptyCells), 0)
+	}
 
-  if len(emptyCells) > 0 {
-    t.Errorf("got %v\nwant %v", len(emptyCells), 0)
-  }
+	cells = []*Cell{
+		NewCell(0, 0, Black),
+		NewCell(1, 0, Black),
+		NewCell(2, 0, Black),
+	}
 
-  cells = cells[0:0]
-  neighborCells = neighborCells[0:0]
+	builder = ReachedResultBuilder{
+		cells:            cells,
+		lastNeighborCell: NewCell(3, 0, 0),
+	}
 
-  cells = append(cells, &Cell { &Point { X: 0, Y: 0, }, Black, })
-  cells = append(cells, &Cell { &Point { X: 1, Y: 0, }, Black, })
-  cells = append(cells, &Cell { &Point { X: 2, Y: 0, }, Black, })
-  neighborCells = append(neighborCells, &Cell { &Point { X: 3, Y: 0, }, 0, })
+	res = builder.ReachedResult()
+	emptyCells = res.EmptyNeighborCells()
 
-  builder = ReachedResultBuilder {
-    cells: cells,
-    neighborCells: neighborCells,
-  }
-
-  res = builder.ReachedResult()
-  emptyCells = res.EmptyNeighborCells()
-
-  if len(emptyCells) <= 0 {
-    t.Errorf("got %v\nwant %v", len(emptyCells), 1)
-  }
+	if len(emptyCells) <= 0 {
+		t.Errorf("got %v\nwant %v", len(emptyCells), 1)
+	}
 }
