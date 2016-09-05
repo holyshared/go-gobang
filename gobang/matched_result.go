@@ -48,7 +48,7 @@ func (r *MatchedResult) HaveReachedRemainCell(remainCount int) bool {
 	return has
 }
 
-func (r *MatchedResult) SelectOnly(num NeighborCellNumber) *MatchedResult {
+func (r *MatchedResult) SelectOnly(num int) *MatchedResult {
 	results := make([]*ReachedResult, 0)
 
 	for _, result := range r.results {

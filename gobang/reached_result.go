@@ -1,26 +1,20 @@
 package gobang
 
-type NeighborCellNumber int
-
 const (
-	OneSide NeighborCellNumber = iota + 1
+	OneSide int = iota + 1
 	BothSides
 )
 
-func (num NeighborCellNumber) Value() int {
-	return int(num)
-}
-
 func NewReachedResult(cells, emptyNeighborCells []*Cell, continuousEmptyCellCount int) *ReachedResult {
-	var reachedType NeighborCellNumber
+	var reachedType int
 	emptyCellCount := len(emptyNeighborCells)
 
 	switch emptyCellCount {
 	default:
 		reachedType = 0
-	case OneSide.Value():
+	case OneSide:
 		reachedType = OneSide
-	case BothSides.Value():
+	case BothSides:
 		reachedType = BothSides
 	}
 
@@ -33,7 +27,7 @@ func NewReachedResult(cells, emptyNeighborCells []*Cell, continuousEmptyCellCoun
 }
 
 type ReachedResult struct {
-	reachedType              NeighborCellNumber
+	reachedType              int
 	cells                    []*Cell
 	emptyNeighborCells       []*Cell
 	continuousEmptyCellCount int
@@ -43,7 +37,7 @@ func (result *ReachedResult) IsEmpty() bool {
 	return len(result.cells) <= 0
 }
 
-func (result *ReachedResult) IsNeighborEmpty(num NeighborCellNumber) bool {
+func (result *ReachedResult) IsNeighborEmpty(num int) bool {
 	return result.reachedType == num
 }
 

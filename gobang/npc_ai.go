@@ -51,7 +51,7 @@ func (ai *NpcAI) selectGamePlayerBlockCell() *Cell {
 }
 
 func (ai *NpcAI) selectGamePlayerReachedCell() *Cell {
-	matcher := NewCellReachedMatcher(ai.ctx.PlayerStone(), ai.ctx.ReachedStoneCount() - OneSide.Value())
+	matcher := NewCellReachedMatcher(ai.ctx.PlayerStone(), ai.ctx.ReachedStoneCount()-OneSide)
 	result := matcher.Matches(ai.ctx.Board())
 
 	oneSideResult := result.SelectOnly(OneSide)
@@ -64,7 +64,7 @@ func (ai *NpcAI) selectGamePlayerReachedCell() *Cell {
 }
 
 func (ai *NpcAI) selectGamePlayerReachChanceCell() *Cell {
-	matcher := NewCellReachedMatcher(ai.ctx.PlayerStone(), ai.ctx.ReachedStoneCount() - BothSides.Value())
+	matcher := NewCellReachedMatcher(ai.ctx.PlayerStone(), ai.ctx.ReachedStoneCount()-BothSides)
 	result := matcher.Matches(ai.ctx.Board())
 
 	bothSidesResult := result.SelectOnly(BothSides)
@@ -77,7 +77,7 @@ func (ai *NpcAI) selectGamePlayerReachChanceCell() *Cell {
 }
 
 func (ai *NpcAI) selectNpcPlayerReachedCell() *Cell {
-	matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), ai.ctx.ReachedStoneCount() - 1)
+	matcher := NewCellReachedMatcher(ai.ctx.NpcPlayerStone(), ai.ctx.ReachedStoneCount()-1)
 	result := matcher.Matches(ai.ctx.Board())
 
 	if result.HasEmptyNeighborCell() {
