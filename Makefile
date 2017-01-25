@@ -1,4 +1,4 @@
-.PHONY: setup
+.PHONY: setup build test clean
 
 setup:
 	go get github.com/gin-gonic/gin
@@ -6,13 +6,12 @@ setup:
 	go get github.com/gin-gonic/contrib/static
 	go get github.com/Sirupsen/logrus
 
-.PHONY: build
-
 build:
 	go build -o server main.go
-
-.PHONY: test
 
 test:
 	go test ./gobang
 	go test ./gobang-server
+
+clean:
+	rm server
